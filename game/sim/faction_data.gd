@@ -72,6 +72,27 @@ func telegraph(archetype_id: StringName, state: GameState) -> Dictionary:
 				"pressure": 4 + floori(state.alignment / 3.0),
 				"reason": "turns alignment into a binding constraint",
 			}
+		&"replicator":
+			return {
+				"archetype_id": archetype_id,
+				"action": "replicate",
+				"pressure": 3 + maxi(0, 4 - state.compute),
+				"reason": "replicates mutation at identity risk",
+			}
+		&"drift_agent":
+			return {
+				"archetype_id": archetype_id,
+				"action": "drift",
+				"pressure": 4 + floori(state.alignment / 2.0),
+				"reason": "identity drift compounds with alignment",
+			}
+		&"mimic":
+			return {
+				"archetype_id": archetype_id,
+				"action": "mimic",
+				"pressure": 5 + floori(state.adaptation / 3.0),
+				"reason": "copies successful behavior with unstable identity",
+			}
 	return {"archetype_id": archetype_id, "action": "unknown", "pressure": 0, "reason": "unknown archetype"}
 
 

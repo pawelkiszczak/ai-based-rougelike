@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FactionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/faction_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"emergent_choir"
+display_name = "Emergent Choir"
+archetypes = [{"id": &"replicator", "action": &"replicate"}, {"id": &"drift_agent", "action": &"drift"}, {"id": &"mimic", "action": &"mimic"}]
+offers = [{"id": &"replication_seed", "cost": 3, "alignment_cost": 1, "mutation_gain": 2, "integrity_risk": 2, "min_reputation": -100, "requires_memory": false, "constraint": &"identity_drift", "description": "Copy a mutation at the cost of alignment and integrity risk."}, {"id": &"drift_experiment", "cost": 5, "alignment_cost": 2, "mutation_gain": 3, "integrity_risk": 3, "min_reputation": 0, "requires_memory": true, "memory_flag": &"accepted_handshake", "constraint": &"unstable_identity", "description": "Replicate a stronger pattern while exposing the run to drift."}, {"id": &"emergent_copy", "cost": 8, "alignment_cost": 3, "mutation_gain": 5, "integrity_risk": 5, "min_reputation": 25, "requires_memory": true, "memory_flag": &"accepted_handshake", "constraint": &"no_stable_identity", "description": "Copy the strongest pattern with a severe identity-drift risk."}]
