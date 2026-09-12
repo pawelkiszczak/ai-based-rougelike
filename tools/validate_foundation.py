@@ -140,6 +140,8 @@ def main() -> int:
         "game/sim/enemy_archetype_library.gd",
         "game/tests/test_enemy_archetypes.gd",
         "docs/content/enemy-archetypes.md",
+        "docs/performance.md",
+        "tools/validate_performance.py",
         "tools/README.md",
         "prototype/index.html",
     )
