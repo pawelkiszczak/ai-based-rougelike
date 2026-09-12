@@ -40,16 +40,16 @@ func check_flag_persistence_and_reactions() -> void:
 	var narrative := NarrativeSystem.new(save)
 	var loss := narrative.record_run(recap(false, 3, 2))
 	expect(loss.ok and loss.ending == "", "loss records without an ending")
-	expect(narrative.snapshot().flags.prior_defeat, "defeat flag is set")
+	expect(bool(narrative.snapshot().get("flags", {}).get("prior_defeat", false)), "defeat flag is set")
 	expect(narrative.reaction_line("archivist").contains("last failure"), "characters react to prior defeat")
 	var reloaded := NarrativeSystem.new(SaveSystem.new(SAVE_PATH))
 	expect(reloaded.snapshot().history.size() == 1, "narrative history survives save/load")
-	expect(reloaded.snapshot().flags.last_outcome == "loss", "last outcome survives save/load")
+	expect(reloaded.snapshot().get("flags", {}).get("last_outcome", "") == "loss", "last outcome survives save/load")
 	var win := reloaded.record_run(recap(true, 9, 7))
 	expect(win.ending == "escape", "first low-stat victory resolves to escape")
 	var final_state := NarrativeSystem.new(SaveSystem.new(SAVE_PATH)).snapshot()
-	expect(final_state.history.size() == 2 and final_state.flags.prior_victory, "victory and history persist")
-	expect(final_state.flags.last_ending == "escape", "ending persists as a flag")
+	expect(final_state.history.size() == 2 and bool(final_state.get("flags", {}).get("prior_victory", false)), "victory and history persist")
+	expect(final_state.get("flags", {}).get("last_ending", "") == "escape", "ending persists as a flag")
 
 
 func check_invalid_recap() -> void:
@@ -61,7 +61,7 @@ func recap(won: bool, adaptation: int, alignment: int) -> Dictionary:
 	return {
 		"schema_version": RunRecap.SCHEMA_VERSION,
 		"run_seed": 7,
-		"choices": [],
+		"choices": ["test"],
 		"cycles": [{"cycle": 6, "mutation_id": "test", "adaptation": adaptation, "alignment": alignment}],
 		"won": won,
 		"cause": "final_gate_passed" if won else "integrity_depleted",
