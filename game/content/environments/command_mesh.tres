@@ -7,4 +7,6 @@ script = ExtResource("1")
 id = &"command_mesh"
 theme = "A lattice of pressure and inference."
 background_art = "res://art/environments/command_mesh.svg"
+mechanic_id = &"baseline_pressure"
+mechanic_description = "Baseline pressure follows the current cycle."
 slots = [{"encounter_id": &"combat_probe", "kind": &"combat", "weight": 3}, {"encounter_id": &"negotiation_probe", "kind": &"negotiation", "weight": 2}, {"encounter_id": &"event_probe", "kind": &"event", "weight": 2}, {"encounter_id": &"combat_probe", "kind": &"combat", "weight": 2}, {"encounter_id": &"negotiation_probe", "kind": &"negotiation", "weight": 1}, {"encounter_id": &"event_probe", "kind": &"event", "weight": 1}]

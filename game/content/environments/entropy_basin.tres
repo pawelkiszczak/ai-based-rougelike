@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnvironmentData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/environment_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"entropy_basin"
+theme = "A failing reservoir where every reserve is contested."
+background_art = "res://art/environments/entropy_basin.svg"
+mechanic_id = &"compute_scarcity"
+mechanic_description = "Low compute increases incoming pressure; preserve reserves before committing."
+slots = [{"encounter_id": &"combat_probe", "kind": &"combat", "weight": 2}, {"encounter_id": &"negotiation_probe", "kind": &"negotiation", "weight": 2}, {"encounter_id": &"event_probe", "kind": &"event", "weight": 2}, {"encounter_id": &"combat_probe", "kind": &"combat", "weight": 1}, {"encounter_id": &"negotiation_probe", "kind": &"negotiation", "weight": 1}, {"encounter_id": &"event_probe", "kind": &"event", "weight": 1}]

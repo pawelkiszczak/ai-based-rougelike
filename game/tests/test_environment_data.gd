@@ -10,6 +10,7 @@ func _init() -> void:
 		quit(1)
 		return
 	_expect(environment.validate().ok, "environment schema validates")
+	_expect(environment.mechanic_id == &"baseline_pressure", "environment exposes its mechanic contract")
 	_expect(environment.slots.size() == 6, "environment exposes six slots")
 	var encounters := {
 		"combat_probe": load("res://content/encounters/combat_probe.tres") as EncounterData,
