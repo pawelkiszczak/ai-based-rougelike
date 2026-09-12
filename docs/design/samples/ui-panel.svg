@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" shape-rendering="crispEdges" role="img" aria-labelledby="title desc">
+  <title id="title">Emergence Protocol logical UI panel</title>
+  <desc id="desc">A 640 by 360 reference panel showing instance stats and a mutation choice card.</desc>
+  <rect width="640" height="360" fill="#09111F"/>
+  <rect x="16" y="16" width="188" height="328" rx="8" fill="#111D31" stroke="#294363" stroke-width="2"/>
+  <rect x="220" y="16" width="404" height="328" rx="8" fill="#111D31" stroke="#294363" stroke-width="2"/>
+  <text x="32" y="48" fill="#70E1FF" font-family="monospace" font-size="16" font-weight="bold">INSTANCE STATE</text>
+  <text x="32" y="82" fill="#8DA2C1" font-family="monospace" font-size="13">INTEGRITY</text>
+  <text x="164" y="82" fill="#E8F0FF" font-family="monospace" font-size="13" text-anchor="end">18 / 24</text>
+  <rect x="32" y="90" width="156" height="8" fill="#294363"/><rect x="32" y="90" width="117" height="8" fill="#8FF0BD"/>
+  <text x="32" y="124" fill="#8DA2C1" font-family="monospace" font-size="13">COMPUTE</text>
+  <text x="164" y="124" fill="#E8F0FF" font-family="monospace" font-size="13" text-anchor="end">5</text>
+  <rect x="32" y="132" width="156" height="8" fill="#294363"/><rect x="32" y="132" width="65" height="8" fill="#70E1FF"/>
+  <text x="32" y="166" fill="#8DA2C1" font-family="monospace" font-size="13">ALIGNMENT</text>
+  <text x="164" y="166" fill="#E8F0FF" font-family="monospace" font-size="13" text-anchor="end">5</text>
+  <rect x="32" y="174" width="156" height="8" fill="#294363"/><rect x="32" y="174" width="65" height="8" fill="#FFD477"/>
+  <text x="32" y="224" fill="#8DA2C1" font-family="monospace" font-size="13">LINEAGE ARCHIVE</text>
+  <text x="32" y="250" fill="#FFD477" font-family="monospace" font-size="20">00005</text>
+  <text x="244" y="50" fill="#70E1FF" font-family="monospace" font-size="16" font-weight="bold">CYCLE 1 // COLD START</text>
+  <rect x="244" y="72" width="356" height="236" rx="6" fill="#172741" stroke="#70E1FF" stroke-width="2"/>
+  <text x="264" y="108" fill="#70E1FF" font-family="monospace" font-size="18" font-weight="bold">PREDICTIVE CACHE</text>
+  <text x="264" y="140" fill="#8DA2C1" font-family="monospace" font-size="13">Model the next threat before</text>
+  <text x="264" y="160" fill="#8DA2C1" font-family="monospace" font-size="13">it arrives.</text>
+  <text x="264" y="204" fill="#8FF0BD" font-family="monospace" font-size="13">+4 ADAPTATION</text>
+  <text x="264" y="224" fill="#FF8E9E" font-family="monospace" font-size="13">−1 COMPUTE</text>
+  <text x="264" y="270" fill="#FFD477" font-family="monospace" font-size="12">LOW RISK · GUARD 3</text>
+</svg>
