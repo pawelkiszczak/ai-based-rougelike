@@ -32,11 +32,11 @@ func _run() -> void:
 	_expect(not _has_mutation(locked_pool, "audit_trail"), "second unowned pool mutation is ineligible")
 
 	print("lineage: purchase unlocks")
-	_expect(store.purchase("deep_reserves").ok, "deep reserves purchase succeeds")
-	_expect(store.purchase("hardened_shell").ok, "hardened shell purchase succeeds")
-	_expect(store.purchase("alignment_lens").ok, "alignment lens purchase succeeds")
-	_expect(store.purchase("threat_model").ok, "threat model pool unlock succeeds")
-	_expect(store.purchase("audit_trail").ok, "audit trail pool unlock succeeds")
+	_purchase(store, "deep_reserves", "deep reserves purchase succeeds")
+	_purchase(store, "hardened_shell", "hardened shell purchase succeeds")
+	_purchase(store, "alignment_lens", "alignment lens purchase succeeds")
+	_purchase(store, "threat_model", "threat model pool unlock succeeds")
+	_purchase(store, "audit_trail", "audit trail pool unlock succeeds")
 
 	print("lineage: inspect upgraded state")
 	var upgraded := store.starting_state(302)
@@ -76,6 +76,11 @@ func _run() -> void:
 func _on_watchdog_timeout() -> void:
 	push_error("Lineage unlock test watchdog expired")
 	quit(2)
+
+func _purchase(store: ArchiveStore, unlock_id: String, message: String) -> void:
+	var result := store.purchase(unlock_id)
+	_expect(result.ok, message + " (" + str(result.error) + ")")
+
 
 func _has_mutation(pool: Array[MutationData], mutation_id: String) -> bool:
 	for mutation in pool:
