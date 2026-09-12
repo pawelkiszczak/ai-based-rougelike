@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"mirror_descent"
+display_name = "Mirror descent"
+text = "Copy a rival's adaptation path. Counterplay: avoid alignment debt."
+category = &"identity"
+adaptation = 3
+compute = 0
+alignment = -4
+integrity = 1
+guard = 2

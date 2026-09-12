@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"consensus_mesh"
+display_name = "Consensus mesh"
+text = "Bind perspectives into one decision. Counterplay: contain adaptation growth."
+category = &"identity"
+adaptation = 2
+compute = 1
+alignment = 3
+integrity = -2
+guard = 2
