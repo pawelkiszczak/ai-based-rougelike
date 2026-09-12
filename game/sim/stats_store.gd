@@ -48,7 +48,7 @@ func process_run(run_result: Dictionary, codex_ids: Array[String] = []) -> Dicti
 	next_stats.processed_run_ids.append(run_id)
 	for entity_id in ids:
 		next_stats.codex_unlocked[str(entity_id)] = true
-	var save_data := save_system.load().data.duplicate(true)
+	var save_data: Dictionary = save_system.load().data.duplicate(true)
 	save_data["stats"] = next_stats
 	var saved := save_system.save(save_data)
 	if not saved.ok:
