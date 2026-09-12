@@ -16,7 +16,7 @@ func _run() -> void:
 	print("lineage: save baseline")
 	var save := SaveSystem.new(SAVE_PATH)
 	var data := save.defaults()
-	data.lineage.archive = 100
+	data["lineage"]["archive"] = 100
 	var seed_result := save.save(data)
 	print("lineage: seed result " + str(seed_result))
 	_expect(seed_result.ok, "unlock fixture save succeeds")
@@ -60,7 +60,7 @@ func _run() -> void:
 	var poor_path := "user://lineage-unlocks-poor.json"
 	var poor_save := SaveSystem.new(poor_path)
 	var poor_data := poor_save.defaults()
-	poor_data.lineage.archive = 0
+	poor_data["lineage"]["archive"] = 0
 	_expect(poor_save.save(poor_data).ok, "poor unlock fixture save succeeds")
 	var poor_store := ArchiveStore.new(poor_save)
 	_expect(poor_store.purchase("deep_reserves").error == "insufficient_funds", "insufficient unlock funds are rejected")

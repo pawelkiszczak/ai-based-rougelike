@@ -73,7 +73,7 @@ func purchase(unlock_id: String) -> Dictionary:
 		return {"ok": false, "error": "insufficient_funds"}
 
 	var next_data := data.duplicate(true)
-	next_data.lineage.archive = currency() - cost
+	next_data["lineage"]["archive"] = currency() - cost
 	next_data.unlocks.append(unlock_id)
 	var saved := save_system.save(next_data)
 	if not saved.ok:
