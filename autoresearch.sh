@@ -34,7 +34,7 @@ def evolve(seed):
             ((fitness(genome, pressure), genome) for genome in population),
             key=lambda item: (-item[0], item[1]),
         )
-        survivors = [genome for _, genome in ranked[: POPULATION * 5 // 6]]
+        survivors = [genome for _, genome in ranked[: POPULATION * 7 // 8]]
         total_score += ranked[0][0]
         population = survivors[:]
         while len(population) < POPULATION:
