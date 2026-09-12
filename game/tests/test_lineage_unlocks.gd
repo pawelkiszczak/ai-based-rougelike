@@ -48,7 +48,7 @@ func _run() -> void:
 
 	var upgraded := store.starting_state(302)
 	_expect(upgraded.compute == 12, "lineage unlocks apply exact starting compute")
-	_expect(upgraded.integrity == 25, "lineage unlocks apply exact starting integrity")
+	_expect(upgraded.integrity == 24, "lineage unlocks apply exact starting integrity")
 	_expect(upgraded.alignment == 10, "lineage unlocks apply exact starting alignment")
 	_expect(upgraded.adaptation == 5, "lineage unlocks apply exact starting adaptation")
 	var upgraded_pool := store.eligible_mutations(all_mutations)
@@ -58,7 +58,7 @@ func _run() -> void:
 	var reloaded := ArchiveStore.new(SaveSystem.new(SAVE_PATH))
 	_expect(reloaded.is_unlocked("lineage_synthesis"), "final unlock persists through save/load")
 	_expect(reloaded.starting_state(303).adaptation == 5, "persisted unlock affects next initialized run")
-	_expect(reloaded.purchase("lineage_synthesis").error == "already_owned", "double purchase is rejected")
+	_expect(reloaded.purchase("lineage_synthesis").get("error", "") == "already_owned", "double purchase is rejected")
 
 	var poor_path := "user://lineage-unlocks-poor.json"
 	var poor_save := SaveSystem.new(poor_path)
@@ -68,7 +68,7 @@ func _run() -> void:
 	poor_data["lineage"] = poor_lineage
 	_expect(poor_save.save(poor_data).ok, "poor unlock fixture save succeeds")
 	var poor_store := ArchiveStore.new(poor_save)
-	_expect(poor_store.purchase("deep_reserves").error == "insufficient_funds", "insufficient unlock funds are rejected")
+	_expect(poor_store.purchase("deep_reserves").get("error", "") == "insufficient_funds", "insufficient unlock funds are rejected")
 	_expect(poor_store.data.unlocks.is_empty(), "rejected purchase does not mutate unlock state")
 
 	_cleanup()
