@@ -18,6 +18,7 @@ func defaults() -> Dictionary:
 		"version": CURRENT_VERSION,
 		"revision": 0,
 		"last_run_id": "",
+		"architecture": "default",
 		"lineage": {"archive": 0, "runs": 0, "wins": 0},
 		"unlocks": [],
 		"reputation": {},
@@ -63,6 +64,8 @@ func load() -> Dictionary:
 	var migrated_from := int(migrated.version)
 	if migrated_from < CURRENT_VERSION:
 		migrated = migrate(migrated, migrated_from)
+	if not migrated.has("architecture"):
+		migrated["architecture"] = "default"
 	var validation := validate(migrated)
 	if not validation.ok:
 		return recover_corrupt(validation.error)
@@ -120,6 +123,8 @@ func migrate(document: Dictionary, from_version: int) -> Dictionary:
 		if not migrated.has("last_run_id"):
 			migrated["last_run_id"] = ""
 		migrated["version"] = CURRENT_VERSION
+	if not migrated.has("architecture"):
+		migrated["architecture"] = "default"
 	if not migrated.has("reputation"):
 		migrated["reputation"] = {}
 	return migrated
@@ -133,6 +138,8 @@ func normalise(input: Dictionary) -> Dictionary:
 		document.revision = 1
 	if input.has("last_run_id") and input.last_run_id is String:
 		document.last_run_id = input.last_run_id
+	if input.has("architecture") and input.architecture is String:
+		document.architecture = input.architecture
 	if input.has("lineage") and input.lineage is Dictionary:
 		var lineage: Dictionary = document["lineage"]
 		for key in ["archive", "runs", "wins"]:
@@ -150,13 +157,15 @@ func normalise(input: Dictionary) -> Dictionary:
 	return document
 
 func validate(document: Dictionary) -> Dictionary:
-	for key in ["version", "revision", "last_run_id", "lineage", "unlocks", "reputation", "stats", "settings"]:
+	for key in ["version", "revision", "last_run_id", "architecture", "lineage", "unlocks", "reputation", "stats", "settings"]:
 		if not document.has(key):
 			return {"ok": false, "error": "missing field: " + key}
 	if not document.version is int or document.version != CURRENT_VERSION:
 		return {"ok": false, "error": "unsupported save version"}
 	if not document.revision is int or document.revision < 0:
 		return {"ok": false, "error": "invalid revision"}
+	if not document.last_run_id is String or not document.architecture is String or document.architecture.is_empty():
+		return {"ok": false, "error": "invalid run selection"}
 	if not document.last_run_id is String:
 		return {"ok": false, "error": "invalid last_run_id"}
 	if not document.lineage is Dictionary:

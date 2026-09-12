@@ -64,6 +64,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_mutation_batch_61_75.gd 2>&1 | tee "$RUNNER_TEMP/mutation-batch-61-75-test.log"
       - name: Run lineage unlock tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_lineage_unlocks.gd 2>&1 | tee "$RUNNER_TEMP/lineage-unlocks-test.log"
+      - name: Run architecture selection tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_architecture_selection.gd 2>&1 | tee "$RUNNER_TEMP/architecture-selection-test.log"
       - name: Run RunController tests
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
       - name: Run EncounterFSM tests
@@ -150,6 +152,7 @@ jobs:
             ${{ runner.temp }}/rng-service-test.log
             ${{ runner.temp }}/mutation-data-test.log
             ${{ runner.temp }}/lineage-unlocks-test.log
+            ${{ runner.temp }}/architecture-selection-test.log
             ${{ runner.temp }}/run-controller-test.log
             ${{ runner.temp }}/encounter-fsm-test.log
             ${{ runner.temp }}/encounter-variety-test.log

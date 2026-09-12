@@ -6,7 +6,7 @@ var store: ArchiveStore
 var currency_label: Label
 var status_label: Label
 var status_message := ""
-var unlock_buttons: Array[Button] = []
+var architecture_buttons: Array[Button] = []
 var back_button: Button
 
 
@@ -49,6 +49,19 @@ func _build_ui() -> void:
 	status_label = Label.new()
 	status_label.add_theme_color_override("font_color", Color("a3b5d4"))
 	content.add_child(status_label)
+	var architecture_title := Label.new()
+	architecture_title.text = "STARTING ARCHITECTURE"
+	architecture_title.add_theme_color_override("font_color", Color("70e1ff"))
+	content.add_child(architecture_title)
+	for definition in store.architectures():
+		var button := Button.new()
+		button.focus_mode = Control.FOCUS_ALL
+		button.custom_minimum_size = Vector2(0, 58)
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.pressed.connect(_on_select_architecture.bind(definition.id))
+		architecture_buttons.append(button)
+		content.add_child(button)
+
 
 	for definition in store.definitions():
 		var button := Button.new()
@@ -68,6 +81,21 @@ func _build_ui() -> void:
 
 func _render() -> void:
 	currency_label.text = "Archive: %d" % store.currency()
+	for index in architecture_buttons.size():
+		var definition: Dictionary = store.architectures()[index]
+		var button := architecture_buttons[index]
+		var architecture_id: String = definition.id
+		if store.selected_architecture() == architecture_id:
+			button.text = "%s · SELECTED\n%s" % [definition.name, definition.description]
+			button.disabled = true
+		elif store.can_select_architecture(architecture_id):
+			button.text = "%s · AVAILABLE\n%s" % [definition.name, definition.description]
+			button.disabled = false
+		else:
+			button.text = "%s · LOCKED\n%s" % [definition.name, definition.description]
+			button.disabled = true
+		button.text += "\n" + ControllerNavigation.prompt("SELECT", not Input.get_connected_joypads().is_empty())
+
 	for index in unlock_buttons.size():
 		var definition: Dictionary = store.definitions()[index]
 		var button := unlock_buttons[index]
@@ -87,10 +115,18 @@ func _render() -> void:
 	else:
 		status_label.text = status_message
 	var focus_controls: Array[Control] = []
+	for button in architecture_buttons:
+		focus_controls.append(button)
 	for button in unlock_buttons:
 		focus_controls.append(button)
 	focus_controls.append(back_button)
 	ControllerNavigation.configure_column(focus_controls)
+
+func _on_select_architecture(architecture_id: String) -> void:
+	var result := store.select_architecture(architecture_id)
+	status_message = "Architecture selected." if result.ok else "Selection rejected: " + result.error
+	_render()
+
 
 
 func _on_purchase(unlock_id: String) -> void:

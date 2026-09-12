@@ -26,3 +26,9 @@ The archive provides eighteen persistent unlocks. The first five establish the v
 `ArchiveStore` persists unlock ids through `SaveSystem`. `starting_state()` applies every owned starting effect to the following run, while `eligible_mutations()` exposes every owned pool addition. `can_purchase()` requires sufficient archive, an unowned definition, and every listed prerequisite; failed or duplicate purchases leave save state unchanged. `validate_unlock_graph()` rejects unknown prerequisites and cycles, so every authored node remains reachable from the initial five roots.
 
 `test_lineage_unlocks.gd` checks the exact opening-state deltas, every pool membership transition, graph validity, persistence, prerequisite locking, insufficient funds, and duplicate-purchase invariants. The archive screen renders all eighteen definitions and keeps locked prerequisites disabled until their graph is satisfied.
+
+## Alternate architecture
+
+`Unified lineage` unlocks the `Frontier architecture`. Before owned unlock effects are applied, the default architecture starts at 18 integrity, 5 compute, 5 alignment, and 0 adaptation; Frontier starts at 16 integrity, 8 compute, 3 alignment, and 2 adaptation. The Frontier base differs on four dimensions, trading safety and alignment for planning capacity and adaptation. Owned lineage effects then apply identically to either architecture.
+
+Architecture selection is persisted in the save as `architecture` and is applied to the next initialized run. The archive screen exposes both choices, leaves Frontier disabled until `unified_lineage` is owned, and keeps the selected choice visibly marked.
