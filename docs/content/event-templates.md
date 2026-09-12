@@ -11,3 +11,7 @@ The deterministic harness validates every `.tres` under `game/content/events` be
 ## Production templates 1–12
 
 The first production batch adds twelve templates assigned to the authored environment and faction ids. Every template displays its inclusive parameter range before commitment and carries two weighted outcomes with explicit state effects. `test_event_batch_1_12.gd` validates all ids, references, deterministic instantiation, and non-empty effect vectors for both branches.
+
+## Production templates 13–24
+
+The second production batch adds twelve more environment/faction-assigned templates. Each has an inclusive parameter boundary, visible weighted outcomes, and non-empty effects for every branch. `test_event_batch_13_24.gd` validates deterministic rendering, ordered ranges, and branch effects.

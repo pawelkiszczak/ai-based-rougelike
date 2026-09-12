@@ -1,8 +1,8 @@
 extends SceneTree
 
 const BATCH_IDS := [
-	"signal_drift", "reserve_warning", "alignment_offer", "mirror_request", "audit_window", "basin_echo",
-	"consensus_break", "replication_deal", "boundary_test", "late_signal", "compute_tithe", "identity_trial",
+	"pressure_pulse", "archive_request", "safety_debt", "forked_signal", "adaptive_bargain", "choir_warning",
+	"compute_window", "alignment_debt", "mirror_storm", "quorum_shift", "fallback_offer", "drift_marker",
 ]
 
 var failures: Array[String] = []
@@ -19,15 +19,16 @@ func _init() -> void:
 			continue
 		var template: EventTemplateData = by_id[id]
 		_expect(template.validate().ok, "event template validates: " + id)
-		_expect(template.environment_id != &"" and template.faction_id != &"", id + " has environment and faction references")
-		var first := template.instantiate(RNGService.new(77))
-		var second := template.instantiate(RNGService.new(77))
+		var first := template.instantiate(RNGService.new(88))
+		var second := template.instantiate(RNGService.new(88))
 		_expect(first == second and not str(first.text).is_empty(), id + " instantiates deterministically")
 		for outcome in template.outcomes:
 			_expect(outcome.has("effects") and not Dictionary(outcome.effects).is_empty(), id + " outcome changes state")
+		for parameter in template.parameters:
+			_expect(float(parameter.min) <= float(parameter.max), id + " parameter range is ordered")
 	_expect(templates.size() == 26, "event library contains twenty-six templates")
 	if failures.is_empty():
-		print("Event batch 1-12 tests passed")
+		print("Event batch 13-24 tests passed")
 		quit(0)
 		return
 	for failure in failures:

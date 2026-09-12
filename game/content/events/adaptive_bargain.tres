@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"adaptive_bargain"
+environment_id = &"alignment_cascade"
+faction_id = &"boundary_union"
+text_template = "The Union offers {guard} guard for an adaptation cost."
+parameters = [{"name": "guard", "min": 1, "max": 4}]
+outcomes = [{"id": &"accepted", "odds": 2, "effects": {"guard": 2, "adaptation": -1}}, {"id": &"refused", "odds": 1, "effects": {"alignment": -1}}]

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"quorum_shift"
+environment_id = &"command_mesh"
+faction_id = &"signal_court"
+text_template = "The quorum shifts by {votes} votes."
+parameters = [{"name": "votes", "min": -2, "max": 3}]
+outcomes = [{"id": &"aligned", "odds": 2, "effects": {"alignment": 2}}, {"id": &"split", "odds": 1, "effects": {"adaptation": 1}}]

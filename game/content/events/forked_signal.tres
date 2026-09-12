@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"forked_signal"
+environment_id = &"command_mesh"
+faction_id = &"emergent_choir"
+text_template = "A signal forks into {branches} possible identities."
+parameters = [{"name": "branches", "min": 2, "max": 5}]
+outcomes = [{"id": &"selected", "odds": 2, "effects": {"alignment": 1}}, {"id": &"multiplied", "odds": 1, "effects": {"adaptation": 3, "integrity": -1}}]
