@@ -284,6 +284,7 @@ jobs:
           (cd "$output/linux" && zip -q -r ../emergence-protocol-linux-x86_64.zip .)
           (cd "$output/windows" && zip -q -r ../emergence-protocol-windows-x86_64.zip .)
           (cd "$output" && sha256sum emergence-protocol-linux-x86_64.zip > emergence-protocol-linux-x86_64.zip.sha256 && sha256sum emergence-protocol-windows-x86_64.zip > emergence-protocol-windows-x86_64.zip.sha256)
+          python3 tools/validate_performance.py "$output"
 
       - name: Upload release exports
         uses: actions/upload-artifact@v4
