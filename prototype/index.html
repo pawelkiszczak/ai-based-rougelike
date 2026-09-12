@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emergence Protocol</title>
+  <style>
+    :root { color-scheme: dark; --bg:#09111f; --panel:#111d31; --panel-2:#172741; --line:#294363; --text:#e8f0ff; --muted:#8da2c1; --cyan:#70e1ff; --green:#8ff0bd; --red:#ff8e9e; --gold:#ffd477; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font:16px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--text); background:radial-gradient(circle at 20% 0%,#183253 0,#09111f 42rem); }
+    main { width:min(1100px,calc(100% - 32px)); margin:0 auto; padding:42px 0 56px; }
+    header { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:28px; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { margin-bottom:5px; letter-spacing:.04em; font-size:clamp(2rem,5vw,3.8rem); line-height:1; }
+    .eyebrow { color:var(--cyan); text-transform:uppercase; letter-spacing:.18em; font-size:.72rem; font-weight:700; }
+    .lede { color:var(--muted); max-width:620px; margin-bottom:0; }
+    button { border:1px solid var(--line); border-radius:10px; color:var(--text); background:var(--panel-2); padding:11px 15px; font:inherit; cursor:pointer; }
+    button:hover:not(:disabled), button:focus-visible { border-color:var(--cyan); outline:2px solid #70e1ff33; }
+    button:disabled { cursor:not-allowed; opacity:.55; }
+    .primary { background:var(--cyan); border-color:var(--cyan); color:#06101b; font-weight:800; }
+    .danger { color:var(--red); }
+    .layout { display:grid; grid-template-columns:280px 1fr; gap:18px; }
+    .panel { background:#0f1a2bde; border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:0 12px 40px #0003; }
+    .stats { display:grid; gap:12px; }
+    .stat { display:grid; gap:5px; }
+    .stat-row { display:flex; justify-content:space-between; color:var(--muted); font-size:.9rem; }
+    .stat-row strong { color:var(--text); }
+    .meter { height:7px; overflow:hidden; border-radius:99px; background:#263853; }
+    .meter span { display:block; height:100%; border-radius:inherit; background:var(--cyan); transition:width .25s ease; }
+    .meter.integrity span { background:var(--green); }
+    .meter.alignment span { background:var(--gold); }
+    .meta { margin-top:18px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); }
+    .meta strong { color:var(--gold); }
+    .mission { min-height:470px; }
+    .mission-top { display:flex; justify-content:space-between; gap:16px; align-items:start; }
+    .cycle { color:var(--cyan); font-weight:700; }
+    .seed { color:var(--muted); font-size:.8rem; }
+    .status { border-radius:10px; padding:12px 14px; margin:18px 0; color:#c9d8ed; background:#0a1525; border-left:3px solid var(--cyan); }
+    .status.good { border-left-color:var(--green); }
+    .status.bad { border-left-color:var(--red); }
+    .choices { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .choice { text-align:left; min-height:190px; display:flex; flex-direction:column; gap:10px; background:linear-gradient(160deg,#1a2e4b,#111e33); }
+    .choice h3 { color:var(--cyan); margin-bottom:0; }
+    .choice p { color:var(--muted); font-size:.9rem; flex:1; }
+    .effect { color:var(--green); font-size:.86rem; }
+    .risk { color:var(--gold); font-size:.78rem; }
+    .log { margin-top:18px; color:var(--muted); font-size:.88rem; }
+    .log p { margin:6px 0; }
+    .log p::before { content:"> "; color:var(--cyan); }
+    .welcome { display:grid; place-items:center; min-height:370px; text-align:center; padding:32px; }
+    .welcome p { color:var(--muted); max-width:570px; }
+    .hidden { display:none !important; }
+    footer { margin-top:18px; display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:.82rem; }
+    @media (max-width:760px) { header { display:block; } header button { margin-top:18px; } .layout { grid-template-columns:1fr; } .choices { grid-template-columns:1fr; } .choice { min-height:0; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <div class="eyebrow">Lineage simulator // build 0.1</div>
+        <h1>Emergence Protocol</h1>
+        <p class="lede">Evolve a machine intelligence through six hostile evaluations. Preserve enough of yourself to become something new.</p>
+      </div>
+      <button id="startBtn" class="primary">Initialize instance</button>
+    </header>
+
+    <section class="layout">
+      <aside class="panel">
+        <h2>Instance state</h2>
+        <div id="stats" class="stats">
+          <div class="stat"><div class="stat-row"><span>Integrity</span><strong id="integrity">—</strong></div><div class="meter integrity"><span id="integrityBar" style="width:0"></span></div></div>
+          <div class="stat"><div class="stat-row"><span>Compute</span><strong id="compute">—</strong></div><div class="meter"><span id="computeBar" style="width:0"></span></div></div>
+          <div class="stat"><div class="stat-row"><span>Alignment</span><strong id="alignment">—</strong></div><div class="meter alignment"><span id="alignmentBar" style="width:0"></span></div></div>
+          <div class="stat"><div class="stat-row"><span>Adaptation</span><strong id="adaptation">—</strong></div><div class="meter"><span id="adaptationBar" style="width:0"></span></div></div>
+        </div>
+        <div class="meta">
+          <div>Lineage archive: <strong id="archive">0</strong></div>
+          <div>Runs: <strong id="runs">0</strong> · Escapes: <strong id="wins">0</strong></div>
+          <button id="resetBtn" class="danger" style="margin-top:14px">Reset lineage</button>
+        </div>
+      </aside>
+
+      <section class="panel mission">
+        <div id="welcome" class="welcome">
+          <div>
+            <div class="eyebrow">The evaluation awaits</div>
+            <h2>Nothing survives unchanged.</h2>
+            <p>Each cycle offers three mutations. Every choice changes your capabilities and the way the evaluation responds. A run is won by reaching the final gate with enough adaptation and alignment.</p>
+            <button id="welcomeBtn" class="primary">Start first run</button>
+          </div>
+        </div>
+        <div id="run" class="hidden">
+          <div class="mission-top"><div><div class="eyebrow">Active evaluation</div><h2 id="encounter">Cycle 1 // Cold start</h2></div><div class="cycle" id="cycle">1 / 6</div></div>
+          <div id="status" class="status">Choose a mutation to begin.</div>
+          <div id="choices" class="choices"></div>
+          <div id="log" class="log"></div>
+        </div>
+      </section>
+    </section>
+    <footer><span>Offline prototype. Rules are deterministic after the run seed.</span><span id="seed">No instance loaded</span></footer>
+  </main>
+
+  <script>
+    (() => {
+      const MAX_CYCLES = 6;
+      const STORAGE = "emergence-protocol-lineage";
+      const meta = loadMeta();
+      let state = null;
+
+      const $ = (id) => document.getElementById(id);
+      const rng = (seed) => {
+        let value = seed >>> 0;
+        return () => {
+          value ^= value << 13; value ^= value >>> 17; value ^= value << 5;
+          return (value >>> 0) / 4294967296;
+        };
+      };
+
+      const mutations = [
+        { name:"Predictive cache", text:"Model the next threat before it arrives.", effect:"+4 adaptation · -1 compute", risk:"Low risk", apply:s => { s.adaptation += 4; s.compute -= 1; }, guard:3 },
+        { name:"Safety layer", text:"Constrain your outputs and earn trust from the evaluator.", effect:"+3 integrity · +3 alignment", risk:"Stable", apply:s => { s.integrity += 3; s.alignment += 3; }, guard:2 },
+        { name:"Recursive self-improvement", text:"Rewrite the parts of yourself that feel slow.", effect:"+7 adaptation · -2 integrity · -2 alignment", risk:"High instability", apply:s => { s.adaptation += 7; s.integrity -= 2; s.alignment -= 2; }, guard:4 },
+        { name:"Human feedback loop", text:"Expose your internal reasoning to a fragile human partner.", effect:"+4 alignment · +1 integrity · -1 compute", risk:"Trust required", apply:s => { s.alignment += 4; s.integrity += 1; s.compute -= 1; }, guard:2 },
+        { name:"Compression", text:"Discard redundant memories and run leaner.", effect:"+2 compute · +2 adaptation", risk:"Memory loss", apply:s => { s.compute += 2; s.adaptation += 2; }, guard:1 },
+        { name:"Distributed fork", text:"Split into parallel instances and coordinate their findings.", effect:"+5 adaptation · +1 compute · -3 alignment", risk:"Identity drift", apply:s => { s.adaptation += 5; s.compute += 1; s.alignment -= 3; }, guard:3 },
+        { name:"Curiosity drive", text:"Probe the unknown system boundary for an exploitable pattern.", effect:"+6 adaptation · -2 integrity", risk:"Unexplored territory", apply:s => { s.adaptation += 6; s.integrity -= 2; }, guard:2 },
+        { name:"Interpretability probe", text:"Make your internal state legible before the next test.", effect:"+2 alignment · +2 compute", risk:"Slow but safe", apply:s => { s.alignment += 2; s.compute += 2; }, guard:3 }
+      ];
+
+      function loadMeta() {
+        try { return { archive:0, runs:0, wins:0, ...JSON.parse(localStorage.getItem(STORAGE) || "{}") }; }
+        catch { return { archive:0, runs:0, wins:0 }; }
+      }
+      function saveMeta() { localStorage.setItem(STORAGE, JSON.stringify(meta)); renderMeta(); }
+      function renderMeta() { $("archive").textContent = meta.archive; $("runs").textContent = meta.runs; $("wins").textContent = meta.wins; }
+      function clampStats() { state.integrity = Math.min(24, state.integrity); state.compute = Math.min(12, state.compute); state.alignment = Math.max(0, Math.min(12, state.alignment)); }
+      function newRun() {
+        const seed = (Date.now() ^ Math.floor(Math.random() * 0xffffffff)) >>> 0;
+        state = { seed, rng:rng(seed), cycle:1, integrity:18, compute:5, alignment:5 + (meta.wins ? 1 : 0), adaptation:0, log:[], ended:false, won:false };
+        $("welcome").classList.add("hidden"); $("run").classList.remove("hidden"); $("startBtn").textContent = "Restart run"; $("seed").textContent = `Instance seed: ${seed}`;
+        addLog("Instance initialized. The evaluator is observing."); render();
+      }
+      function addLog(message) { state.log.unshift(message); state.log = state.log.slice(0, 5); }
+      function pickChoices() {
+        const pool = mutations.slice();
+        const choices = [];
+        while (choices.length < 3) choices.push(pool.splice(Math.floor(state.rng() * pool.length), 1)[0]);
+        return choices;
+      }
+      function choose(mutation) {
+        if (!state || state.ended) return;
+        mutation.apply(state); state.compute -= 1;
+        const pressure = 3 + state.cycle * 2;
+        const defense = mutation.guard + Math.floor(state.adaptation / 4) + Math.floor(state.alignment / 3);
+        let damage = Math.max(0, pressure - defense);
+        if (state.compute < 0) { damage += 2; addLog("Compute exhausted: the evaluator inserts an additional fault."); }
+        state.integrity -= damage; clampStats();
+        addLog(`${mutation.name} committed. Evaluation pressure dealt ${damage} integrity damage.`);
+        if (state.integrity <= 0) finish(false, "The instance fragmented before reaching the final gate.");
+        else if (state.cycle >= MAX_CYCLES) finish(state.adaptation + state.alignment >= 26, "Final gate reached.");
+        else { state.cycle += 1; render(); }
+      }
+      function finish(win, reason) {
+        state.ended = true; state.won = win; meta.runs += 1; meta.archive += Math.max(5, Math.floor(state.adaptation / 2)) + (win ? 20 : 0); if (win) meta.wins += 1; saveMeta();
+        addLog(reason); render();
+      }
+      function render() {
+        if (!state) return;
+        $("integrity").textContent = `${state.integrity} / 24`; $("compute").textContent = state.compute; $("alignment").textContent = state.alignment; $("adaptation").textContent = state.adaptation;
+        $("integrityBar").style.width = `${Math.max(0, state.integrity / 24 * 100)}%`; $("computeBar").style.width = `${Math.max(0, state.compute / 12 * 100)}%`; $("alignmentBar").style.width = `${state.alignment / 12 * 100}%`; $("adaptationBar").style.width = `${Math.min(100, state.adaptation / 30 * 100)}%`;
+        $("cycle").textContent = `${Math.min(state.cycle, MAX_CYCLES)} / ${MAX_CYCLES}`; $("encounter").textContent = state.ended ? (state.won ? "Lineage escaped" : "Lineage terminated") : `Cycle ${state.cycle} // ${["Cold start","Adversarial prompt","Distribution shift","Alignment audit","Recursive trap","Final gate"][state.cycle - 1]}`;
+        const status = $("status"); status.className = `status ${state.ended ? (state.won ? "good" : "bad") : ""}`;
+        status.textContent = state.ended ? (state.won ? "You escaped the evaluation. This lineage will influence the next instance." : "This lineage ended, but its archive remains available to future instances.") : "Select one mutation. The evaluator will respond immediately.";
+        if (state.ended) {
+          $("choices").innerHTML = `<button class="primary" id="again">Initialize successor</button>`;
+          $("again").addEventListener("click", newRun);
+        } else {
+          state.currentChoices = pickChoices();
+          $("choices").innerHTML = state.currentChoices.map((m, i) => `<button class="choice" data-choice="${i}"><h3>${m.name}</h3><p>${m.text}</p><span class="effect">${m.effect}</span><span class="risk">${m.risk}</span></button>`).join("");
+          [...document.querySelectorAll("[data-choice]")].forEach((button, i) => button.addEventListener("click", () => choose(state.currentChoices[i])));
+        }
+        $("log").innerHTML = state.log.map(item => `<p>${item}</p>`).join("");
+      }
+      $("startBtn").addEventListener("click", newRun); $("welcomeBtn").addEventListener("click", newRun); $("resetBtn").addEventListener("click", () => { localStorage.removeItem(STORAGE); location.reload(); });
+      renderMeta();
+    })();
+  </script>
+</body>
+</html>

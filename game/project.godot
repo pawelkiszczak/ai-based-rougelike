@@ -1,0 +1,21 @@
+; Engine configuration file.
+; Keep this project compatible with the version pinned in docs/TOOLCHAIN.md.
+config_version=5
+
+[application]
+config/name="Emergence Protocol"
+run/main_scene="res://scenes/main.tscn"
+
+[display]
+
+[display/window]
+size/viewport_width=640
+size/viewport_height=360
+size/window_width_override=1280
+size/window_height_override=720
+stretch/mode="canvas_items"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false
