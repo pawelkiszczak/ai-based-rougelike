@@ -39,8 +39,9 @@ func load() -> Dictionary:
 	var parsed = JSON.parse_string(raw)
 	if not parsed is Dictionary:
 		return recover_corrupt("save is not a JSON object")
-	if not parsed.has("version") or not parsed.version is int:
-		return recover_corrupt("save has no integer version")
+	if not parsed.has("version") or not (parsed.version is int or parsed.version is float):
+		return recover_corrupt("save has no numeric version")
+	parsed["version"] = int(parsed.version)
 	if parsed.version > CURRENT_VERSION:
 		_save_locked = true
 		return {
@@ -50,6 +51,14 @@ func load() -> Dictionary:
 		}
 
 	var migrated: Dictionary = parsed.duplicate(true)
+	if migrated.has("revision") and (migrated.revision is int or migrated.revision is float):
+		migrated["revision"] = int(migrated.revision)
+	if migrated.has("lineage") and migrated.lineage is Dictionary:
+		var migrated_lineage: Dictionary = migrated["lineage"]
+		for key in ["archive", "runs", "wins"]:
+			if migrated_lineage.has(key) and (migrated_lineage[key] is int or migrated_lineage[key] is float):
+				migrated_lineage[key] = int(migrated_lineage[key])
+		migrated["lineage"] = migrated_lineage
 	var migrated_from := int(migrated.version)
 	if migrated_from < CURRENT_VERSION:
 		migrated = migrate(migrated, migrated_from)
