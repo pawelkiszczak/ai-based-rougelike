@@ -49,7 +49,7 @@ func select(state: GameState) -> Dictionary:
 	for profile_id in PROFILE_IDS:
 		total += int(profile_weights[profile_id])
 	var roll := random.next_int(1, total)
-	var selected_id := PROFILE_IDS.back()
+	var selected_id: String = PROFILE_IDS.back()
 	var cursor := 0
 	for profile_id in PROFILE_IDS:
 		cursor += int(profile_weights[profile_id])
