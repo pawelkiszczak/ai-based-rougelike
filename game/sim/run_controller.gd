@@ -8,6 +8,7 @@ signal run_ended(result: Dictionary)
 
 var state: GameState
 var rng_service: RNGService
+var enemy_director: AdaptiveEnemyDirector
 var reputation: FactionReputation
 var reputation_changes: Array[Dictionary] = []
 var run_log: Array[Dictionary] = []
@@ -21,6 +22,7 @@ func _init(
 ) -> void:
 	state = initial_state if initial_state != null else GameState.new()
 	rng_service = random if random != null else RNGService.new(state.run_seed)
+	enemy_director = AdaptiveEnemyDirector.new(state.run_seed)
 	reputation = faction_reputation if faction_reputation != null else FactionReputation.new(null, FactionReputation.normalise({}))
 
 
@@ -67,22 +69,23 @@ func damage_range(current_state: GameState, mutation: MutationData, encounter: D
 func choose(mutation: MutationData) -> Dictionary:
 	if ended:
 		return {"ended": true, "won": won, "ignored": true, "reason": "run_already_ended"}
-
 	var cycle := state.cycle
-	var pressure := 3 + cycle * 2
-	var damage_info := damage_range(state, mutation, {"pressure": pressure})
+	var pressure_profile := enemy_director.select(state)
+	var pressure := int(pressure_profile.pressure)
+	var damage_info := damage_range(state, mutation, pressure_profile)
 	mutation.apply_to(state)
 	state.compute -= 1
 	var defense: int = damage_info.defense
 	var damage: int = damage_info.resolved_damage
 	state.integrity -= damage
 	state.clamp_stats()
-
 	var result := {
 		"run_seed": state.run_seed,
 		"cycle": cycle,
 		"mutation_id": str(mutation.id),
 		"pressure": pressure,
+		"pressure_profile": pressure_profile.id,
+		"pressure_reason": pressure_profile.reason,
 		"defense": defense,
 		"damage": damage,
 		"integrity": state.integrity,

@@ -80,6 +80,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_faction_data.gd 2>&1 | tee "$RUNNER_TEMP/faction-data-test.log"
       - name: Run FactionReputation tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_faction_reputation.gd 2>&1 | tee "$RUNNER_TEMP/faction-reputation-test.log"
+      - name: Run AdaptiveEnemyDirector tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_adaptive_enemy_director.gd 2>&1 | tee "$RUNNER_TEMP/adaptive-director-test.log"
       - name: Run BossGate tests
         run: godot --headless --path game -s res://tests/test_boss_gate.gd 2>&1 | tee "$RUNNER_TEMP/boss-gate-test.log"
       - name: Run AudioDirector tests
@@ -120,6 +122,7 @@ jobs:
             ${{ runner.temp }}/run-recap-test.log
             ${{ runner.temp }}/telemetry-store-test.log
             ${{ runner.temp }}/faction-reputation-test.log
+            ${{ runner.temp }}/adaptive-director-test.log
             ${{ runner.temp }}/environment-data-test.log
             ${{ runner.temp }}/faction-data-test.log
             ${{ runner.temp }}/boss-gate-test.log
