@@ -60,6 +60,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_save_system.gd 2>&1 | tee "$RUNNER_TEMP/save-system-test.log"
       - name: Run RunScreen tests
         run: godot --headless --path game -s res://tests/test_run_screen.gd 2>&1 | tee "$RUNNER_TEMP/run-screen-test.log"
+      - name: Run ArchiveScreen tests
+        run: godot --headless --path game -s res://tests/test_archive_screen.gd 2>&1 | tee "$RUNNER_TEMP/archive-screen-test.log"
       - name: Run deterministic harness
         run: |
           godot --headless --path game -s ../tools/harness.gd -- --seed-base 1000 --count 100 --output "$RUNNER_TEMP/harness-a.json" 2>&1 | tee "$RUNNER_TEMP/harness-a.log"
@@ -86,6 +88,7 @@ jobs:
             ${{ runner.temp }}/encounter-fsm-test.log
             ${{ runner.temp }}/save-system-test.log
             ${{ runner.temp }}/run-screen-test.log
+            ${{ runner.temp }}/archive-screen-test.log
             ${{ runner.temp }}/harness-a.log
             ${{ runner.temp }}/harness-b.log
             ${{ runner.temp }}/harness-malformed.log

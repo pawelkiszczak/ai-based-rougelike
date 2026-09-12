@@ -49,6 +49,12 @@ func _build_ui() -> void:
 	status_label.add_theme_color_override("font_color", Color("a3b5d4"))
 	content.add_child(status_label)
 
+	var archive_button := Button.new()
+	archive_button.text = "OPEN LINEAGE ARCHIVE"
+	archive_button.focus_mode = Control.FOCUS_ALL
+	archive_button.pressed.connect(_on_archive_pressed)
+	content.add_child(archive_button)
+
 	var body := HBoxContainer.new()
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.add_theme_constant_override("separation", 14)
@@ -124,6 +130,10 @@ func _on_choice(mutation: MutationData) -> void:
 	for child in choice_container.get_children():
 		(child as Button).disabled = true
 	controller.choose(mutation)
+
+
+func _on_archive_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/archive.tscn")
 
 
 func _on_successor_pressed() -> void:
