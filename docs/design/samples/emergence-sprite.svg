@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" shape-rendering="crispEdges" role="img" aria-labelledby="title desc">
+  <title id="title">Emergence Protocol predictive cache icon</title>
+  <desc id="desc">A cyan prediction core protected by a green integrity ring on a dark navy field.</desc>
+  <rect width="64" height="64" fill="#09111F"/>
+  <rect x="8" y="8" width="48" height="48" fill="#111D31" stroke="#294363" stroke-width="2"/>
+  <path d="M32 14v8M32 42v8M14 32h8M42 32h8" stroke="#8DA2C1" stroke-width="2"/>
+  <path d="M21 25l11-8 11 8v14l-11 8-11-8z" fill="#172741" stroke="#70E1FF" stroke-width="2"/>
+  <path d="M27 31h10M32 26v12M27 36h10" stroke="#70E1FF" stroke-width="2"/>
+  <path d="M18 42l5 5M46 42l-5 5" stroke="#8FF0BD" stroke-width="2"/>
+  <rect x="29" y="28" width="6" height="8" fill="#FFD477"/>
+</svg>
