@@ -7,3 +7,4 @@ script = ExtResource("1")
 id = &"event_probe"
 kind = &"event"
 display_name = "Unknown signal"
+outcomes = [{"id": &"stabilized", "odds": 3, "success": true}, {"id": &"cascade", "odds": 1, "success": false}]

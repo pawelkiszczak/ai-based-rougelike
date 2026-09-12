@@ -7,3 +7,4 @@ script = ExtResource("1")
 id = &"combat_probe"
 kind = &"combat"
 display_name = "Sentinel probe"
+pressure = 7

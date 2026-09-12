@@ -7,3 +7,4 @@ script = ExtResource("1")
 id = &"negotiation_probe"
 kind = &"negotiation"
 display_name = "Observer negotiation"
+alignment_requirement = 6
