@@ -52,7 +52,7 @@ func record_run(recap: Dictionary) -> Dictionary:
 		history.pop_front()
 	data["flags"] = flags
 	data["history"] = history
-	var document := save_system.load().data.duplicate(true)
+	var document: Dictionary = save_system.load().data.duplicate(true)
 	document["narrative"] = data.duplicate(true)
 	var saved := save_system.save(document)
 	if not saved.ok:
