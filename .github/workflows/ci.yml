@@ -58,6 +58,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
       - name: Run EncounterFSM tests
         run: godot --headless --path game -s res://tests/test_encounter_fsm.gd 2>&1 | tee "$RUNNER_TEMP/encounter-fsm-test.log"
+      - name: Run encounter variety tests
+        run: godot --headless --path game -s res://tests/test_encounter_variety.gd 2>&1 | tee "$RUNNER_TEMP/encounter-variety-test.log"
       - name: Run SaveSystem tests
         run: godot --headless --path game -s res://tests/test_save_system.gd 2>&1 | tee "$RUNNER_TEMP/save-system-test.log"
       - name: Run RunScreen tests
@@ -99,6 +101,7 @@ jobs:
             ${{ runner.temp }}/lineage-unlocks-test.log
             ${{ runner.temp }}/run-controller-test.log
             ${{ runner.temp }}/encounter-fsm-test.log
+            ${{ runner.temp }}/encounter-variety-test.log
             ${{ runner.temp }}/save-system-test.log
             ${{ runner.temp }}/run-screen-test.log
             ${{ runner.temp }}/archive-screen-test.log
