@@ -14,12 +14,14 @@ var log_label: Label
 var end_button: Button
 var archive_button: Button
 var recap_label: Label
+var narrative_system: NarrativeSystem
 var telemetry_store := TelemetryStore.new()
 
 
 func _ready() -> void:
 	_build_ui()
 	archive_store = ArchiveStore.new()
+	narrative_system = NarrativeSystem.new(archive_store.save_system)
 	mutations = archive_store.eligible_mutations(MutationLibrary.load_all())
 	start_run(int(Time.get_unix_time_from_system()))
 
@@ -133,8 +135,9 @@ func _on_state_changed(_state: GameState) -> void:
 func _on_run_ended(_result: Dictionary) -> void:
 	var recap := RunRecap.from_controller(controller)
 	telemetry_store.record_run(recap)
+	var narrative_result := narrative_system.record_run(recap)
 	status_label.text = ("RUN WON" if recap.won else "RUN ENDED") + " · " + recap.cause
-	recap_label.text = _format_recap(recap)
+	recap_label.text = _format_recap(recap, narrative_result)
 	_render()
 
 
@@ -224,13 +227,19 @@ func _effect_text(mutation: MutationData) -> String:
 
 
 
-func _format_recap(recap: Dictionary) -> String:
+func _format_recap(recap: Dictionary, narrative_result: Dictionary = {}) -> String:
 	var lines: Array[String] = [
 		"RECAP · %s" % ("VICTORY" if recap.won else "DEFEAT"),
 		"Path: " + ", ".join(recap.choices),
 		"Cause: %s · Final integrity: %d" % [recap.cause, recap.final_integrity],
 		"Archive gained: %d" % recap.archive_gained,
 	]
+	if bool(narrative_result.get("ok", false)):
+		var ending := str(narrative_result.get("ending", ""))
+		if not ending.is_empty():
+			lines.append("ENDING · " + ending.to_upper())
+			lines.append(str(narrative_result.get("epilogue", "")))
+		lines.append(str(narrative_result.get("reaction", "")))
 	for change in recap.reputation_changes:
 		lines.append("Reputation · %s %s · %s" % [change.faction, _signed(change.delta), change.reason])
 	for cycle in recap.cycles:

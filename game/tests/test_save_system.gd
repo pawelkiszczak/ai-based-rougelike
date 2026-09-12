@@ -74,7 +74,7 @@ func check_round_trip_and_revision() -> void:
 	expect(loaded.status == "loaded", "current save must load")
 	expect(loaded.data.lineage.archive == 42, "lineage archive must survive round trip")
 	expect(loaded.data.unlocks == ["safety_layer"], "unlock ids must survive round trip")
-	expect(not loaded.data.has("narrative"), "unrecognized prose must not enter structured save")
+	expect(loaded.data.narrative.flags.is_empty() and loaded.data.narrative.history.is_empty(), "structured narrative state defaults without prose")
 	var second := system.save(loaded.data)
 	expect(second.revision == 2, "saving loaded data must increment revision")
 

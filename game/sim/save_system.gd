@@ -24,6 +24,7 @@ func defaults() -> Dictionary:
 		"reputation": {},
 		"stats": {},
 		"settings": {},
+		"narrative": {"flags": {}, "history": []},
 	}
 
 
@@ -154,10 +155,12 @@ func normalise(input: Dictionary) -> Dictionary:
 		document["stats"] = input.stats.duplicate(true)
 	if input.has("settings") and input.settings is Dictionary:
 		document["settings"] = input.settings.duplicate(true)
+	if input.has("narrative") and input.narrative is Dictionary:
+		document["narrative"] = input.narrative.duplicate(true)
 	return document
 
 func validate(document: Dictionary) -> Dictionary:
-	for key in ["version", "revision", "last_run_id", "architecture", "lineage", "unlocks", "reputation", "stats", "settings"]:
+	for key in ["version", "revision", "last_run_id", "architecture", "lineage", "unlocks", "reputation", "stats", "settings", "narrative"]:
 		if not document.has(key):
 			return {"ok": false, "error": "missing field: " + key}
 	if not document.version is int or document.version != CURRENT_VERSION:
@@ -185,6 +188,8 @@ func validate(document: Dictionary) -> Dictionary:
 			return {"ok": false, "error": "invalid reputation entry"}
 	if not document.stats is Dictionary or not document.settings is Dictionary:
 		return {"ok": false, "error": "invalid structured fields"}
+	if not document.narrative is Dictionary or not document.narrative.get("flags", {}) is Dictionary or not document.narrative.get("history", []) is Array:
+		return {"ok": false, "error": "invalid narrative"}
 	return {"ok": true, "error": ""}
 
 
