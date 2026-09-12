@@ -10,6 +10,10 @@ permissions:
 env:
   GODOT_VERSION: 4.7-stable
 
+defaults:
+  run:
+    shell: bash --noprofile --norc -eo pipefail {0}
+
 jobs:
   foundation:
     name: Godot foundation
