@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-label="Enemy archetype icons">
+<rect width="320" height="96" fill="#091122"/>
+<g stroke="#70e1ff" stroke-width="4" fill="#10294a"><path d="M48 16 76 30v28L48 78 20 58V30z"/><path d="m160 16 28 18-10 32-18 14-18-14-10-32z"/><path d="M244 16h40l16 24-16 40h-40l-16-40z"/></g>
+<g fill="#ffb86b"><path d="M48 28 61 48 48 65 35 48z"/><circle cx="160" cy="43" r="9"/><path d="m244 40 14-10 14 10-14 10z"/></g>
+<path d="M30 69h36M144 68h32M238 70h52" stroke="#d2e5ff" stroke-width="3"/>
+</svg>

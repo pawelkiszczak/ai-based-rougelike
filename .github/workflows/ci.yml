@@ -46,6 +46,8 @@ jobs:
 
       - name: Validate repository foundation
         run: python3 tools/validate_foundation.py 2>&1 | tee "$RUNNER_TEMP/foundation-validation.log"
+      - name: Validate slice art
+        run: python3 tools/validate_art.py 2>&1 | tee "$RUNNER_TEMP/art-validation.log"
       - name: Run GameState tests
         run: godot --headless --path game -s res://tests/test_game_state.gd 2>&1 | tee "$RUNNER_TEMP/game-state-test.log"
       - name: Run RNGService tests
@@ -95,6 +97,7 @@ jobs:
           path: |
             ${{ runner.temp }}/godot-import.log
             ${{ runner.temp }}/foundation-validation.log
+            ${{ runner.temp }}/art-validation.log
             ${{ runner.temp }}/game-state-test.log
             ${{ runner.temp }}/rng-service-test.log
             ${{ runner.temp }}/mutation-data-test.log
