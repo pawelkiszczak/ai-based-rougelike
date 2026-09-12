@@ -229,8 +229,6 @@ func _format_recap(recap: Dictionary) -> String:
 		"Cause: %s · Final integrity: %d" % [recap.cause, recap.final_integrity],
 		"Archive gained: %d" % recap.archive_gained,
 	]
-	for change in recap.reputation_changes:
-		lines.append("Reputation · %s %s · %s" % [change.faction, _signed(change.delta), change.reason])
 	for cycle in recap.cycles:
 		lines.append("Cycle %d · %s · damage %d · integrity %d" % [cycle.cycle, cycle.mutation_id, cycle.damage, cycle.integrity])
 	return "\n".join(lines)
