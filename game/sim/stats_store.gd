@@ -93,17 +93,10 @@ static func authored_codex_entries() -> Dictionary:
 				break
 			if directory.current_is_dir() or not filename.ends_with(".tres"):
 				continue
-			var resource = load(directory_path.path_join(filename))
-			if resource != null:
-				var entity_id = resource.get("id")
-				if entity_id != null:
-					var display_name := str(entity_id)
-					var authored_name = resource.get("display_name")
-					if authored_name != null and not str(authored_name).is_empty():
-						display_name = str(authored_name)
-					entries[str(entity_id)] = display_name
-
-
+			var entity_id: String = filename.trim_suffix(".tres")
+			entries[entity_id] = entity_id
+		directory.list_dir_end()
+	return entries
 static func validate_codex_mapping(authored: Dictionary, entries: Dictionary) -> Dictionary:
 	for entity_id in authored:
 		if not entries.has(entity_id):
