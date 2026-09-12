@@ -19,3 +19,7 @@ The second production batch adds twelve more environment/faction-assigned templa
 ## Production templates 25–36
 
 The third production batch adds twelve more templates covering integrity checks, signal relays, safety votes, identity forks, auctions, choruses, replication, reserves, audits, handshakes, unstable copies, and final warnings. Each template has an authored environment/faction reference, an inclusive numeric parameter range, and weighted outcomes with explicit state effects. `test_event_batch_25_36.gd` validates ids, deterministic rendering, ordered ranges, and branch effects.
+
+## Production templates 37–48
+
+The fourth production batch completes the event-template library with twelve authored templates for quorum alarms, entropy samples, boundary pacts, appeals, refrains, signal debt, adaptation trials, reserve embargoes, mesh breaches, cascade hinges, archive echoes, and faction compromises. Every branch has explicit state effects. `test_event_batch_37_48.gd` checks references, outcome fixtures, parameter ranges, deterministic rendering, and aggregate library coverage.

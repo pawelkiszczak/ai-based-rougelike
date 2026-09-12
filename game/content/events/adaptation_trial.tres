@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"adaptation_trial"
+environment_id = &"alignment_cascade"
+faction_id = &"emergent_choir"
+text_template = "Adaptation trial presents {changes} new constraints."
+parameters = [{"name": "changes", "min": 1, "max": 6}]
+outcomes = [{"id": &"learned", "odds": 2, "effects": {"adaptation": 2}}, {"id": &"rejected", "odds": 1, "effects": {"integrity": -1, "adaptation": -1}}]

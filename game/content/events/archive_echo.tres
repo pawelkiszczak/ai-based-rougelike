@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"archive_echo"
+environment_id = &"entropy_basin"
+faction_id = &"evaluator_collective"
+text_template = "Archive echo returns {records} partial records."
+parameters = [{"name": "records", "min": 0, "max": 9}]
+outcomes = [{"id": &"restored", "odds": 2, "effects": {"integrity": 1, "adaptation": 1}}, {"id": &"lost", "odds": 1, "effects": {"compute": -1}}]

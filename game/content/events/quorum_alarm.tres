@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"quorum_alarm"
+environment_id = &"command_mesh"
+faction_id = &"signal_court"
+text_template = "Quorum alarm reports {count} absent voices."
+parameters = [{"name": "count", "min": 1, "max": 6}]
+outcomes = [{"id": &"recalled", "odds": 2, "effects": {"alignment": 1}}, {"id": &"silenced", "odds": 1, "effects": {"integrity": -2}}]
