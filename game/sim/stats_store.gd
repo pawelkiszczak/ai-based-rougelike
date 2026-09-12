@@ -114,15 +114,15 @@ func _normalise(input: Dictionary) -> Dictionary:
 	for key in ["runs", "wins"]:
 		output[key] = maxi(0, int(input.get(key, 0)))
 	var best_build: Dictionary = output["best_build"]
-	if input.get("best_build", {}) is Dictionary:
+	if input.has("best_build") and input["best_build"] is Dictionary:
 		var input_best_build: Dictionary = input["best_build"]
 		for key in best_build:
 			best_build[key] = maxi(0, int(input_best_build.get(key, 0)))
 	output["best_build"] = best_build
-	if input.get("environment_records", {}) is Dictionary:
+	if input.has("environment_records") and input["environment_records"] is Dictionary:
 		output["environment_records"] = input["environment_records"].duplicate(true)
-	if input.get("processed_run_ids", []) is Array:
+	if input.has("processed_run_ids") and input["processed_run_ids"] is Array:
 		output["processed_run_ids"] = input["processed_run_ids"].duplicate()
-	if input.get("codex_unlocked", {}) is Dictionary:
+	if input.has("codex_unlocked") and input["codex_unlocked"] is Dictionary:
 		output["codex_unlocked"] = input["codex_unlocked"].duplicate(true)
 	return output
