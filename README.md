@@ -10,6 +10,10 @@ An offline, deterministic roguelite about evolving a machine intelligence throug
 - `tools/` — development and validation tools
 - `autoresearch.sh` — root-level deterministic research harness
 
+## Design
+
+Read the [design pillars](docs/design/pillars.md) before changing scope or simulation rules.
+
 ## Development
 
 Use the Godot version pinned in `docs/TOOLCHAIN.md`. The first production milestone ports the prototype's simulation loop into `game/`.
