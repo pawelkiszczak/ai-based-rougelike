@@ -61,7 +61,7 @@ jobs:
       - name: Run SaveSystem tests
         run: godot --headless --path game -s res://tests/test_save_system.gd 2>&1 | tee "$RUNNER_TEMP/save-system-test.log"
       - name: Run RunScreen tests
-        run: godot --headless --path game -s res://tests/test_run_screen.gd 2>&1 | tee "$RUNNER_TEMP/run-screen-test.log"
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_run_screen.gd 2>&1 | tee "$RUNNER_TEMP/run-screen-test.log"
       - name: Run ArchiveScreen tests
         run: godot --headless --path game -s res://tests/test_archive_screen.gd 2>&1 | tee "$RUNNER_TEMP/archive-screen-test.log"
       - name: Run RunRecap tests
