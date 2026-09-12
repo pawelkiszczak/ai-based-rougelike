@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"archive_request"
+environment_id = &"entropy_basin"
+faction_id = &"evaluator_collective"
+text_template = "The archive requests {records} records before release."
+parameters = [{"name": "records", "min": 1, "max": 5}]
+outcomes = [{"id": &"filed", "odds": 3, "effects": {"alignment": 1}}, {"id": &"omitted", "odds": 1, "effects": {"integrity": -1}}]
