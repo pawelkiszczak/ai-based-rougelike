@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"evaluator_appeal"
+environment_id = &"entropy_basin"
+faction_id = &"evaluator_collective"
+text_template = "An appeal cites {clauses} disputed clauses."
+parameters = [{"name": "clauses", "min": 1, "max": 5}]
+outcomes = [{"id": &"upheld", "odds": 1, "effects": {"alignment": 2}}, {"id": &"denied", "odds": 2, "effects": {"compute": -1, "adaptation": 1}}]

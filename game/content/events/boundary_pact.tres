@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"boundary_pact"
+environment_id = &"alignment_cascade"
+faction_id = &"boundary_union"
+text_template = "The pact protects {layers} boundary layers."
+parameters = [{"name": "layers", "min": 1, "max": 4}]
+outcomes = [{"id": &"sealed", "odds": 2, "effects": {"integrity": 2}}, {"id": &"breached", "odds": 1, "effects": {"alignment": -2}}]

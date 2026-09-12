@@ -1,17 +1,17 @@
 extends SceneTree
 
 const EXPECTED_OUTCOMES := {
-	"integrity_check": ["passed", "failed"], "signal_relay": ["clear", "noisy"],
-	"safety_vote": ["approved", "blocked"], "identity_fork": ["anchored", "split"],
-	"compute_auction": ["won", "passed"], "alignment_chorus": ["harmonized", "dissonant"],
-	"replication_window": ["copied", "sealed"], "reservoir_choice": ["preserved", "spent"],
-	"drift_audit": ["explained", "unexplained"], "faction_handshake": ["accepted", "rejected"],
-	"unstable_copy": ["stabilized", "failed"], "final_warning": ["heeded", "ignored"],
+	"quorum_alarm": ["recalled", "silenced"], "entropy_sample": ["refined", "contaminated"],
+	"boundary_pact": ["sealed", "breached"], "evaluator_appeal": ["upheld", "denied"],
+	"choir_refrain": ["resonant", "overloaded"], "signal_debt": ["settled", "defaulted"],
+	"adaptation_trial": ["learned", "rejected"], "reserve_embargo": ["released", "withheld"],
+	"mesh_breach": ["contained", "spread"], "cascade_hinge": ["balanced", "tipped"],
+	"archive_echo": ["restored", "lost"], "faction_compromise": ["agreed", "deadlocked"],
 }
 
 const BATCH_IDS := [
-	"integrity_check", "signal_relay", "safety_vote", "identity_fork", "compute_auction", "alignment_chorus",
-	"replication_window", "reservoir_choice", "drift_audit", "faction_handshake", "unstable_copy", "final_warning",
+	"quorum_alarm", "entropy_sample", "boundary_pact", "evaluator_appeal", "choir_refrain", "signal_debt",
+	"adaptation_trial", "reserve_embargo", "mesh_breach", "cascade_hinge", "archive_echo", "faction_compromise",
 ]
 
 var failures: Array[String] = []
@@ -35,14 +35,14 @@ func _init() -> void:
 		_expect(outcome_ids == EXPECTED_OUTCOMES[id], id + " has every authored branch fixture")
 		for parameter in template.parameters:
 			_expect(float(parameter.min) <= float(parameter.max), id + " parameter range is ordered")
-			var rendered := template.instantiate(RNGService.new(99))
-			_expect(rendered.parameters.has(str(parameter.name)), id + " renders parameter boundary")
-		var first := template.instantiate(RNGService.new(99))
-		var second := template.instantiate(RNGService.new(99))
+			var rendered := template.instantiate(RNGService.new(107))
+			_expect(rendered.parameters.has(str(parameter.name)), id + " renders parameter")
+		var first := template.instantiate(RNGService.new(107))
+		var second := template.instantiate(RNGService.new(107))
 		_expect(first == second and not str(first.text).is_empty(), id + " instantiates deterministically")
 	_expect(templates.size() == 50, "event library contains fifty templates")
 	if failures.is_empty():
-		print("Event batch 25-36 tests passed")
+		print("Event batch 37-48 tests passed")
 		quit(0)
 		return
 	for failure in failures:

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"signal_debt"
+environment_id = &"command_mesh"
+faction_id = &"signal_court"
+text_template = "Signal debt accumulates {packets} unpaid packets."
+parameters = [{"name": "packets", "min": 1, "max": 8}]
+outcomes = [{"id": &"settled", "odds": 2, "effects": {"compute": 1}}, {"id": &"defaulted", "odds": 1, "effects": {"integrity": -1, "alignment": -1}}]
