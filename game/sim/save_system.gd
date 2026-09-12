@@ -124,16 +124,15 @@ func normalise(input: Dictionary) -> Dictionary:
 	if input.has("lineage") and input.lineage is Dictionary:
 		var lineage: Dictionary = document["lineage"]
 		for key in ["archive", "runs", "wins"]:
-			if input.lineage.has(key) and input.lineage[key] is int:
-				lineage[key] = maxi(0, input.lineage[key])
+			if input.lineage.has(key) and (input.lineage[key] is int or input.lineage[key] is float):
+				lineage[key] = maxi(0, int(input.lineage[key]))
 		document["lineage"] = lineage
 	if input.has("unlocks") and input.unlocks is Array:
-		document.unlocks = input.unlocks.duplicate()
+		document["unlocks"] = input.unlocks.duplicate()
 	if input.has("stats") and input.stats is Dictionary:
-		document.stats = input.stats.duplicate(true)
+		document["stats"] = input.stats.duplicate(true)
 	if input.has("settings") and input.settings is Dictionary:
-		document.settings = input.settings.duplicate(true)
-	return document
+		document["settings"] = input.settings.duplicate(true)
 
 
 func validate(document: Dictionary) -> Dictionary:
