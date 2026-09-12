@@ -10,6 +10,8 @@ func _init() -> void:
 
 
 func _run() -> void:
+	var watchdog := create_timer(15.0)
+	watchdog.timeout.connect(_on_watchdog_timeout)
 	_cleanup()
 	var seed_save := SaveSystem.new(SAVE_PATH)
 	var seed_data := seed_save.defaults()
@@ -56,6 +58,12 @@ func _run() -> void:
 
 
 
+
+
+
+func _on_watchdog_timeout() -> void:
+	push_error("ArchiveScreen test watchdog expired")
+	quit(2)
 
 func _cleanup() -> void:
 	for path in [SAVE_PATH, SAVE_PATH + ".tmp", "user://archive-screen-poor.json", "user://archive-screen-poor.json.tmp"]:
