@@ -7,6 +7,7 @@ const RUN_LOG_LIMIT := 8
 var controller: RunController
 var archive_store: ArchiveStore
 var mutations: Array[MutationData] = []
+var choice_container: HBoxContainer
 var stats_labels: Dictionary = {}
 var status_label: Label
 var log_label: Label
