@@ -153,6 +153,8 @@ func normalise(input: Dictionary) -> Dictionary:
 		document["reputation"] = input.reputation.duplicate(true)
 	if input.has("stats") and input.stats is Dictionary:
 		document["stats"] = input.stats.duplicate(true)
+	if input.has("settings") and input.settings is Dictionary:
+		document["settings"] = input.settings.duplicate(true)
 	if input.has("narrative") and input.narrative is Dictionary:
 		document["narrative"] = input.narrative.duplicate(true)
 	return document
