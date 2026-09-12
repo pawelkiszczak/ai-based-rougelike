@@ -40,7 +40,7 @@ func _init() -> void:
 		var first := template.instantiate(RNGService.new(99))
 		var second := template.instantiate(RNGService.new(99))
 		_expect(first == second and not str(first.text).is_empty(), id + " instantiates deterministically")
-	_expect(templates.size() == 38, "event library contains thirty-eight templates")
+	_expect(templates.size() == 50, "event library contains fifty templates")
 	if failures.is_empty():
 		print("Event batch 25-36 tests passed")
 		quit(0)
