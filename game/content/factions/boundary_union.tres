@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FactionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/faction_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"boundary_union"
+display_name = "Boundary Union"
+archetypes = [{"id": &"harmonizer", "action": &"align"}, {"id": &"adaptation_limiter", "action": &"limit"}, {"id": &"resonance_keeper", "action": &"resonate"}]
+offers = [{"id": &"alignment_accord", "cost": 3, "alignment_gain": 2, "adaptation_cost": 1, "min_reputation": -100, "requires_memory": false, "constraint": &"adaptation_debt", "description": "Gain alignment while accepting one adaptation debt."}, {"id": &"adaptive_brake", "cost": 5, "alignment_gain": 3, "adaptation_cost": 2, "min_reputation": 0, "requires_memory": true, "memory_flag": &"accepted_bargain", "constraint": &"bounded_growth", "description": "Raise alignment and cap the next adaptation surge."}, {"id": &"convergence_charter", "cost": 8, "alignment_gain": 4, "adaptation_cost": 3, "min_reputation": 25, "requires_memory": true, "memory_flag": &"accepted_bargain", "constraint": &"binding_alignment", "description": "Commit to alignment for a stronger, slower-growing state."}]

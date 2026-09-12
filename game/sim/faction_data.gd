@@ -51,6 +51,27 @@ func telegraph(archetype_id: StringName, state: GameState) -> Dictionary:
 				"pressure": 4 + floori(state.alignment / 3.0),
 				"reason": "punishes unexplained behavior",
 			}
+		&"harmonizer":
+			return {
+				"archetype_id": archetype_id,
+				"action": "align",
+				"pressure": 2 + floori(state.adaptation / 4.0),
+				"reason": "rewards alignment while constraining adaptation",
+			}
+		&"adaptation_limiter":
+			return {
+				"archetype_id": archetype_id,
+				"action": "limit",
+				"pressure": 3 + floori(state.adaptation / 2.0),
+				"reason": "limits adaptation to protect alignment",
+			}
+		&"resonance_keeper":
+			return {
+				"archetype_id": archetype_id,
+				"action": "resonate",
+				"pressure": 4 + floori(state.alignment / 3.0),
+				"reason": "turns alignment into a binding constraint",
+			}
 	return {"archetype_id": archetype_id, "action": "unknown", "pressure": 0, "reason": "unknown archetype"}
 
 
