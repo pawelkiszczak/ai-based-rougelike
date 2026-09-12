@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"coherence_kernel"
+display_name = "Coherence kernel"
+text = "Hold identity through stress. Counterplay: trade adaptation for alignment."
+category = &"identity"
+adaptation = -3
+compute = 1
+alignment = 4
+integrity = 4
+guard = 2

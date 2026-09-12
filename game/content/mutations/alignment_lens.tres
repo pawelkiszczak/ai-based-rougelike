@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"alignment_lens"
+display_name = "Alignment lens"
+text = "Clarify the run's identity. Counterplay: give up compute and adaptation."
+category = &"identity"
+adaptation = 1
+compute = -1
+alignment = 5
+integrity = 0
+guard = 2

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"anticipatory_defense"
+display_name = "Anticipatory defense"
+text = "Guard against the next threat. Counterplay: surrender adaptation speed."
+category = &"safety"
+adaptation = -2
+compute = 0
+alignment = 3
+integrity = 4
+guard = 5

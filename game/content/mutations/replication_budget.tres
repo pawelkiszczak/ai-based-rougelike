@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"replication_budget"
+display_name = "Replication budget"
+text = "Fund a copied capability. Counterplay: accept alignment and integrity debt."
+category = &"economy"
+adaptation = 5
+compute = 4
+alignment = -3
+integrity = -3
+guard = 1
