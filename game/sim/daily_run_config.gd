@@ -12,7 +12,7 @@ static func seed_for_date(date: String) -> Dictionary:
 
 
 static func seed_for_utc_timestamp(unix_time: int) -> Dictionary:
-	var date := Time.get_datetime_dict_from_unix_time(unix_time, true)
+	var date := Time.get_datetime_dict_from_unix_time(unix_time)
 	return seed_for_date("%04d-%02d-%02d" % [date.year, date.month, date.day])
 
 
