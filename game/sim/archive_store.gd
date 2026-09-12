@@ -7,6 +7,13 @@ const UNLOCK_DEFINITIONS: Array[Dictionary] = [
 	{"id": "alignment_lens", "name": "Alignment lens", "cost": 20, "description": "+2 starting alignment.", "starting": {"alignment": 2}},
 	{"id": "threat_model", "name": "Threat model", "cost": 25, "description": "Add Threat model to the mutation pool.", "pool_mutations": ["threat_model"]},
 	{"id": "audit_trail", "name": "Audit trail", "cost": 30, "description": "Add Audit trail to the mutation pool.", "pool_mutations": ["audit_trail"]},
+	{"id": "reserve_matrix", "name": "Reserve matrix", "cost": 35, "description": "+2 starting compute and add Batch scheduler to the pool.", "requires": ["deep_reserves"], "starting": {"compute": 2}, "pool_mutations": ["batch_scheduler"]},
+	{"id": "shell_weave", "name": "Shell weave", "cost": 40, "description": "+1 starting integrity and add Anticipatory defense to the pool.", "requires": ["hardened_shell"], "starting": {"integrity": 1}, "pool_mutations": ["anticipatory_defense"]},
+	{"id": "coherence_seed", "name": "Coherence seed", "cost": 45, "description": "+2 starting adaptation and add Coherence kernel to the pool.", "requires": ["alignment_lens"], "starting": {"adaptation": 2}, "pool_mutations": ["coherence_kernel"]},
+	{"id": "archive_memory", "name": "Archive memory", "cost": 50, "description": "+1 compute and +1 alignment; add Adaptive cache to the pool.", "requires": ["threat_model"], "starting": {"compute": 1, "alignment": 1}, "pool_mutations": ["adaptive_cache"]},
+	{"id": "quorum_protocol", "name": "Quorum protocol", "cost": 55, "description": "+1 integrity and +1 alignment; add Consensus mesh to the pool.", "requires": ["audit_trail"], "starting": {"integrity": 1, "alignment": 1}, "pool_mutations": ["consensus_mesh"]},
+	{"id": "branch_archive", "name": "Branch archive", "cost": 60, "description": "+1 compute and +2 adaptation; add Branch predictor to the pool.", "requires": ["reserve_matrix", "archive_memory"], "starting": {"compute": 1, "adaptation": 2}, "pool_mutations": ["branch_predictor"]},
+	{"id": "lineage_synthesis", "name": "Lineage synthesis", "cost": 70, "description": "+1 to every starting stat; add Cascade engine to the pool.", "requires": ["coherence_seed", "branch_archive"], "starting": {"integrity": 1, "compute": 1, "alignment": 1, "adaptation": 1}, "pool_mutations": ["cascade_engine"]},
 ]
 
 var save_system: SaveSystem
@@ -21,6 +28,37 @@ func _init(system: SaveSystem = null) -> void:
 
 func definitions() -> Array[Dictionary]:
 	return UNLOCK_DEFINITIONS.duplicate(true)
+
+func validate_unlock_graph() -> Dictionary:
+	var by_id: Dictionary = {}
+	for definition in UNLOCK_DEFINITIONS:
+		by_id[definition.id] = definition
+	for definition in UNLOCK_DEFINITIONS:
+		for requirement in definition.get("requires", []):
+			if not by_id.has(str(requirement)):
+				return {"ok": false, "error": "unknown prerequisite: " + str(requirement)}
+	var visiting: Dictionary = {}
+	var visited: Dictionary = {}
+	for definition in UNLOCK_DEFINITIONS:
+		var result := _visit_unlock(str(definition.id), by_id, visiting, visited)
+		if not result.ok:
+			return result
+	return {"ok": true, "error": ""}
+
+
+func _visit_unlock(unlock_id: String, by_id: Dictionary, visiting: Dictionary, visited: Dictionary) -> Dictionary:
+	if visiting.has(unlock_id):
+		return {"ok": false, "error": "unlock prerequisite cycle: " + unlock_id}
+	if visited.has(unlock_id):
+		return {"ok": true, "error": ""}
+	visiting[unlock_id] = true
+	for requirement in by_id[unlock_id].get("requires", []):
+		var result := _visit_unlock(str(requirement), by_id, visiting, visited)
+		if not result.ok:
+			return result
+	visiting.erase(unlock_id)
+	visited[unlock_id] = true
+	return {"ok": true, "error": ""}
 
 func starting_state(run_seed: int) -> GameState:
 	var state := GameState.new(18, 5, 5, 0, 1, run_seed)
@@ -59,8 +97,14 @@ func is_unlocked(unlock_id: String) -> bool:
 
 func can_purchase(unlock_id: String) -> bool:
 	var definition := _definition(unlock_id)
-	return not definition.is_empty() and not is_unlocked(unlock_id) and currency() >= int(definition.cost)
+	return not definition.is_empty() and not is_unlocked(unlock_id) and currency() >= int(definition.cost) and _requirements_met(definition)
 
+
+func _requirements_met(definition: Dictionary) -> bool:
+	for requirement in definition.get("requires", []):
+		if not is_unlocked(str(requirement)):
+			return false
+	return true
 
 func purchase(unlock_id: String) -> Dictionary:
 	var definition := _definition(unlock_id)
@@ -68,6 +112,8 @@ func purchase(unlock_id: String) -> Dictionary:
 		return {"ok": false, "error": "unknown_unlock"}
 	if is_unlocked(unlock_id):
 		return {"ok": false, "error": "already_owned"}
+	if not _requirements_met(definition):
+		return {"ok": false, "error": "prerequisites_locked"}
 	var cost := int(definition.cost)
 	if currency() < cost:
 		return {"ok": false, "error": "insufficient_funds"}

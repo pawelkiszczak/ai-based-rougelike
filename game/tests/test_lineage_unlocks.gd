@@ -14,41 +14,50 @@ func _init() -> void:
 func _run() -> void:
 	_cleanup()
 	var save := SaveSystem.new(SAVE_PATH)
-	var data := save.defaults()
 	var lineage: Dictionary = data["lineage"]
-	lineage["archive"] = 100
+	lineage["archive"] = 1000
 	data["lineage"] = lineage
 	var seed_result := save.save(data)
 	_expect(seed_result.ok, "unlock fixture save succeeds")
 	var store := ArchiveStore.new(save)
-	_expect(store.definitions().size() == 5, "five vertical-slice unlocks are authored")
-	_expect(store.definitions()[0].cost < store.definitions()[1].cost, "unlock costs are tiered")
+	_expect(store.definitions().size() == 12, "twelve lineage unlocks are authored")
+	_expect(store.validate_unlock_graph().ok, "unlock prerequisite graph is acyclic and resolvable")
+	_expect(store.definitions()[0].cost < store.definitions()[5].cost, "unlock costs are tiered")
+	_expect(not store.can_purchase("branch_archive"), "dependent unlock stays locked before prerequisites")
 
 	var baseline := store.starting_state(301)
-	_expect(baseline.compute == 5 and baseline.integrity == 18 and baseline.alignment == 5, "unlocked effects do not alter baseline state")
+	_expect(baseline.compute == 5 and baseline.integrity == 18 and baseline.alignment == 5 and baseline.adaptation == 0, "unlocked effects do not alter baseline state")
 	var all_mutations := MutationLibrary.load_all()
 	var locked_pool := store.eligible_mutations(all_mutations)
-	_expect(not _has_mutation(locked_pool, "threat_model"), "unowned pool mutation is ineligible")
-	_expect(not _has_mutation(locked_pool, "audit_trail"), "second unowned pool mutation is ineligible")
+	for mutation_id in ["batch_scheduler", "anticipatory_defense", "coherence_kernel", "adaptive_cache", "consensus_mesh", "branch_predictor", "cascade_engine"]:
+		_expect(not _has_mutation(locked_pool, mutation_id), "unowned pool mutation is ineligible: " + mutation_id)
 
 	_purchase(store, "deep_reserves", "deep reserves purchase succeeds")
 	_purchase(store, "hardened_shell", "hardened shell purchase succeeds")
 	_purchase(store, "alignment_lens", "alignment lens purchase succeeds")
 	_purchase(store, "threat_model", "threat model pool unlock succeeds")
 	_purchase(store, "audit_trail", "audit trail pool unlock succeeds")
+	_purchase(store, "reserve_matrix", "reserve matrix purchase succeeds")
+	_purchase(store, "shell_weave", "shell weave purchase succeeds")
+	_purchase(store, "coherence_seed", "coherence seed purchase succeeds")
+	_purchase(store, "archive_memory", "archive memory purchase succeeds")
+	_purchase(store, "quorum_protocol", "quorum protocol purchase succeeds")
+	_purchase(store, "branch_archive", "branch archive purchase succeeds")
+	_purchase(store, "lineage_synthesis", "lineage synthesis purchase succeeds")
 
 	var upgraded := store.starting_state(302)
-	_expect(upgraded.compute == 7, "deep reserves applies exact starting compute")
-	_expect(upgraded.integrity == 21, "hardened shell applies exact starting integrity")
-	_expect(upgraded.alignment == 7, "alignment lens applies exact starting alignment")
+	_expect(upgraded.compute == 12, "lineage unlocks apply exact starting compute")
+	_expect(upgraded.integrity == 25, "lineage unlocks apply exact starting integrity")
+	_expect(upgraded.alignment == 10, "lineage unlocks apply exact starting alignment")
+	_expect(upgraded.adaptation == 5, "lineage unlocks apply exact starting adaptation")
 	var upgraded_pool := store.eligible_mutations(all_mutations)
-	_expect(_has_mutation(upgraded_pool, "threat_model"), "purchased threat model enters subsequent pool")
-	_expect(_has_mutation(upgraded_pool, "audit_trail"), "purchased audit trail enters subsequent pool")
+	for mutation_id in ["threat_model", "audit_trail", "batch_scheduler", "anticipatory_defense", "coherence_kernel", "adaptive_cache", "consensus_mesh", "branch_predictor", "cascade_engine"]:
+		_expect(_has_mutation(upgraded_pool, mutation_id), "purchased pool mutation enters subsequent pool: " + mutation_id)
 
 	var reloaded := ArchiveStore.new(SaveSystem.new(SAVE_PATH))
-	_expect(reloaded.is_unlocked("alignment_lens"), "stat unlock persists through save/load")
-	_expect(reloaded.is_unlocked("threat_model"), "pool unlock persists through save/load")
-	_expect(reloaded.starting_state(303).compute == 7, "persisted stat unlock affects next initialized run")
+	_expect(reloaded.is_unlocked("lineage_synthesis"), "final unlock persists through save/load")
+	_expect(reloaded.starting_state(303).adaptation == 5, "persisted unlock affects next initialized run")
+	_expect(reloaded.purchase("lineage_synthesis").error == "already_owned", "double purchase is rejected")
 
 	var poor_path := "user://lineage-unlocks-poor.json"
 	var poor_save := SaveSystem.new(poor_path)
