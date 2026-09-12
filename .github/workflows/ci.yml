@@ -70,6 +70,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_architecture_selection.gd 2>&1 | tee "$RUNNER_TEMP/architecture-selection-test.log"
       - name: Run license manifest tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_license_manifest.gd 2>&1 | tee "$RUNNER_TEMP/license-manifest-test.log"
+      - name: Run build metadata tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_build_metadata.gd 2>&1 | tee "$RUNNER_TEMP/build-metadata-test.log"
       - name: Run RunController tests
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
       - name: Run EncounterFSM tests
@@ -158,6 +160,7 @@ jobs:
             ${{ runner.temp }}/mutation-data-test.log
             ${{ runner.temp }}/lineage-unlocks-test.log
             ${{ runner.temp }}/license-manifest-test.log
+            ${{ runner.temp }}/build-metadata-test.log
             ${{ runner.temp }}/architecture-selection-test.log
             ${{ runner.temp }}/run-controller-test.log
             ${{ runner.temp }}/encounter-fsm-test.log
@@ -192,3 +195,85 @@ jobs:
             ${{ runner.temp }}/harness-b.log
             ${{ runner.temp }}/harness-malformed.log
           if-no-files-found: ignore
+  exports:
+    name: Release exports
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install pinned Godot editor and templates
+        shell: bash
+        env:
+          GODOT_VERSION: 4.7-stable
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/godot.zip"
+          install_dir="$RUNNER_TEMP/godot"
+          mkdir -p "$install_dir"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip" \
+            --output "$archive"
+          unzip -q "$archive" -d "$install_dir"
+          mv "$install_dir/Godot_v${GODOT_VERSION}_linux.x86_64" "$install_dir/godot"
+          chmod +x "$install_dir/godot"
+          echo "$install_dir" >> "$GITHUB_PATH"
+          templates_archive="$RUNNER_TEMP/godot-templates.tpz"
+          templates_dir="$HOME/.local/share/godot/export_templates/4.7.stable"
+          mkdir -p "$templates_dir"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz" \
+            --output "$templates_archive"
+          unzip -q "$templates_archive" -d "$RUNNER_TEMP/godot-templates"
+          cp -R "$RUNNER_TEMP/godot-templates/templates/." "$templates_dir/"
+          godot --version
+
+      - name: Generate build metadata
+        shell: bash
+        env:
+          VERSION: 0.1.0
+          CHANNEL: ci
+        run: |
+          set -euo pipefail
+          commit_timestamp="$(git show -s --format=%cI "$GITHUB_SHA")"
+          python3 - "$GITHUB_SHA" "$commit_timestamp" "$VERSION" "$CHANNEL" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          commit, timestamp, version, channel = sys.argv[1:]
+          Path("game/build_metadata.json").write_text(json.dumps({
+              "version": version,
+              "source_commit": commit,
+              "build_timestamp": timestamp,
+              "channel": channel,
+          }, indent=2) + "\n", encoding="utf-8")
+          PY
+          python3 tools/validate_build_metadata.py
+
+      - name: Export Linux and Windows packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$RUNNER_TEMP/exports"
+          mkdir -p "$output/linux" "$output/windows"
+          godot --headless --path game --export-release Linux "$output/linux/emergence-protocol"
+          godot --headless --path game --export-release Windows "$output/windows/emergence-protocol.exe"
+          cp game/build_metadata.json "$output/linux/build_metadata.json"
+          cp game/build_metadata.json "$output/windows/build_metadata.json"
+          python3 tools/validate_build_metadata.py game/build_metadata.json
+          python3 tools/validate_build_metadata.py "$output/linux/build_metadata.json"
+          python3 tools/validate_build_metadata.py "$output/windows/build_metadata.json"
+          test -x "$output/linux/emergence-protocol"
+          test -f "$output/windows/emergence-protocol.exe"
+          timeout 15 "$output/linux/emergence-protocol" --headless --quit-after 1
+          (cd "$output/linux" && zip -q -r ../emergence-protocol-linux-x86_64.zip .)
+          (cd "$output/windows" && zip -q -r ../emergence-protocol-windows-x86_64.zip .)
+          (cd "$output" && sha256sum emergence-protocol-linux-x86_64.zip > emergence-protocol-linux-x86_64.zip.sha256 && sha256sum emergence-protocol-windows-x86_64.zip > emergence-protocol-windows-x86_64.zip.sha256)
+
+      - name: Upload release exports
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-exports
+          path: |
+            ${{ runner.temp }}/exports/*.zip
+            ${{ runner.temp }}/exports/*.sha256
