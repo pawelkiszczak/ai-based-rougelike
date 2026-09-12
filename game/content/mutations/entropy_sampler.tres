@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"entropy_sampler"
+display_name = "Entropy sampler"
+text = "Sample unstable futures. Counterplay: accept identity drift."
+category = &"identity"
+adaptation = 4
+compute = 0
+alignment = -4
+integrity = 2
+guard = 2

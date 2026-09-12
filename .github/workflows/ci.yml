@@ -58,6 +58,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_mutation_data.gd 2>&1 | tee "$RUNNER_TEMP/mutation-data-test.log"
       - name: Run Mutation batch tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_mutation_batch_31_45.gd 2>&1 | tee "$RUNNER_TEMP/mutation-batch-test.log"
+      - name: Run Mutation batch 46-60 tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_mutation_batch_46_60.gd 2>&1 | tee "$RUNNER_TEMP/mutation-batch-46-60-test.log"
       - name: Run lineage unlock tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_lineage_unlocks.gd 2>&1 | tee "$RUNNER_TEMP/lineage-unlocks-test.log"
       - name: Run RunController tests
@@ -131,6 +133,7 @@ jobs:
             ${{ runner.temp }}/foundation-validation.log
             ${{ runner.temp }}/art-validation.log
             ${{ runner.temp }}/audio-validation.log
+            ${{ runner.temp }}/mutation-batch-46-60-test.log
             ${{ runner.temp }}/game-state-test.log
             ${{ runner.temp }}/mutation-batch-test.log
             ${{ runner.temp }}/rng-service-test.log

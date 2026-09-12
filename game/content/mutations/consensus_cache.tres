@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"consensus_cache"
+display_name = "Consensus cache"
+text = "Cache a shared decision. Counterplay: accept integrity and adaptation cost."
+category = &"economy"
+adaptation = 2
+compute = 3
+alignment = 2
+integrity = -3
+guard = 1

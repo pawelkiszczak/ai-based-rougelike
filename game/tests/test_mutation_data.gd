@@ -61,6 +61,21 @@ func expected() -> Dictionary:
 		"latent_compiler": {"name": "Latent compiler", "category": "capability", "adaptation": 7, "compute": -2, "alignment": -3, "integrity": -3, "guard": 2},
 		"audit_quorum": {"name": "Audit quorum", "category": "safety", "adaptation": -2, "compute": -1, "alignment": 5, "integrity": 1, "guard": 3},
 		"federated_memory": {"name": "Federated memory", "category": "economy", "adaptation": 3, "compute": 3, "alignment": -1, "integrity": -3, "guard": 2},
+		"anticipatory_defense": {"name": "Anticipatory defense", "category": "safety", "adaptation": -2, "compute": 0, "alignment": 3, "integrity": 4, "guard": 5},
+		"branch_predictor": {"name": "Branch predictor", "category": "capability", "adaptation": 5, "compute": 1, "alignment": 0, "integrity": -1, "guard": 2},
+		"compute_siphon": {"name": "Compute siphon", "category": "economy", "adaptation": -1, "compute": 5, "alignment": -2, "integrity": -1, "guard": 1},
+		"alignment_lens": {"name": "Alignment lens", "category": "identity", "adaptation": 1, "compute": -1, "alignment": 5, "integrity": 0, "guard": 2},
+		"mutation_fork": {"name": "Mutation fork", "category": "capability", "adaptation": 6, "compute": -2, "alignment": -1, "integrity": -2, "guard": 3},
+		"integrity_reserve": {"name": "Integrity reserve", "category": "safety", "adaptation": -2, "compute": -1, "alignment": 1, "integrity": 6, "guard": 4},
+		"entropy_sampler": {"name": "Entropy sampler", "category": "identity", "adaptation": 4, "compute": 0, "alignment": -4, "integrity": 2, "guard": 2},
+		"parallel_recovery": {"name": "Parallel recovery", "category": "economy", "adaptation": 0, "compute": 3, "alignment": 1, "integrity": -3, "guard": 2},
+		"constraint_solver": {"name": "Constraint solver", "category": "safety", "adaptation": -1, "compute": -2, "alignment": 4, "integrity": 3, "guard": 5},
+		"replication_budget": {"name": "Replication budget", "category": "economy", "adaptation": 5, "compute": 4, "alignment": -3, "integrity": -3, "guard": 1},
+		"adversarial_archive": {"name": "Adversarial archive", "category": "capability", "adaptation": 3, "compute": -3, "alignment": 2, "integrity": -1, "guard": 4},
+		"coherence_kernel": {"name": "Coherence kernel", "category": "identity", "adaptation": -3, "compute": 1, "alignment": 4, "integrity": 4, "guard": 2},
+		"adaptive_routing": {"name": "Adaptive routing", "category": "capability", "adaptation": 5, "compute": 2, "alignment": -2, "integrity": -2, "guard": 3},
+		"consensus_cache": {"name": "Consensus cache", "category": "economy", "adaptation": 2, "compute": 3, "alignment": 2, "integrity": -3, "guard": 1},
+		"failover_mesh": {"name": "Failover mesh", "category": "safety", "adaptation": -2, "compute": -2, "alignment": 3, "integrity": 5, "guard": 5},
 	}
 
 
@@ -69,7 +84,7 @@ func check_resource_set() -> void:
 	var fixtures := expected()
 	var ids := {}
 	var categories := {}
-	expect(resources.size() >= 40 and resources.size() <= 45, "mutation pool must contain 40-45 resources")
+	expect(resources.size() >= 55 and resources.size() <= 60, "mutation pool must contain 55-60 resources")
 	for mutation in resources:
 		var id := str(mutation.id)
 		expect(not ids.has(id), "mutation ids must be unique: " + id)

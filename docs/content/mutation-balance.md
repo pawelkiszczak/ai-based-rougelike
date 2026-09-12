@@ -28,3 +28,15 @@ These pairs are replay fixtures, not claims that the pair is universally optimal
 | Parallel probe + Embodied model | `(3, +3, -1, +3)` | Broad probing gains an identity anchor for a compute cost. |
 
 The fixture table is deliberately state-independent. Route-specific balance still requires later playtest evidence; random appearance counts do not define correctness.
+
+## Batch 46–60
+
+The second production batch extends the same full-vector dominance assumptions. Its curated fixtures are checked by `test_mutation_batch_46_60.gd`:
+
+| Pair | Expected vector `(adaptation, compute, alignment, integrity)` | Interaction |
+|---|---:|---|
+| Anticipatory defense + Branch predictor | `(3, +1, +3, +3)` | Defensive forecasting trades adaptation for a safer branch. |
+| Compute siphon + Alignment lens | `(0, +4, +3, -1)` | Reserve harvesting funds a clearer identity at integrity cost. |
+| Mutation fork + Integrity reserve | `(4, -3, 0, +4)` | Replication momentum is buffered by a compute-heavy reserve. |
+| Entropy sampler + Parallel recovery | `(4, +3, -3, -1)` | Future sampling and parallel recovery expose identity and integrity. |
+| Constraint solver + Replication budget | `(4, +2, +1, 0)` | Safety boundaries support replication without a free positive vector. |

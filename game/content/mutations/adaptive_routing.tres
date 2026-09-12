@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"adaptive_routing"
+display_name = "Adaptive routing"
+text = "Reroute around a live threat. Counterplay: lose alignment and integrity."
+category = &"capability"
+adaptation = 5
+compute = 2
+alignment = -2
+integrity = -2
+guard = 3

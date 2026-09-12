@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"failover_mesh"
+display_name = "Failover mesh"
+text = "Route around a failing branch. Counterplay: pay compute and adaptation."
+category = &"safety"
+adaptation = -2
+compute = -2
+alignment = 3
+integrity = 5
+guard = 5
