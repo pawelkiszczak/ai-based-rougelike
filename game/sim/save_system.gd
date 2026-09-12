@@ -49,7 +49,7 @@ func load() -> Dictionary:
 			"message": "This save was created by a newer version and was not changed.",
 		}
 
-	var migrated := parsed.duplicate(true)
+	var migrated: Dictionary = parsed.duplicate(true)
 	var migrated_from := int(migrated.version)
 	if migrated_from < CURRENT_VERSION:
 		migrated = migrate(migrated, migrated_from)
