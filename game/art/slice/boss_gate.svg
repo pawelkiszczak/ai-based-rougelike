@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 128" role="img" aria-label="Command Mesh Gate boss">
+<rect width="320" height="128" fill="#091122"/>
+<path d="M40 104V32h48l32 24 32-24h48v72h-48l-32-24-32 24z" fill="#10294a" stroke="#70e1ff" stroke-width="4"/>
+<path d="M160 56 184 80l-24 24-24-24z" fill="#e86161" stroke="#ffb86b" stroke-width="4"/>
+<path d="M224 32h48M224 48h64M224 64h36M224 80h56M224 96h44" stroke="#d2e5ff" stroke-width="4"/>
+</svg>

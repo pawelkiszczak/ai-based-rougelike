@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" role="img" aria-label="Mutation category icons">
+<rect width="320" height="64" fill="#091122"/>
+<g fill="#70e1ff" stroke="#10294a" stroke-width="3">
+<path d="M32 12 52 32 32 52 12 32Z"/><path d="m96 12 20 20-20 20-20-20Z"/><path d="M144 16h32v32h-32z"/><path d="m224 12 18 8 8 18-8 18-18 8-18-8-8-18 8-18z"/>
+</g><g fill="#ffb86b"><circle cx="32" cy="32" r="7"/><path d="m96 22 7 10-7 10-7-10z"/><path d="m160 23 10 9-10 9-10-9z"/><path d="m224 22 10 10-10 10-10-10z"/></g>
+</svg>

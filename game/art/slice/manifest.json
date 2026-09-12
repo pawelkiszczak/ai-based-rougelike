@@ -1,0 +1,10 @@
+{
+  "palette": ["#091122", "#10294a", "#1a4d64", "#70e1ff", "#d2e5ff", "#ffb86b", "#e86161"],
+  "assets": {
+    "mutation_categories": "mutation_categories.svg",
+    "archetypes": "archetypes.svg",
+    "boss_gate": "boss_gate.svg",
+    "environment_frame": "environment_frame.svg",
+    "archive_recap": "archive_recap.svg"
+  }
+}
