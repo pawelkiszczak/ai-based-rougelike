@@ -66,6 +66,12 @@ func check_damage_range() -> void:
 	expect(info.min == 0, "golden telegraph minimum must match pressure range")
 	expect(info.max == 1, "golden telegraph maximum must match pressure range")
 	expect(info.resolved_damage == 0, "golden telegraph resolved damage must match controller")
+	var boundary_controller := controller_for(GameState.new(18, 5, 0, 0, 1, 83))
+	var boundary_mutation := mutation("res://content/mutations/recursive_self_improvement.tres")
+	var boundary_info := boundary_controller.damage_range(boundary_controller.state, boundary_mutation)
+	var boundary_result := boundary_controller.choose(boundary_mutation)
+	expect(boundary_info.defense == 5, "telegraph must clamp negative alignment before defense")
+	expect(boundary_result.defense == boundary_info.defense, "telegraph defense must equal resolved defense at alignment floor")
 
 
 func check_telegraph_property() -> void:

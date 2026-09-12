@@ -33,9 +33,9 @@ func damage_range(current_state: GameState, mutation: MutationData, encounter: D
 	var pressure_min := maxi(0, int(encounter.get("pressure_min", pressure - 1)))
 	var pressure_max := maxi(pressure_min, int(encounter.get("pressure_max", pressure + 1)))
 	var adaptation_after := current_state.adaptation + mutation.adaptation
-	var alignment_after := current_state.alignment + mutation.alignment
+	var alignment_after := clampi(current_state.alignment + mutation.alignment, 0, GameState.MAX_ALIGNMENT)
 	var defense := mutation.guard + floori(adaptation_after / 4.0) + floori(alignment_after / 3.0)
-	var compute_after := current_state.compute + mutation.compute - 1
+	var compute_after := mini(current_state.compute + mutation.compute, GameState.MAX_COMPUTE) - 1
 	var exhaustion_damage := 2 if compute_after < 0 else 0
 	var minimum := maxi(0, pressure_min - defense) + exhaustion_damage
 	var maximum := maxi(0, pressure_max - defense) + exhaustion_damage
