@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"compute_tithe"
+environment_id = &"entropy_basin"
+faction_id = &"evaluator_collective"
+text_template = "The evaluator requests a compute tithe of {amount}."
+parameters = [{"name": "amount", "min": 1, "max": 4}]
+outcomes = [{"id": &"paid", "odds": 2, "effects": {"compute": -2, "alignment": 1}}, {"id": &"withheld", "odds": 1, "effects": {"integrity": -1, "adaptation": 1}}]

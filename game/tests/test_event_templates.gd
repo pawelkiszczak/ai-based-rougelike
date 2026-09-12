@@ -5,7 +5,7 @@ var failures: Array[String] = []
 
 func _init() -> void:
 	var templates := EventTemplateLibrary.load_all()
-	_expect(templates.size() == 2, "all authored event templates load")
+	_expect(templates.size() == 14, "all authored event templates load")
 	_expect(EventTemplateLibrary.validate_all(templates).ok, "authored event templates pass validation")
 	for template in templates:
 		var first := template.instantiate(RNGService.new(41))

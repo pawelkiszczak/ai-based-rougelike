@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"late_signal"
+environment_id = &"command_mesh"
+faction_id = &"signal_court"
+text_template = "A late signal arrives after {delay} cycles."
+parameters = [{"name": "delay", "min": 1, "max": 4}]
+outcomes = [{"id": &"decoded", "odds": 3, "effects": {"compute": 1}}, {"id": &"lost", "odds": 1, "effects": {"alignment": -1}}]
