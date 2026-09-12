@@ -65,15 +65,14 @@ func load() -> Dictionary:
 	var migrated_from := int(migrated.version)
 	if migrated_from < CURRENT_VERSION:
 		migrated = migrate(migrated, migrated_from)
-	if not migrated.has("architecture"):
-		migrated["architecture"] = "default"
+	migrated = _with_defaults(migrated)
 	var validation := validate(migrated)
 	if not validation.ok:
 		return recover_corrupt(validation.error)
 	_save_locked = false
 	return {
 		"status": "migrated" if migrated_from < CURRENT_VERSION else "loaded",
-		"data": normalise(migrated),
+		"data": normalise(migrated, false),
 		"message": "",
 	}
 
@@ -131,12 +130,20 @@ func migrate(document: Dictionary, from_version: int) -> Dictionary:
 	return migrated
 
 
-func normalise(input: Dictionary) -> Dictionary:
+func _with_defaults(input: Dictionary) -> Dictionary:
+	var document := defaults()
+	for key in document:
+		if input.has(key):
+			document[key] = input[key]
+	return document
+
+
+func normalise(input: Dictionary, increment_revision := true) -> Dictionary:
 	var document := defaults()
 	if input.has("revision") and input.revision is int:
-		document.revision = maxi(0, input.revision) + 1
+		document.revision = maxi(0, input.revision) + (1 if increment_revision else 0)
 	else:
-		document.revision = 1
+		document.revision = 1 if increment_revision else 0
 	if input.has("last_run_id") and input.last_run_id is String:
 		document.last_run_id = input.last_run_id
 	if input.has("architecture") and input.architecture is String:
