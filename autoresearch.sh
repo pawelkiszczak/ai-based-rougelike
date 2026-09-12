@@ -42,7 +42,7 @@ def evolve(seed):
             child = parent[:]
             index = rng.randrange(GENOME_SIZE)
             child[index] = (child[index] + rng.choice((-4, -3, -2, -1, 1, 2, 3, 4))) % 17
-            if rng.random() < 0.75:
+            if rng.random() < 1.00:
                 second = rng.randrange(GENOME_SIZE)
                 child[second] = (child[second] + rng.choice((-4, -3, -2, -1, 1, 2, 3, 4))) % 17
             if rng.random() < 0.20:
