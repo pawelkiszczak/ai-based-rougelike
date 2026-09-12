@@ -6,6 +6,7 @@ const RUN_LOG_LIMIT := 8
 
 var controller: RunController
 var archive_store: ArchiveStore
+var accessibility_settings := AccessibilitySettings.new()
 var mutations: Array[MutationData] = []
 var choice_container: HBoxContainer
 var stats_labels: Dictionary = {}
@@ -19,11 +20,14 @@ var telemetry_store := TelemetryStore.new()
 
 
 func _ready() -> void:
-	_build_ui()
 	archive_store = ArchiveStore.new()
+	accessibility_settings.load(archive_store.save_system)
+	_build_ui()
+	accessibility_settings.apply_text_scale(self)
 	narrative_system = NarrativeSystem.new(archive_store.save_system)
 	mutations = archive_store.eligible_mutations(MutationLibrary.load_all())
 	start_run(int(Time.get_unix_time_from_system()))
+
 
 
 func _build_ui() -> void:
@@ -191,6 +195,7 @@ func _render_choices() -> void:
 		choice_container.add_child(button)
 		controls.append(button)
 	ControllerNavigation.configure_row(controls)
+	accessibility_settings.apply_text_scale(choice_container)
 
 
 func _render_log() -> void:

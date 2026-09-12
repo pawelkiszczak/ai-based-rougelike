@@ -3,16 +3,21 @@ extends Control
 
 var save_path := SaveSystem.DEFAULT_PATH
 var store: ArchiveStore
+var accessibility_settings := AccessibilitySettings.new()
 var currency_label: Label
 var status_label: Label
 var status_message := ""
 var architecture_buttons: Array[Button] = []
 var back_button: Button
 
+var unlock_buttons: Array[Button] = []
+
 
 func _ready() -> void:
 	store = ArchiveStore.new(SaveSystem.new(save_path))
+	accessibility_settings.load(store.save_system)
 	_build_ui()
+	accessibility_settings.apply_text_scale(self)
 	_render()
 
 

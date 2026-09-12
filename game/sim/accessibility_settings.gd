@@ -55,3 +55,19 @@ func load(save_system: SaveSystem) -> void:
 	for action in ACTIONS:
 		if saved_bindings.has(action):
 			remap_action(action, str(saved_bindings[action]))
+
+
+func apply_text_scale(root: Control) -> void:
+	_apply_text_scale(root)
+
+
+func _apply_text_scale(control: Control) -> void:
+	if control is Label or control is Button:
+		var base_size: int = int(control.get_meta("accessibility_base_font_size", 0))
+		if base_size <= 0:
+			base_size = control.get_theme_font_size("font_size")
+			control.set_meta("accessibility_base_font_size", base_size)
+		control.add_theme_font_size_override("font_size", maxi(1, roundi(base_size * text_scale())))
+	for child in control.get_children():
+		if child is Control:
+			_apply_text_scale(child)
