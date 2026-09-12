@@ -20,8 +20,10 @@ def main() -> int:
         "docs/design/pillars.md",
         "game/project.godot",
         "game/scenes/main.tscn",
-        "prototype/index.html",
+        "game/scenes/run.tscn",
+        "game/ui/run_screen.gd",
         "tools/validate_foundation.py",
+        "prototype/index.html",
     )
     for relative in required_files:
         if not (ROOT / relative).is_file():
@@ -43,7 +45,7 @@ def main() -> int:
     project = (ROOT / "game/project.godot").read_text(encoding="utf-8")
     required_project_values = (
         'config/name="Emergence Protocol"',
-        'run/main_scene="res://scenes/main.tscn"',
+        'run/main_scene="res://scenes/run.tscn"',
         "[display]\nwindow/size/viewport_width=640",
         "window/size/viewport_height=360",
         'renderer/rendering_method="gl_compatibility"',
