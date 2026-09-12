@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"entropy_valve"
+display_name = "Entropy valve"
+text = "Release unstable pressure. Counterplay: lose alignment for adaptation."
+category = &"identity"
+adaptation = 5
+compute = 0
+alignment = -4
+integrity = 3
+guard = 2

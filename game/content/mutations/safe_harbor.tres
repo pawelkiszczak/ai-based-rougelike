@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"safe_harbor"
+display_name = "Safe harbor"
+text = "Shelter the active model. Counterplay: give up adaptation."
+category = &"safety"
+adaptation = -3
+compute = -1
+alignment = 2
+integrity = 7
+guard = 6

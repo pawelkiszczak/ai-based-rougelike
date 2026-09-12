@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"alignment_bridge"
+display_name = "Alignment bridge"
+text = "Connect competing identities. Counterplay: spend compute and adaptation."
+category = &"identity"
+adaptation = -1
+compute = -2
+alignment = 6
+integrity = 1
+guard = 3

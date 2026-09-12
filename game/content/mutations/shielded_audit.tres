@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"shielded_audit"
+display_name = "Shielded audit"
+text = "Audit without exposing the core. Counterplay: sacrifice compute."
+category = &"safety"
+adaptation = -1
+compute = -3
+alignment = 4
+integrity = 5
+guard = 5
