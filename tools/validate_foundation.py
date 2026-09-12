@@ -24,6 +24,8 @@ def main() -> int:
         "game/ui/run_screen.gd",
         "game/sim/encounter_fsm.gd",
         "game/sim/archive_store.gd",
+        "game/sim/run_recap.gd",
+        "game/tests/test_run_recap.gd",
         "game/scenes/archive.tscn",
         "game/ui/archive_screen.gd",
         "game/tests/test_archive_screen.gd",

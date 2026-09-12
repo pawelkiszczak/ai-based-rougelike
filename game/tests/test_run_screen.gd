@@ -33,6 +33,8 @@ func _run() -> void:
 	_expect(screen.controller.ended, "successive choices reach a terminal state")
 	_expect(screen.end_button.visible, "terminal state shows successor action")
 	_expect(screen.choice_container.get_child_count() == 0, "terminal state removes choice cards")
+	_expect(screen.recap_label.text.contains("Path:"), "terminal state renders recap path")
+	_expect(screen.recap_label.text.contains("Archive gained:"), "terminal state renders archive result")
 
 	screen.queue_free()
 	if failures.is_empty():
