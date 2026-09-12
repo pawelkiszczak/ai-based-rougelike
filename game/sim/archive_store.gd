@@ -27,8 +27,11 @@ func starting_state(run_seed: int) -> GameState:
 	for definition in UNLOCK_DEFINITIONS:
 		if not is_unlocked(definition.id):
 			continue
-		for stat in definition.get("starting", {}):
-			state.set(stat, state.get(stat) + int(definition.starting[stat]))
+		var starting: Dictionary = definition.get("starting", {})
+		state.integrity += int(starting.get("integrity", 0))
+		state.compute += int(starting.get("compute", 0))
+		state.alignment += int(starting.get("alignment", 0))
+		state.adaptation += int(starting.get("adaptation", 0))
 	state.clamp_stats()
 	return state
 
