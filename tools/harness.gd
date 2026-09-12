@@ -13,7 +13,7 @@ func _init() -> void:
 
 
 func _run() -> void:
-	var config := _parse_args(OS.get_cmdline_args())
+	var config := _parse_args(OS.get_cmdline_user_args())
 	if not config.ok:
 		_fail(config.error)
 		return
