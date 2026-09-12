@@ -11,6 +11,7 @@ var stats_labels: Dictionary = {}
 var status_label: Label
 var log_label: Label
 var end_button: Button
+var recap_label: Label
 
 
 func _ready() -> void:
@@ -99,6 +100,10 @@ func _build_ui() -> void:
 	log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	log_label.add_theme_color_override("font_color", Color("a3b5d4"))
 	run_box.add_child(log_label)
+	recap_label = Label.new()
+	recap_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	recap_label.add_theme_color_override("font_color", Color("d2e5ff"))
+	run_box.add_child(recap_label)
 
 	end_button = Button.new()
 	end_button.text = "INITIALIZE SUCCESSOR"
@@ -113,6 +118,7 @@ func start_run(run_seed: int) -> void:
 	controller.state_changed.connect(_on_state_changed)
 	controller.run_ended.connect(_on_run_ended)
 	end_button.visible = false
+	recap_label.text = ""
 	_render()
 
 
@@ -121,6 +127,9 @@ func _on_state_changed(_state: GameState) -> void:
 
 
 func _on_run_ended(_result: Dictionary) -> void:
+	var recap := RunRecap.from_controller(controller)
+	status_label.text = ("RUN WON" if recap.won else "RUN ENDED") + " · " + recap.cause
+	recap_label.text = _format_recap(recap)
 	_render()
 
 
@@ -201,6 +210,19 @@ func _effect_text(mutation: MutationData) -> String:
 			effects.append("%s %s" % [item[0], _signed(item[1])])
 	return ", ".join(effects) if not effects.is_empty() else "No stat change"
 
+
+
+
+func _format_recap(recap: Dictionary) -> String:
+	var lines: Array[String] = [
+		"RECAP · %s" % ("VICTORY" if recap.won else "DEFEAT"),
+		"Path: " + ", ".join(recap.choices),
+		"Cause: %s · Final integrity: %d" % [recap.cause, recap.final_integrity],
+		"Archive gained: %d" % recap.archive_gained,
+	]
+	for cycle in recap.cycles:
+		lines.append("Cycle %d · %s · damage %d · integrity %d" % [cycle.cycle, cycle.mutation_id, cycle.damage, cycle.integrity])
+	return "\n".join(lines)
 
 func _telegraph_text(telegraph: Dictionary) -> String:
 	return "Incoming damage %d–%d · %s (%s)" % [telegraph.min, telegraph.max, telegraph.source, telegraph.reason]
