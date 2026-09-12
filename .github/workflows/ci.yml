@@ -53,7 +53,7 @@ jobs:
       - name: Run MutationData tests
         run: godot --headless --path game -s res://tests/test_mutation_data.gd 2>&1 | tee "$RUNNER_TEMP/mutation-data-test.log"
       - name: Run lineage unlock tests
-        run: godot --headless --path game -s res://tests/test_lineage_unlocks.gd 2>&1 | tee "$RUNNER_TEMP/lineage-unlocks-test.log"
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_lineage_unlocks.gd 2>&1 | tee "$RUNNER_TEMP/lineage-unlocks-test.log"
       - name: Run RunController tests
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
       - name: Run EncounterFSM tests
