@@ -196,6 +196,8 @@ func _render_log() -> void:
 	for index in range(first, controller.run_log.size()):
 		var entry: Dictionary = controller.run_log[index]
 		var line := "Cycle %d · %s · damage %d · integrity %d" % [entry.cycle, entry.mutation_id, entry.damage, entry.integrity]
+		if entry.get("pressure_reason", "") != "":
+			line += " · " + str(entry.pressure_reason)
 		if entry.ended:
 			line += " · " + ("WON" if entry.won else "ENDED")
 		entries.append(line)

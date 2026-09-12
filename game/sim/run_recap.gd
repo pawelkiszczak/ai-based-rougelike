@@ -13,6 +13,8 @@ static func from_controller(controller: RunController) -> Dictionary:
 			"cycle": entry.cycle,
 			"mutation_id": entry.mutation_id,
 			"pressure": entry.pressure,
+			"pressure_profile": str(entry.get("pressure_profile", "")),
+			"pressure_reason": str(entry.get("pressure_reason", "")),
 			"damage": entry.damage,
 			"integrity": entry.integrity,
 		})
