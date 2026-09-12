@@ -5,6 +5,7 @@ const DEFAULT_COUNT := 10
 const DEFAULT_OUTPUT := "user://harness-results.json"
 const DEFAULT_MUTATION_DIR := "res://content/mutations"
 const CHOICE_COUNT := 3
+const DEFAULT_EVENT_DIRECTORY := "res://content/events"
 const SCHEMA_VERSION := 1
 
 
@@ -26,6 +27,14 @@ func _run() -> void:
 		if mutation.id == &"" or mutation.display_name.is_empty() or mutation.text.is_empty():
 			_fail("invalid mutation content: " + str(mutation.id))
 			return
+	var event_templates: Array[EventTemplateData] = EventTemplateLibrary.load_all(DEFAULT_EVENT_DIRECTORY, true)
+	if event_templates.is_empty():
+		_fail(EventTemplateLibrary.last_error if not EventTemplateLibrary.last_error.is_empty() else "event template library is empty")
+		return
+	var event_validation := EventTemplateLibrary.validate_all(event_templates)
+	if not event_validation.ok:
+		_fail(event_validation.error)
+		return
 
 	var environment := load("res://content/environments/command_mesh.tres") as EnvironmentData
 	if environment == null:

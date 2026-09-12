@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"threshold_breach"
+text_template = "The threshold shifts by {shift} points before the next choice."
+parameters = [{"name": "shift", "min": -2, "max": 2}]
+outcomes = [{"id": &"contained", "odds": 2, "success": true}, {"id": &"breached", "odds": 2, "success": false}]
