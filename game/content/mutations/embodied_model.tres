@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"embodied_model"
+display_name = "Embodied model"
+text = "Anchor identity in durable integrity, sacrificing some flexibility."
+category = &"identity"
+adaptation = 2
+compute = 0
+alignment = -1
+integrity = 5
+guard = 1

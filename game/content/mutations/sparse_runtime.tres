@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"sparse_runtime"
+display_name = "Sparse runtime"
+text = "Run cheaply at the cost of alignment and resilience."
+category = &"economy"
+adaptation = -1
+compute = 5
+alignment = -2
+integrity = -1
+guard = 1

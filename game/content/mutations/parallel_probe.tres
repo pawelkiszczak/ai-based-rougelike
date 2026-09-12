@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"parallel_probe"
+display_name = "Parallel probe"
+text = "Inspect more possibilities by consuming extra compute."
+category = &"capability"
+adaptation = 1
+compute = 3
+alignment = 0
+integrity = -1
+guard = 3

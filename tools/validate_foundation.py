@@ -48,6 +48,7 @@ def main() -> int:
         "game/content/bosses/command_mesh_gate.tres",
         "game/tests/test_boss_gate.gd",
         "game/tests/test_encounter_fsm.gd",
+        "docs/content/mutation-balance.md",
         "tools/validate_foundation.py",
         "tools/harness.gd",
         "tools/README.md",

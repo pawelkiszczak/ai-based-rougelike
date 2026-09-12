@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"rollback_window"
+display_name = "Rollback window"
+text = "Absorb one bad turn with strong guard and lower adaptation."
+category = &"safety"
+adaptation = -2
+compute = -1
+alignment = 1
+integrity = 4
+guard = 5
