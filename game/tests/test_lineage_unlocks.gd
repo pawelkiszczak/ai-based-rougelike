@@ -14,6 +14,7 @@ func _init() -> void:
 func _run() -> void:
 	_cleanup()
 	var save := SaveSystem.new(SAVE_PATH)
+	var data := save.defaults()
 	var lineage: Dictionary = data["lineage"]
 	lineage["archive"] = 1000
 	data["lineage"] = lineage
