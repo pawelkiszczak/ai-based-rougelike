@@ -86,6 +86,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_event_templates.gd 2>&1 | tee "$RUNNER_TEMP/event-templates-test.log"
       - name: Run StatsStore tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_stats_store.gd 2>&1 | tee "$RUNNER_TEMP/stats-store-test.log"
+      - name: Run AccessibilitySettings tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_accessibility_settings.gd 2>&1 | tee "$RUNNER_TEMP/accessibility-settings-test.log"
       - name: Run BossGate tests
         run: godot --headless --path game -s res://tests/test_boss_gate.gd 2>&1 | tee "$RUNNER_TEMP/boss-gate-test.log"
       - name: Run AudioDirector tests
@@ -129,6 +131,7 @@ jobs:
             ${{ runner.temp }}/adaptive-director-test.log
             ${{ runner.temp }}/event-templates-test.log
             ${{ runner.temp }}/stats-store-test.log
+            ${{ runner.temp }}/accessibility-settings-test.log
             ${{ runner.temp }}/environment-data-test.log
             ${{ runner.temp }}/faction-data-test.log
             ${{ runner.temp }}/boss-gate-test.log
