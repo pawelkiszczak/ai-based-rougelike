@@ -48,6 +48,8 @@ jobs:
         run: python3 tools/validate_foundation.py 2>&1 | tee "$RUNNER_TEMP/foundation-validation.log"
       - name: Validate slice art
         run: python3 tools/validate_art.py 2>&1 | tee "$RUNNER_TEMP/art-validation.log"
+      - name: Validate audio assets
+        run: python3 tools/validate_audio.py 2>&1 | tee "$RUNNER_TEMP/audio-validation.log"
       - name: Run GameState tests
         run: godot --headless --path game -s res://tests/test_game_state.gd 2>&1 | tee "$RUNNER_TEMP/game-state-test.log"
       - name: Run RNGService tests
@@ -78,6 +80,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_faction_data.gd 2>&1 | tee "$RUNNER_TEMP/faction-data-test.log"
       - name: Run BossGate tests
         run: godot --headless --path game -s res://tests/test_boss_gate.gd 2>&1 | tee "$RUNNER_TEMP/boss-gate-test.log"
+      - name: Run AudioDirector tests
+        run: godot --headless --path game -s res://tests/test_audio_director.gd 2>&1 | tee "$RUNNER_TEMP/audio-director-test.log"
       - name: Run deterministic harness
         run: |
           godot --headless --path game -s ../tools/harness.gd -- --seed-base 1000 --count 1000 --output "$RUNNER_TEMP/harness-a.json" 2>&1 | tee "$RUNNER_TEMP/harness-a.log"
@@ -98,6 +102,7 @@ jobs:
             ${{ runner.temp }}/godot-import.log
             ${{ runner.temp }}/foundation-validation.log
             ${{ runner.temp }}/art-validation.log
+            ${{ runner.temp }}/audio-validation.log
             ${{ runner.temp }}/game-state-test.log
             ${{ runner.temp }}/rng-service-test.log
             ${{ runner.temp }}/mutation-data-test.log
@@ -113,6 +118,7 @@ jobs:
             ${{ runner.temp }}/environment-data-test.log
             ${{ runner.temp }}/faction-data-test.log
             ${{ runner.temp }}/boss-gate-test.log
+            ${{ runner.temp }}/audio-director-test.log
             ${{ runner.temp }}/harness-a.log
             ${{ runner.temp }}/harness-b.log
             ${{ runner.temp }}/harness-malformed.log

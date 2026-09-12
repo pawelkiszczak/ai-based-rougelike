@@ -1,0 +1,14 @@
+{
+  "sfx": {
+    "choice": "sfx/choice.wav",
+    "damage": "sfx/damage.wav",
+    "unlock": "sfx/unlock.wav",
+    "win": "sfx/win.wav",
+    "lose": "sfx/lose.wav",
+    "boss_tell": "sfx/boss_tell.wav"
+  },
+  "music": {
+    "environment_loop": "music/environment_loop.wav",
+    "boss_loop": "music/boss_loop.wav"
+  }
+}
