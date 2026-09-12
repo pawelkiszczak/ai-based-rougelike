@@ -27,6 +27,21 @@ func _run() -> void:
 			_fail("invalid mutation content: " + str(mutation.id))
 			return
 
+	var environment := load("res://content/environments/command_mesh.tres") as EnvironmentData
+	if environment == null:
+		_fail("environment resource failed to load: command_mesh")
+		return
+	var environment_validation := environment.validate()
+	if not environment_validation.ok:
+		_fail(environment_validation.error)
+		return
+	for slot in environment.slots:
+		var encounter_path := "res://content/encounters/" + str(slot.encounter_id) + ".tres"
+		var encounter := load(encounter_path) as EncounterData
+		if encounter == null or encounter.kind != slot.kind:
+			_fail("invalid environment encounter reference: " + str(slot.encounter_id))
+			return
+
 	var runs: Array[Dictionary] = []
 	var wins := 0
 	var causes: Dictionary = {}
