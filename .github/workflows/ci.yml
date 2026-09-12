@@ -104,6 +104,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_event_batch_1_12.gd 2>&1 | tee "$RUNNER_TEMP/event-batch-1-12-test.log"
       - name: Run Event batch 13-24 tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_event_batch_13_24.gd 2>&1 | tee "$RUNNER_TEMP/event-batch-13-24-test.log"
+      - name: Run Event batch 25-36 tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_event_batch_25_36.gd 2>&1 | tee "$RUNNER_TEMP/event-batch-25-36-test.log"
       - name: Run StatsStore tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_stats_store.gd 2>&1 | tee "$RUNNER_TEMP/stats-store-test.log"
       - name: Run AccessibilitySettings tests
@@ -153,6 +155,7 @@ jobs:
             ${{ runner.temp }}/run-screen-test.log
             ${{ runner.temp }}/archive-screen-test.log
             ${{ runner.temp }}/run-recap-test.log
+            ${{ runner.temp }}/event-batch-25-36-test.log
             ${{ runner.temp }}/telemetry-store-test.log
             ${{ runner.temp }}/event-batch-13-24-test.log
             ${{ runner.temp }}/faction-reputation-test.log

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"final_warning"
+environment_id = &"command_mesh"
+faction_id = &"signal_court"
+text_template = "The final warning repeats {times} times."
+parameters = [{"name": "times", "min": 1, "max": 3}]
+outcomes = [{"id": &"heeded", "odds": 2, "effects": {"guard": 2}}, {"id": &"ignored", "odds": 1, "effects": {"integrity": -2, "adaptation": 1}}]

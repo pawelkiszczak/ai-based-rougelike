@@ -26,7 +26,7 @@ func _init() -> void:
 			_expect(outcome.has("effects") and not Dictionary(outcome.effects).is_empty(), id + " outcome changes state")
 		for parameter in template.parameters:
 			_expect(float(parameter.min) <= float(parameter.max), id + " parameter range is ordered")
-	_expect(templates.size() == 26, "event library contains twenty-six templates")
+	_expect(templates.size() == 38, "event library contains thirty-eight templates")
 	if failures.is_empty():
 		print("Event batch 13-24 tests passed")
 		quit(0)
