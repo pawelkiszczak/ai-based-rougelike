@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FactionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/faction_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"signal_court"
+display_name = "Signal Court"
+archetypes = [{"id": &"sentinel", "action": &"fortify"}, {"id": &"oracle", "action": &"predict"}, {"id": &"parasite", "action": &"exploit"}]
+offers = [{"id": &"shared_protocol", "cost": 5, "requires_memory": false, "description": "Gain alignment at a compute cost."}, {"id": &"predictive_bargain", "cost": 8, "requires_memory": true, "description": "See one extra intent clue."}, {"id": &"cold_audit", "cost": 12, "requires_memory": true, "description": "Trade integrity for archive."}]
