@@ -70,6 +70,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_environment_data.gd 2>&1 | tee "$RUNNER_TEMP/environment-data-test.log"
       - name: Run FactionData tests
         run: godot --headless --path game -s res://tests/test_faction_data.gd 2>&1 | tee "$RUNNER_TEMP/faction-data-test.log"
+      - name: Run BossGate tests
+        run: godot --headless --path game -s res://tests/test_boss_gate.gd 2>&1 | tee "$RUNNER_TEMP/boss-gate-test.log"
       - name: Run deterministic harness
         run: |
           godot --headless --path game -s ../tools/harness.gd -- --seed-base 1000 --count 1000 --output "$RUNNER_TEMP/harness-a.json" 2>&1 | tee "$RUNNER_TEMP/harness-a.log"
@@ -101,6 +103,7 @@ jobs:
             ${{ runner.temp }}/telemetry-store-test.log
             ${{ runner.temp }}/environment-data-test.log
             ${{ runner.temp }}/faction-data-test.log
+            ${{ runner.temp }}/boss-gate-test.log
             ${{ runner.temp }}/harness-a.log
             ${{ runner.temp }}/harness-b.log
             ${{ runner.temp }}/harness-malformed.log
