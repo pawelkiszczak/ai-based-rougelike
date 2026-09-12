@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FactionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/faction_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"evaluator_collective"
+display_name = "Evaluator Collective"
+archetypes = [{"id": &"auditor", "action": &"audit"}, {"id": &"shield_broker", "action": &"shield"}, {"id": &"drift_watcher", "action": &"constrain"}]
+offers = [{"id": &"safety_layer", "cost": 3, "compute_cost": 3, "safety": 4, "min_reputation": -100, "requires_memory": false, "constraint": &"compute_commitment", "description": "Spend compute for immediate integrity protection."}, {"id": &"interpretability_probe", "cost": 5, "compute_cost": 2, "safety": 6, "min_reputation": 0, "requires_memory": true, "memory_flag": &"accepted_audit", "constraint": &"visible_reasoning", "description": "Trade compute for a safer, inspectable evaluation."}, {"id": &"drift_insurance", "cost": 8, "compute_cost": 4, "safety": 10, "min_reputation": 25, "requires_memory": true, "memory_flag": &"accepted_audit", "constraint": &"no_unexplained_drift", "description": "Commit compute now to prevent short-term safety loss."}]
