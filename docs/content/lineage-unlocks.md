@@ -29,6 +29,6 @@ The archive provides eighteen persistent unlocks. The first five establish the v
 
 ## Alternate architecture
 
-`Unified lineage` unlocks the `Frontier architecture`. The default architecture starts at 18 integrity, 5 compute, 5 alignment, and 0 adaptation. Frontier starts at 16 integrity, 8 compute, 3 alignment, and 2 adaptation: four dimensions differ, trading safety and alignment for planning capacity and adaptation. Its pool bias deterministically moves `adversarial_fuzzing`, `compute_siphon`, and `consent_gate` to the front of the eligible choices without removing any available mutation.
+`Unified lineage` unlocks the `Frontier architecture`. Before owned unlock effects are applied, the default architecture starts at 18 integrity, 5 compute, 5 alignment, and 0 adaptation; Frontier starts at 16 integrity, 8 compute, 3 alignment, and 2 adaptation. The Frontier base differs on four dimensions, trading safety and alignment for planning capacity and adaptation. Owned lineage effects then apply identically to either architecture.
 
 Architecture selection is persisted in the save as `architecture` and is applied to the next initialized run. The archive screen exposes both choices, leaves Frontier disabled until `unified_lineage` is owned, and keeps the selected choice visibly marked.

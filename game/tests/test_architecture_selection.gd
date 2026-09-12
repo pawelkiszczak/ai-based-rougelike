@@ -22,7 +22,7 @@ func _init() -> void:
 	_expect(frontier_store.can_select_architecture("frontier"), "frontier architecture unlocks from unified lineage")
 	_expect(frontier_store.select_architecture("frontier").ok, "frontier architecture selection persists")
 	var frontier_state := frontier_store.starting_state(502)
-	_expect(frontier_state.integrity == 16 and frontier_state.compute == 8 and frontier_state.alignment == 3 and frontier_state.adaptation == 2, "frontier opening differs on four dimensions")
+	_expect(frontier_state.integrity == 17 and frontier_state.compute == 9 and frontier_state.alignment == 4 and frontier_state.adaptation == 3, "frontier opening differs on four dimensions")
 	var pool := frontier_store.eligible_mutations(MutationLibrary.load_all())
 	_expect(str(pool[0].id) == "adversarial_fuzzing" and str(pool[1].id) == "compute_siphon" and str(pool[2].id) == "consent_gate", "frontier pool bias is deterministic")
 
