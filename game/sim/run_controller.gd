@@ -8,15 +8,27 @@ signal run_ended(result: Dictionary)
 
 var state: GameState
 var rng_service: RNGService
+var reputation: FactionReputation
+var reputation_changes: Array[Dictionary] = []
 var run_log: Array[Dictionary] = []
 var ended := false
 var won := false
 
-
-func _init(initial_state: GameState = null, random: RNGService = null) -> void:
+func _init(
+	initial_state: GameState = null,
+	random: RNGService = null,
+	faction_reputation: FactionReputation = null,
+) -> void:
 	state = initial_state if initial_state != null else GameState.new()
 	rng_service = random if random != null else RNGService.new(state.run_seed)
+	reputation = faction_reputation if faction_reputation != null else FactionReputation.new(null, FactionReputation.normalise({}))
 
+
+func apply_faction_choice(choice_id: String) -> Dictionary:
+	var change := reputation.apply_choice(choice_id)
+	if change.ok:
+		reputation_changes.append(change.duplicate(true))
+	return change
 
 func draw_choices(pool: Array[MutationData], count: int = 3) -> Array[MutationData]:
 	if pool.is_empty() or count <= 0:

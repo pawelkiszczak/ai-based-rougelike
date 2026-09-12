@@ -22,6 +22,7 @@ static func from_controller(controller: RunController) -> Dictionary:
 		"run_seed": controller.state.run_seed,
 		"choices": choices,
 		"cycles": cycles,
+		"reputation_changes": controller.reputation_changes.duplicate(true),
 		"won": controller.won,
 		"cause": str(terminal.get("cause", "run_in_progress")),
 		"archive_gained": int(terminal.get("archive_gained", 0)),
