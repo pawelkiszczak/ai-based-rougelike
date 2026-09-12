@@ -23,6 +23,7 @@ func _run() -> void:
 	get_root().add_child(screen)
 	await process_frame
 	_expect(screen.currency_label.text == "Archive: 20", "archive screen renders currency")
+	_expect(screen.unlock_buttons.size() == 5, "archive screen renders five unlock choices")
 	_expect(screen.unlock_buttons[0].focus_mode == Control.FOCUS_ALL, "unlock is keyboard/controller focusable")
 	_expect(not screen.unlock_buttons[0].disabled, "affordable unlock is enabled")
 
