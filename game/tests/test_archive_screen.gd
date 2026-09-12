@@ -11,6 +11,8 @@ func _init() -> void:
 
 func _run() -> void:
 	print("archive: start")
+	var watchdog := create_timer(15.0)
+	watchdog.timeout.connect(_on_watchdog_timeout)
 	_cleanup()
 	var seed_save := SaveSystem.new(SAVE_PATH)
 	var seed_data := seed_save.defaults()
@@ -20,18 +22,17 @@ func _run() -> void:
 
 	var screen := preload("res://scenes/archive.tscn").instantiate() as ArchiveScreen
 	screen.save_path = SAVE_PATH
+	print("archive: before add")
 	get_root().add_child(screen)
-	print("archive: screen added")
 	await process_frame
-	print("archive: first frame")
+	print("archive: after first frame")
 	_expect(screen.currency_label.text == "Archive: 20", "archive screen renders currency")
 	_expect(screen.unlock_buttons[0].focus_mode == Control.FOCUS_ALL, "unlock is keyboard/controller focusable")
 	_expect(not screen.unlock_buttons[0].disabled, "affordable unlock is enabled")
 
 	(screen.unlock_buttons[0] as Button).emit_signal("pressed")
-	print("archive: before purchase")
 	await process_frame
-	print("archive: after purchase frame")
+	print("archive: after purchase")
 	_expect(screen.store.is_unlocked("deep_reserves"), "purchase marks unlock owned")
 	_expect(screen.store.currency() == 10, "purchase deducts exact cost")
 	_expect(screen.unlock_buttons[0].disabled, "owned unlock cannot be purchased twice")
@@ -51,7 +52,6 @@ func _run() -> void:
 	_expect(poor_store.currency() == 0, "currency never falls below zero")
 
 	screen.queue_free()
-	print("archive: before quit")
 	_cleanup()
 	if failures.is_empty():
 		print("ArchiveScreen tests passed")
@@ -60,6 +60,11 @@ func _run() -> void:
 		for failure in failures:
 			push_error(failure)
 		quit(1)
+
+
+func _on_watchdog_timeout() -> void:
+	push_error("ArchiveScreen test watchdog expired")
+	quit(2)
 
 
 func _cleanup() -> void:
