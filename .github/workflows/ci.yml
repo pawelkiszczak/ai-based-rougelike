@@ -114,6 +114,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_faction_reputation.gd 2>&1 | tee "$RUNNER_TEMP/faction-reputation-test.log"
       - name: Run AdaptiveEnemyDirector tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_adaptive_enemy_director.gd 2>&1 | tee "$RUNNER_TEMP/adaptive-director-test.log"
+      - name: Run EnemyArchetype tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_enemy_archetypes.gd 2>&1 | tee "$RUNNER_TEMP/enemy-archetypes-test.log"
       - name: Run event template tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_event_templates.gd 2>&1 | tee "$RUNNER_TEMP/event-templates-test.log"
       - name: Run Event batch 1-12 tests
@@ -183,6 +185,7 @@ jobs:
             ${{ runner.temp }}/run-recap-test.log
             ${{ runner.temp }}/event-batch-25-36-test.log
             ${{ runner.temp }}/telemetry-store-test.log
+            ${{ runner.temp }}/enemy-archetypes-test.log
             ${{ runner.temp }}/event-batch-13-24-test.log
             ${{ runner.temp }}/faction-reputation-test.log
             ${{ runner.temp }}/event-batch-1-12-test.log

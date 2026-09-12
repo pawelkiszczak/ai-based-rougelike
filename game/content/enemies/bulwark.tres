@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyArchetypeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/enemy_archetype_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"bulwark"
+display_name = "Bulwark"
+primitive = &"defend"
+intent = &"fortify"
+telegraph = "Seals its frame and prepares a stronger guard."
+description = "Defends its position and makes direct pressure less efficient."

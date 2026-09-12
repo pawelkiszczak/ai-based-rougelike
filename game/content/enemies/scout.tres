@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyArchetypeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/enemy_archetype_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"scout"
+display_name = "Scout"
+primitive = &"explore"
+intent = &"advance"
+telegraph = "Maps a new pressure route before it strikes."
+description = "Explores the evaluation space and raises pressure when adaptation is low."
