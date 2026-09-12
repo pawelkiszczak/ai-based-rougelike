@@ -21,7 +21,7 @@ func _init() -> void:
 		var mutation: MutationData = by_id[id]
 		_expect(not mutation.text.is_empty() and mutation.text.contains("Counterplay:"), id + " exposes counterplay")
 		_expect(_has_tradeoff(mutation), id + " has a non-dominant effect vector")
-	_expect(resources.size() == 55, "mutation batches expand the pool to fifty-five resources")
+	_expect(resources.size() == 70, "mutation batches expand the pool to seventy resources")
 	_check_combo(by_id, ["adversarial_fuzzing", "invariant_check"], [4, -4, 3, 1])
 	_check_combo(by_id, ["trust_anchor", "mirror_descent"], [1, 0, 0, 4])
 	_check_combo(by_id, ["elastic_scheduler", "rollback_cache"], [-2, 2, 0, 3])
