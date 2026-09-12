@@ -1,0 +1,58 @@
+name: Validation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  GODOT_VERSION: 4.7-stable
+
+jobs:
+  foundation:
+    name: Godot foundation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install pinned Godot editor
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/godot.zip"
+          install_dir="$RUNNER_TEMP/godot"
+          mkdir -p "$install_dir"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip" \
+            --output "$archive"
+          unzip -q "$archive" -d "$install_dir"
+          mv "$install_dir/Godot_v${GODOT_VERSION}_linux.x86_64" "$install_dir/godot"
+          chmod +x "$install_dir/godot"
+          echo "$install_dir" >> "$GITHUB_PATH"
+          export PATH="$install_dir:$PATH"
+          godot --version
+
+      - name: Cache Godot imports
+        uses: actions/cache@v4
+        with:
+          path: game/.godot
+          key: godot-${{ env.GODOT_VERSION }}-${{ runner.os }}-${{ hashFiles('game/project.godot', 'game/**/*.tscn') }}
+
+      - name: Import project headlessly
+        run: godot --headless --path game --editor --quit 2>&1 | tee "$RUNNER_TEMP/godot-import.log"
+
+      - name: Validate repository foundation
+        run: python3 tools/validate_foundation.py 2>&1 | tee "$RUNNER_TEMP/foundation-validation.log"
+
+      - name: Upload validation logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation-validation-logs
+          path: |
+            ${{ runner.temp }}/godot-import.log
+            ${{ runner.temp }}/foundation-validation.log
+          if-no-files-found: ignore
