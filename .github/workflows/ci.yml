@@ -72,6 +72,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_license_manifest.gd 2>&1 | tee "$RUNNER_TEMP/license-manifest-test.log"
       - name: Run build metadata tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_build_metadata.gd 2>&1 | tee "$RUNNER_TEMP/build-metadata-test.log"
+      - name: Run daily run tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_daily_runs.gd 2>&1 | tee "$RUNNER_TEMP/daily-runs-test.log"
       - name: Run RunController tests
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
       - name: Run EncounterFSM tests
@@ -161,6 +163,7 @@ jobs:
             ${{ runner.temp }}/lineage-unlocks-test.log
             ${{ runner.temp }}/license-manifest-test.log
             ${{ runner.temp }}/build-metadata-test.log
+            ${{ runner.temp }}/daily-runs-test.log
             ${{ runner.temp }}/architecture-selection-test.log
             ${{ runner.temp }}/run-controller-test.log
             ${{ runner.temp }}/encounter-fsm-test.log
