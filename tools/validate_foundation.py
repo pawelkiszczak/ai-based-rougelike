@@ -142,6 +142,7 @@ def main() -> int:
         "docs/content/enemy-archetypes.md",
         "docs/performance.md",
         "tools/validate_performance.py",
+        "tools/performance_probe.gd",
         "tools/README.md",
         "prototype/index.html",
     )
