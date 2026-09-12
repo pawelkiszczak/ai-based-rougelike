@@ -15,7 +15,9 @@ func _run() -> void:
 	_cleanup()
 	var seed_save := SaveSystem.new(SAVE_PATH)
 	var seed_data := seed_save.defaults()
-	seed_data.lineage.archive = 20
+	var seed_lineage: Dictionary = seed_data["lineage"]
+	seed_lineage["archive"] = 20
+	seed_data["lineage"] = seed_lineage
 	_expect(seed_save.save(seed_data).ok, "archive fixture save succeeds")
 
 	var screen := preload("res://scenes/archive.tscn").instantiate() as ArchiveScreen
@@ -23,6 +25,7 @@ func _run() -> void:
 	get_root().add_child(screen)
 	await process_frame
 	_expect(screen.currency_label.text == "Archive: 20", "archive screen renders currency")
+	_expect(screen.unlock_buttons.size() == 5, "archive screen renders five unlock choices")
 	_expect(screen.unlock_buttons[0].focus_mode == Control.FOCUS_ALL, "unlock is keyboard/controller focusable")
 	_expect(not screen.unlock_buttons[0].disabled, "affordable unlock is enabled")
 
@@ -40,7 +43,9 @@ func _run() -> void:
 	var poor_path := "user://archive-screen-poor.json"
 	var poor_save := SaveSystem.new(poor_path)
 	var poor_data := poor_save.defaults()
-	poor_data.lineage.archive = 0
+	var poor_lineage: Dictionary = poor_data["lineage"]
+	poor_lineage["archive"] = 0
+	poor_data["lineage"] = poor_lineage
 	poor_save.save(poor_data)
 	var poor_store := ArchiveStore.new(poor_save)
 	_expect(poor_store.purchase("deep_reserves").error == "insufficient_funds", "insufficient funds are rejected")

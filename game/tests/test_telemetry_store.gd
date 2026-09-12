@@ -33,8 +33,10 @@ func _run() -> void:
 
 	var save := SaveSystem.new(SAVE_PATH)
 	var data := save.defaults()
-	data.lineage.archive = 12
-	data.unlocks = ["deep_reserves"]
+	var lineage: Dictionary = data["lineage"]
+	lineage["archive"] = 12
+	data["lineage"] = lineage
+	data["unlocks"] = ["deep_reserves"]
 	_expect(save.save(data).ok, "progression fixture saves")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TELEMETRY_PATH))
 	var loaded := SaveSystem.new(SAVE_PATH).load()

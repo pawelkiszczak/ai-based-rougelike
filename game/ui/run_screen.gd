@@ -5,6 +5,7 @@ const CHOICE_COUNT := 3
 const RUN_LOG_LIMIT := 8
 
 var controller: RunController
+var archive_store: ArchiveStore
 var mutations: Array[MutationData] = []
 var choice_container: HBoxContainer
 var stats_labels: Dictionary = {}
@@ -17,7 +18,8 @@ var telemetry_store := TelemetryStore.new()
 
 func _ready() -> void:
 	_build_ui()
-	mutations = MutationLibrary.load_all()
+	archive_store = ArchiveStore.new()
+	mutations = archive_store.eligible_mutations(MutationLibrary.load_all())
 	start_run(int(Time.get_unix_time_from_system()))
 
 
@@ -114,7 +116,7 @@ func _build_ui() -> void:
 
 
 func start_run(run_seed: int) -> void:
-	var initial_state := GameState.new(18, 5, 5, 0, 1, run_seed)
+	var initial_state := archive_store.starting_state(run_seed)
 	controller = RunController.new(initial_state, RNGService.new(run_seed))
 	controller.state_changed.connect(_on_state_changed)
 	controller.run_ended.connect(_on_run_ended)

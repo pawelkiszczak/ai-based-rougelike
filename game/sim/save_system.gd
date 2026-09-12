@@ -39,8 +39,9 @@ func load() -> Dictionary:
 	var parsed = JSON.parse_string(raw)
 	if not parsed is Dictionary:
 		return recover_corrupt("save is not a JSON object")
-	if not parsed.has("version") or not parsed.version is int:
-		return recover_corrupt("save has no integer version")
+	if not parsed.has("version") or not (parsed.version is int or parsed.version is float):
+		return recover_corrupt("save has no numeric version")
+	parsed["version"] = int(parsed.version)
 	if parsed.version > CURRENT_VERSION:
 		_save_locked = true
 		return {
@@ -49,7 +50,15 @@ func load() -> Dictionary:
 			"message": "This save was created by a newer version and was not changed.",
 		}
 
-	var migrated := parsed.duplicate(true)
+	var migrated: Dictionary = parsed.duplicate(true)
+	if migrated.has("revision") and (migrated.revision is int or migrated.revision is float):
+		migrated["revision"] = int(migrated.revision)
+	if migrated.has("lineage") and migrated.lineage is Dictionary:
+		var migrated_lineage: Dictionary = migrated["lineage"]
+		for key in ["archive", "runs", "wins"]:
+			if migrated_lineage.has(key) and (migrated_lineage[key] is int or migrated_lineage[key] is float):
+				migrated_lineage[key] = int(migrated_lineage[key])
+		migrated["lineage"] = migrated_lineage
 	var migrated_from := int(migrated.version)
 	if migrated_from < CURRENT_VERSION:
 		migrated = migrate(migrated, migrated_from)
@@ -122,15 +131,17 @@ func normalise(input: Dictionary) -> Dictionary:
 	if input.has("last_run_id") and input.last_run_id is String:
 		document.last_run_id = input.last_run_id
 	if input.has("lineage") and input.lineage is Dictionary:
+		var lineage: Dictionary = document["lineage"]
 		for key in ["archive", "runs", "wins"]:
-			if input.lineage.has(key) and input.lineage[key] is int:
-				document.lineage[key] = maxi(0, input.lineage[key])
+			if input.lineage.has(key) and (input.lineage[key] is int or input.lineage[key] is float):
+				lineage[key] = maxi(0, int(input.lineage[key]))
+		document["lineage"] = lineage
 	if input.has("unlocks") and input.unlocks is Array:
-		document.unlocks = input.unlocks.duplicate()
+		document["unlocks"] = input.unlocks.duplicate()
 	if input.has("stats") and input.stats is Dictionary:
-		document.stats = input.stats.duplicate(true)
+		document["stats"] = input.stats.duplicate(true)
 	if input.has("settings") and input.settings is Dictionary:
-		document.settings = input.settings.duplicate(true)
+		document["settings"] = input.settings.duplicate(true)
 	return document
 
 

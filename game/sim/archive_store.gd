@@ -2,9 +2,11 @@ class_name ArchiveStore
 extends RefCounted
 
 const UNLOCK_DEFINITIONS: Array[Dictionary] = [
-	{"id": "deep_reserves", "name": "Deep reserves", "cost": 10, "description": "+2 starting compute."},
-	{"id": "hardened_shell", "name": "Hardened shell", "cost": 15, "description": "+3 starting integrity."},
-	{"id": "audit_memory", "name": "Audit memory", "cost": 20, "description": "Preserve one lineage flag."},
+	{"id": "deep_reserves", "name": "Deep reserves", "cost": 10, "description": "+2 starting compute.", "starting": {"compute": 2}},
+	{"id": "hardened_shell", "name": "Hardened shell", "cost": 15, "description": "+3 starting integrity.", "starting": {"integrity": 3}},
+	{"id": "alignment_lens", "name": "Alignment lens", "cost": 20, "description": "+2 starting alignment.", "starting": {"alignment": 2}},
+	{"id": "threat_model", "name": "Threat model", "cost": 25, "description": "Add Threat model to the mutation pool.", "pool_mutations": ["threat_model"]},
+	{"id": "audit_trail", "name": "Audit trail", "cost": 30, "description": "Add Audit trail to the mutation pool.", "pool_mutations": ["audit_trail"]},
 ]
 
 var save_system: SaveSystem
@@ -19,6 +21,32 @@ func _init(system: SaveSystem = null) -> void:
 
 func definitions() -> Array[Dictionary]:
 	return UNLOCK_DEFINITIONS.duplicate(true)
+
+func starting_state(run_seed: int) -> GameState:
+	var state := GameState.new(18, 5, 5, 0, 1, run_seed)
+	for definition in UNLOCK_DEFINITIONS:
+		if not is_unlocked(definition.id):
+			continue
+		var starting: Dictionary = definition.get("starting", {})
+		state.integrity += int(starting.get("integrity", 0))
+		state.compute += int(starting.get("compute", 0))
+		state.alignment += int(starting.get("alignment", 0))
+		state.adaptation += int(starting.get("adaptation", 0))
+	state.clamp_stats()
+	return state
+
+
+func eligible_mutations(all_mutations: Array[MutationData]) -> Array[MutationData]:
+	var locked_ids := {}
+	for definition in UNLOCK_DEFINITIONS:
+		for mutation_id in definition.get("pool_mutations", []):
+			if not is_unlocked(definition.id):
+				locked_ids[mutation_id] = true
+	var eligible: Array[MutationData] = []
+	for mutation in all_mutations:
+		if not locked_ids.has(str(mutation.id)):
+			eligible.append(mutation)
+	return eligible
 
 
 func currency() -> int:
@@ -45,8 +73,10 @@ func purchase(unlock_id: String) -> Dictionary:
 		return {"ok": false, "error": "insufficient_funds"}
 
 	var next_data := data.duplicate(true)
-	next_data.lineage.archive = currency() - cost
-	next_data.unlocks.append(unlock_id)
+	var lineage: Dictionary = next_data["lineage"]
+	lineage["archive"] = currency() - cost
+	next_data["lineage"] = lineage
+	next_data["unlocks"].append(unlock_id)
 	var saved := save_system.save(next_data)
 	if not saved.ok:
 		return {"ok": false, "error": saved.error}

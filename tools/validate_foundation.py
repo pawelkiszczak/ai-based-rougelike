@@ -49,6 +49,8 @@ def main() -> int:
         "game/tests/test_boss_gate.gd",
         "game/tests/test_encounter_fsm.gd",
         "docs/content/mutation-balance.md",
+        "docs/content/lineage-unlocks.md",
+        "game/tests/test_lineage_unlocks.gd",
         "tools/validate_foundation.py",
         "tools/harness.gd",
         "tools/README.md",
