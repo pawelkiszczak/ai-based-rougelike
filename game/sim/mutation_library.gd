@@ -4,10 +4,15 @@ extends RefCounted
 const RESOURCE_DIR := "res://content/mutations"
 
 
-static func load_all() -> Array[MutationData]:
-	var directory := DirAccess.open(RESOURCE_DIR)
+static var last_error := ""
+
+
+static func load_all(resource_dir: String = RESOURCE_DIR, strict: bool = false) -> Array[MutationData]:
+	last_error = ""
+	var directory := DirAccess.open(resource_dir)
 	if directory == null:
-		push_error("Mutation resource directory is missing: " + RESOURCE_DIR)
+		last_error = "mutation directory is missing: " + resource_dir
+		push_error(last_error)
 		return []
 
 	var paths: Array[String] = []
@@ -24,9 +29,13 @@ static func load_all() -> Array[MutationData]:
 
 	var mutations: Array[MutationData] = []
 	for filename in paths:
-		var mutation: MutationData = load(RESOURCE_DIR + "/" + filename) as MutationData
+		var resource_path := resource_dir + "/" + filename
+		var mutation: MutationData = load(resource_path) as MutationData
 		if mutation == null:
-			push_error("Mutation resource is not MutationData: " + filename)
+			last_error = "invalid mutation resource: " + resource_path
+			push_error(last_error)
+			if strict:
+				return []
 			continue
 		mutations.append(mutation)
 	return mutations

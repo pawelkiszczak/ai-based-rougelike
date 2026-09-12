@@ -23,6 +23,8 @@ def main() -> int:
         "game/scenes/run.tscn",
         "game/ui/run_screen.gd",
         "tools/validate_foundation.py",
+        "tools/harness.gd",
+        "tools/README.md",
         "prototype/index.html",
     )
     for relative in required_files:

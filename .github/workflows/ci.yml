@@ -58,6 +58,15 @@ jobs:
         run: godot --headless --path game -s res://tests/test_save_system.gd 2>&1 | tee "$RUNNER_TEMP/save-system-test.log"
       - name: Run RunScreen tests
         run: godot --headless --path game -s res://tests/test_run_screen.gd 2>&1 | tee "$RUNNER_TEMP/run-screen-test.log"
+      - name: Run deterministic harness
+        run: |
+          godot --headless --path game -s ../tools/harness.gd -- --seed-base 1000 --count 100 --output "$RUNNER_TEMP/harness-a.json" 2>&1 | tee "$RUNNER_TEMP/harness-a.log"
+          godot --headless --path game -s ../tools/harness.gd -- --seed-base 1000 --count 100 --output "$RUNNER_TEMP/harness-b.json" 2>&1 | tee "$RUNNER_TEMP/harness-b.log"
+          cmp "$RUNNER_TEMP/harness-a.json" "$RUNNER_TEMP/harness-b.json"
+          if godot --headless --path game -s ../tools/harness.gd -- --count 1 --mutation-dir res://tests/fixtures --output "$RUNNER_TEMP/harness-malformed.json" > "$RUNNER_TEMP/harness-malformed.log" 2>&1; then
+            echo "Malformed mutation fixture unexpectedly succeeded" >&2
+            exit 1
+          fi
 
       - name: Upload validation logs
         if: ${{ always() }}
@@ -73,4 +82,7 @@ jobs:
             ${{ runner.temp }}/run-controller-test.log
             ${{ runner.temp }}/save-system-test.log
             ${{ runner.temp }}/run-screen-test.log
+            ${{ runner.temp }}/harness-a.log
+            ${{ runner.temp }}/harness-b.log
+            ${{ runner.temp }}/harness-malformed.log
           if-no-files-found: ignore
