@@ -17,6 +17,7 @@ def main() -> int:
         "README.md",
         "autoresearch.sh",
         "docs/TOOLCHAIN.md",
+        "docs/design/pillars.md",
         "game/project.godot",
         "game/scenes/main.tscn",
         "prototype/index.html",
@@ -34,6 +35,10 @@ def main() -> int:
     toolchain = (ROOT / "docs/TOOLCHAIN.md").read_text(encoding="utf-8")
     if "Godot 4.7-stable" not in toolchain:
         failures.append("toolchain must pin Godot 4.7-stable")
+    pillars = (ROOT / "docs/design/pillars.md").read_text(encoding="utf-8")
+    for heading in ("## Player fantasy", "## Core loop", "## Win and loss", "## Non-goals for this iteration"):
+        if heading not in pillars:
+            failures.append(f"design pillars missing: {heading}")
 
     project = (ROOT / "game/project.godot").read_text(encoding="utf-8")
     required_project_values = (
