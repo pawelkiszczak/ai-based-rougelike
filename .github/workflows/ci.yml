@@ -78,6 +78,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_environment_data.gd 2>&1 | tee "$RUNNER_TEMP/environment-data-test.log"
       - name: Run Environment two tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_environment_two.gd 2>&1 | tee "$RUNNER_TEMP/environment-two-test.log"
+      - name: Run Environment three tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_environment_three.gd 2>&1 | tee "$RUNNER_TEMP/environment-three-test.log"
       - name: Run FactionData tests
         run: godot --headless --path game -s res://tests/test_faction_data.gd 2>&1 | tee "$RUNNER_TEMP/faction-data-test.log"
       - name: Run FactionReputation tests
@@ -141,6 +143,7 @@ jobs:
             ${{ runner.temp }}/boss-gate-test.log
             ${{ runner.temp }}/boss-two-test.log
             ${{ runner.temp }}/audio-director-test.log
+            ${{ runner.temp }}/environment-three-test.log
             ${{ runner.temp }}/controller-navigation-test.log
             ${{ runner.temp }}/environment-two-test.log
             ${{ runner.temp }}/harness-a.log

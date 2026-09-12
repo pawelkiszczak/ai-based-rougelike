@@ -28,14 +28,22 @@ func validate() -> Dictionary:
 	return {"ok": true, "error": ""}
 
 func mechanic_preview(state: GameState) -> Dictionary:
+	var pressure_modifier := 0
 	if mechanic_id == &"compute_scarcity":
-		var pressure_modifier := 2 if state.compute <= 2 else 0
+		pressure_modifier = 2 if state.compute <= 2 else 0
 		return {
 			"id": mechanic_id,
 			"pressure_modifier": pressure_modifier,
 			"reason": "low compute increases pressure" if pressure_modifier > 0 else "compute reserves keep pressure stable",
 		}
-	return {"id": mechanic_id, "pressure_modifier": 0, "reason": mechanic_description}
+	if mechanic_id == &"alignment_pressure":
+		pressure_modifier = 2 if state.alignment >= 8 else 0
+		return {
+			"id": mechanic_id,
+			"pressure_modifier": pressure_modifier,
+			"reason": "high alignment attracts pressure; choose restraint" if pressure_modifier > 0 else "alignment remains below the pressure threshold",
+		}
+	return {"id": mechanic_id, "pressure_modifier": pressure_modifier, "reason": mechanic_description}
 
 
 func draw_slot(random: RNGService) -> Dictionary:
