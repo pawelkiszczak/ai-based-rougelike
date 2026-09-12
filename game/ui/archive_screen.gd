@@ -5,7 +5,7 @@ var save_path := SaveSystem.DEFAULT_PATH
 var store: ArchiveStore
 var currency_label: Label
 var status_label: Label
-var unlock_buttons: Array[Button] = []
+var status_message := ""
 
 
 func _ready() -> void:
@@ -79,12 +79,15 @@ func _render() -> void:
 		else:
 			button.text = "%s · %d archive · LOCKED\n%s" % [definition.name, definition.cost, definition.description]
 			button.disabled = true
-	status_label.text = "Select an affordable unlock." if store.currency() > 0 else "Complete runs to earn archive."
+	if status_message.is_empty():
+		status_label.text = "Select an affordable unlock." if store.currency() > 0 else "Complete runs to earn archive."
+	else:
+		status_label.text = status_message
 
 
 func _on_purchase(unlock_id: String) -> void:
 	var result := store.purchase(unlock_id)
-	status_label.text = "Unlocked." if result.ok else "Purchase rejected: " + result.error
+	status_message = "Unlocked." if result.ok else "Purchase rejected: " + result.error
 	_render()
 
 
