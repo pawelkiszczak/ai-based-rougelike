@@ -96,6 +96,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_boss_gate.gd 2>&1 | tee "$RUNNER_TEMP/boss-gate-test.log"
       - name: Run AudioDirector tests
         run: godot --headless --path game -s res://tests/test_audio_director.gd 2>&1 | tee "$RUNNER_TEMP/audio-director-test.log"
+      - name: Run Boss three tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_boss_three.gd 2>&1 | tee "$RUNNER_TEMP/boss-three-test.log"
       - name: Run Boss two tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_boss_two.gd 2>&1 | tee "$RUNNER_TEMP/boss-two-test.log"
       - name: Run ControllerNavigation tests
@@ -142,6 +144,7 @@ jobs:
             ${{ runner.temp }}/faction-data-test.log
             ${{ runner.temp }}/boss-gate-test.log
             ${{ runner.temp }}/boss-two-test.log
+            ${{ runner.temp }}/boss-three-test.log
             ${{ runner.temp }}/audio-director-test.log
             ${{ runner.temp }}/environment-three-test.log
             ${{ runner.temp }}/controller-navigation-test.log
