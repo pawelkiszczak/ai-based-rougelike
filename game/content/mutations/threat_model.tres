@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"threat_model"
+display_name = "Threat model"
+text = "Read pressure early, but spend compute maintaining the model."
+category = &"capability"
+adaptation = 3
+compute = -2
+alignment = 1
+integrity = 0
+guard = 1

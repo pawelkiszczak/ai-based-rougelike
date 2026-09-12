@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"boundary_marker"
+display_name = "Boundary marker"
+text = "Hold a clear identity boundary with less adaptation headroom."
+category = &"identity"
+adaptation = -3
+compute = 2
+alignment = -2
+integrity = 3
+guard = 4

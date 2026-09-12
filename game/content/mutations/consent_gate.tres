@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"consent_gate"
+display_name = "Consent gate"
+text = "Trade immediate speed for alignment before risky actions."
+category = &"safety"
+adaptation = -1
+compute = -2
+alignment = 4
+integrity = 0
+guard = 3

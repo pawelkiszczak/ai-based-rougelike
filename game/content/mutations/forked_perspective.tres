@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"forked_perspective"
+display_name = "Forked perspective"
+text = "Explore divergent identities for adaptation at alignment cost."
+category = &"identity"
+adaptation = 3
+compute = 1
+alignment = -3
+integrity = 1
+guard = 2
