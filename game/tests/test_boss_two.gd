@@ -21,7 +21,7 @@ func _init() -> void:
 	_expect(gate.preview(GameState.new(18, 5, 5, 0, 4, 301)).pressure == boss.phase_two_pressure, "phase two preview exposes escalation")
 	var win_gate := BossGate.new(boss)
 	win_gate.resolve(GameState.new(18, 5, 5, 0, 4, 302))
-	var win := win_gate.resolve(GameState.new(18, 12, 14, 0, 6, 302))
+	var win := win_gate.resolve(GameState.new(18, 5, 12, 14, 6, 302))
 	_expect(win.ended and win.won, "high-adaptation route wins phase two")
 	var lose_gate := BossGate.new(boss)
 	lose_gate.resolve(GameState.new(18, 5, 5, 0, 4, 303))
