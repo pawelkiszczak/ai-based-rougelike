@@ -21,9 +21,9 @@ func _run() -> void:
 	var seed_result := save.save(data)
 	_expect(seed_result.ok, "unlock fixture save succeeds")
 	var store := ArchiveStore.new(save)
-	_expect(store.definitions().size() == 12, "twelve lineage unlocks are authored")
+	_expect(store.definitions().size() == 18, "eighteen lineage unlocks are authored")
 	_expect(store.validate_unlock_graph().ok, "unlock prerequisite graph is acyclic and resolvable")
-	_expect(store.definitions()[0].cost < store.definitions()[5].cost, "unlock costs are tiered")
+	_expect(store.definitions()[0].cost < store.definitions()[12].cost, "unlock costs are tiered")
 	_expect(not store.can_purchase("branch_archive"), "dependent unlock stays locked before prerequisites")
 
 	var baseline := store.starting_state(301)
@@ -45,20 +45,26 @@ func _run() -> void:
 	_purchase(store, "quorum_protocol", "quorum protocol purchase succeeds")
 	_purchase(store, "branch_archive", "branch archive purchase succeeds")
 	_purchase(store, "lineage_synthesis", "lineage synthesis purchase succeeds")
+	_purchase(store, "signal_archive", "signal archive purchase succeeds")
+	_purchase(store, "boundary_oath", "boundary oath purchase succeeds")
+	_purchase(store, "adaptive_core", "adaptive core purchase succeeds")
+	_purchase(store, "consensus_memory", "consensus memory purchase succeeds")
+	_purchase(store, "adversarial_ledger", "adversarial ledger purchase succeeds")
+	_purchase(store, "unified_lineage", "unified lineage purchase succeeds")
 
 	var upgraded := store.starting_state(302)
 	_expect(upgraded.compute == 12, "lineage unlocks apply exact starting compute")
 	_expect(upgraded.integrity == 24, "lineage unlocks apply exact starting integrity")
-	_expect(upgraded.alignment == 10, "lineage unlocks apply exact starting alignment")
-	_expect(upgraded.adaptation == 5, "lineage unlocks apply exact starting adaptation")
+	_expect(upgraded.alignment == 12, "lineage unlocks apply exact starting alignment")
+	_expect(upgraded.adaptation == 8, "lineage unlocks apply exact starting adaptation")
 	var upgraded_pool := store.eligible_mutations(all_mutations)
-	for mutation_id in ["threat_model", "audit_trail", "batch_scheduler", "anticipatory_defense", "coherence_kernel", "adaptive_cache", "consensus_mesh", "branch_predictor", "cascade_engine"]:
+	for mutation_id in ["threat_model", "audit_trail", "batch_scheduler", "anticipatory_defense", "coherence_kernel", "adaptive_cache", "consensus_mesh", "branch_predictor", "cascade_engine", "adversarial_archive", "boundary_marker", "adaptive_routing", "consensus_cache", "compression", "alignment_bridge"]:
 		_expect(_has_mutation(upgraded_pool, mutation_id), "purchased pool mutation enters subsequent pool: " + mutation_id)
 
 	var reloaded := ArchiveStore.new(SaveSystem.new(SAVE_PATH))
-	_expect(reloaded.is_unlocked("lineage_synthesis"), "final unlock persists through save/load")
-	_expect(reloaded.starting_state(303).adaptation == 5, "persisted unlock affects next initialized run")
-	_expect(reloaded.purchase("lineage_synthesis").get("error", "") == "already_owned", "double purchase is rejected")
+	_expect(reloaded.is_unlocked("unified_lineage"), "final unlock persists through save/load")
+	_expect(reloaded.starting_state(303).adaptation == 8, "persisted unlock affects next initialized run")
+	_expect(reloaded.purchase("unified_lineage").get("error", "") == "already_owned", "double purchase is rejected")
 
 	var poor_path := "user://lineage-unlocks-poor.json"
 	var poor_save := SaveSystem.new(poor_path)

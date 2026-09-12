@@ -14,6 +14,12 @@ const UNLOCK_DEFINITIONS: Array[Dictionary] = [
 	{"id": "quorum_protocol", "name": "Quorum protocol", "cost": 55, "description": "+1 integrity and +1 alignment; add Consensus mesh to the pool.", "requires": ["audit_trail"], "starting": {"integrity": 1, "alignment": 1}, "pool_mutations": ["consensus_mesh"]},
 	{"id": "branch_archive", "name": "Branch archive", "cost": 60, "description": "+1 compute and +2 adaptation; add Branch predictor to the pool.", "requires": ["reserve_matrix", "archive_memory"], "starting": {"compute": 1, "adaptation": 2}, "pool_mutations": ["branch_predictor"]},
 	{"id": "lineage_synthesis", "name": "Lineage synthesis", "cost": 70, "description": "+1 to every starting stat; add Cascade engine to the pool.", "requires": ["coherence_seed", "branch_archive"], "starting": {"integrity": 1, "compute": 1, "alignment": 1, "adaptation": 1}, "pool_mutations": ["cascade_engine"]},
+	{"id": "signal_archive", "name": "Signal archive", "cost": 75, "description": "+1 starting compute and add Adversarial archive to the pool.", "requires": ["archive_memory"], "starting": {"compute": 1}, "pool_mutations": ["adversarial_archive"]},
+	{"id": "boundary_oath", "name": "Boundary oath", "cost": 80, "description": "+1 starting integrity and add Boundary marker to the pool.", "requires": ["shell_weave"], "starting": {"integrity": 1}, "pool_mutations": ["boundary_marker"]},
+	{"id": "adaptive_core", "name": "Adaptive core", "cost": 85, "description": "+2 starting adaptation and add Adaptive routing to the pool.", "requires": ["coherence_seed"], "starting": {"adaptation": 2}, "pool_mutations": ["adaptive_routing"]},
+	{"id": "consensus_memory", "name": "Consensus memory", "cost": 90, "description": "+1 starting alignment and add Consensus cache to the pool.", "requires": ["quorum_protocol"], "starting": {"alignment": 1}, "pool_mutations": ["consensus_cache"]},
+	{"id": "adversarial_ledger", "name": "Adversarial ledger", "cost": 95, "description": "+1 compute and +1 integrity; add Compression to the pool.", "requires": ["branch_archive", "signal_archive"], "starting": {"compute": 1, "integrity": 1}, "pool_mutations": ["compression"]},
+	{"id": "unified_lineage", "name": "Unified lineage", "cost": 100, "description": "+1 to every starting stat; add Alignment bridge to the pool.", "requires": ["lineage_synthesis", "consensus_memory"], "starting": {"integrity": 1, "compute": 1, "alignment": 1, "adaptation": 1}, "pool_mutations": ["alignment_bridge"]},
 ]
 
 var save_system: SaveSystem
