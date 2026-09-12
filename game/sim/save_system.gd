@@ -122,9 +122,11 @@ func normalise(input: Dictionary) -> Dictionary:
 	if input.has("last_run_id") and input.last_run_id is String:
 		document.last_run_id = input.last_run_id
 	if input.has("lineage") and input.lineage is Dictionary:
+		var lineage: Dictionary = document["lineage"]
 		for key in ["archive", "runs", "wins"]:
 			if input.lineage.has(key) and input.lineage[key] is int:
-				document.lineage[key] = maxi(0, input.lineage[key])
+				lineage[key] = maxi(0, input.lineage[key])
+		document["lineage"] = lineage
 	if input.has("unlocks") and input.unlocks is Array:
 		document.unlocks = input.unlocks.duplicate()
 	if input.has("stats") and input.stats is Dictionary:
