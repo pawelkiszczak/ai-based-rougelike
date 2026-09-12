@@ -17,8 +17,11 @@ func _run() -> void:
 	var save := SaveSystem.new(SAVE_PATH)
 	var data := save.defaults()
 	data.lineage.archive = 100
-	_expect(save.save(data).ok, "unlock fixture save succeeds")
+	var seed_result := save.save(data)
+	print("lineage: seed result " + str(seed_result))
+	_expect(seed_result.ok, "unlock fixture save succeeds")
 	var store := ArchiveStore.new(save)
+	print("lineage: loaded currency " + str(store.currency()))
 	print("lineage: inspect definitions")
 	_expect(store.definitions().size() == 5, "five vertical-slice unlocks are authored")
 	_expect(store.definitions()[0].cost < store.definitions()[1].cost, "unlock costs are tiered")
