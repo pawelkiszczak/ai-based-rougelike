@@ -80,6 +80,7 @@ func choose(mutation: MutationData) -> Dictionary:
 	state.integrity -= damage
 	state.clamp_stats()
 	var result := {
+		"run_id": "run-%d" % state.run_seed,
 		"run_seed": state.run_seed,
 		"cycle": cycle,
 		"mutation_id": str(mutation.id),
