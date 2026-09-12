@@ -6,6 +6,8 @@ var store: ArchiveStore
 var currency_label: Label
 var status_label: Label
 var status_message := ""
+var unlock_buttons: Array[Button] = []
+var back_button: Button
 
 
 func _ready() -> void:
@@ -57,8 +59,8 @@ func _build_ui() -> void:
 		unlock_buttons.append(button)
 		content.add_child(button)
 
-	var back_button := Button.new()
-	back_button.text = "BACK TO RUN"
+	back_button = Button.new()
+	back_button.text = ControllerNavigation.prompt("BACK TO RUN", not Input.get_connected_joypads().is_empty())
 	back_button.focus_mode = Control.FOCUS_ALL
 	back_button.pressed.connect(_on_back_pressed)
 	content.add_child(back_button)
@@ -79,10 +81,16 @@ func _render() -> void:
 		else:
 			button.text = "%s · %d archive · LOCKED\n%s" % [definition.name, definition.cost, definition.description]
 			button.disabled = true
+		button.text += "\n" + ControllerNavigation.prompt("SELECT", not Input.get_connected_joypads().is_empty())
 	if status_message.is_empty():
 		status_label.text = "Select an affordable unlock." if store.currency() > 0 else "Complete runs to earn archive."
 	else:
 		status_label.text = status_message
+	var focus_controls: Array[Control] = []
+	for button in unlock_buttons:
+		focus_controls.append(button)
+	focus_controls.append(back_button)
+	ControllerNavigation.configure_column(focus_controls)
 
 
 func _on_purchase(unlock_id: String) -> void:

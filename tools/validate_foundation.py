@@ -62,6 +62,8 @@ def main() -> int:
         "game/audio/manifest.json",
         "game/sim/audio_director.gd",
         "game/tests/test_audio_director.gd",
+        "game/ui/controller_navigation.gd",
+        "game/tests/test_controller_navigation.gd",
         "docs/content/audio.md",
         "tools/validate_audio.py",
         "docs/content/mutation-balance.md",

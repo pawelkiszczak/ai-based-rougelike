@@ -12,6 +12,7 @@ var stats_labels: Dictionary = {}
 var status_label: Label
 var log_label: Label
 var end_button: Button
+var archive_button: Button
 var recap_label: Label
 var telemetry_store := TelemetryStore.new()
 
@@ -53,8 +54,8 @@ func _build_ui() -> void:
 	status_label.add_theme_color_override("font_color", Color("a3b5d4"))
 	content.add_child(status_label)
 
-	var archive_button := Button.new()
-	archive_button.text = "OPEN LINEAGE ARCHIVE"
+	archive_button = Button.new()
+	archive_button.text = ControllerNavigation.prompt("OPEN LINEAGE ARCHIVE", not Input.get_connected_joypads().is_empty())
 	archive_button.focus_mode = Control.FOCUS_ALL
 	archive_button.pressed.connect(_on_archive_pressed)
 	content.add_child(archive_button)
@@ -171,18 +172,22 @@ func _render_choices() -> void:
 	_clear_choices()
 	if controller.ended:
 		end_button.visible = true
+		end_button.text = ControllerNavigation.prompt("INITIALIZE SUCCESSOR", not Input.get_connected_joypads().is_empty())
 		return
 	end_button.visible = false
+	var controls: Array[Control] = []
 	for mutation in controller.draw_choices(mutations, CHOICE_COUNT):
 		var button := Button.new()
 		button.custom_minimum_size = Vector2(0, 150)
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		var telegraph := controller.damage_range(controller.state, mutation)
-		button.text = "%s\n\n%s\n\n%s\n%s" % [mutation.display_name, mutation.text, _effect_text(mutation), _telegraph_text(telegraph)]
+		button.text = "%s\n\n%s\n\n%s\n%s\n%s" % [mutation.display_name, mutation.text, _effect_text(mutation), _telegraph_text(telegraph), ControllerNavigation.prompt("CHOOSE", not Input.get_connected_joypads().is_empty())]
 		button.tooltip_text = mutation.text
 		button.pressed.connect(_on_choice.bind(mutation))
 		choice_container.add_child(button)
+		controls.append(button)
+	ControllerNavigation.configure_row(controls)
 
 
 func _render_log() -> void:
