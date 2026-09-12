@@ -12,6 +12,7 @@ var status_label: Label
 var log_label: Label
 var end_button: Button
 var recap_label: Label
+var telemetry_store := TelemetryStore.new()
 
 
 func _ready() -> void:
@@ -128,6 +129,7 @@ func _on_state_changed(_state: GameState) -> void:
 
 func _on_run_ended(_result: Dictionary) -> void:
 	var recap := RunRecap.from_controller(controller)
+	telemetry_store.record_run(recap)
 	status_label.text = ("RUN WON" if recap.won else "RUN ENDED") + " · " + recap.cause
 	recap_label.text = _format_recap(recap)
 	_render()

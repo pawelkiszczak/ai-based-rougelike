@@ -64,6 +64,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_archive_screen.gd 2>&1 | tee "$RUNNER_TEMP/archive-screen-test.log"
       - name: Run RunRecap tests
         run: godot --headless --path game -s res://tests/test_run_recap.gd 2>&1 | tee "$RUNNER_TEMP/run-recap-test.log"
+      - name: Run TelemetryStore tests
+        run: godot --headless --path game -s res://tests/test_telemetry_store.gd 2>&1 | tee "$RUNNER_TEMP/telemetry-store-test.log"
       - name: Run deterministic harness
         run: |
           godot --headless --path game -s ../tools/harness.gd -- --seed-base 1000 --count 100 --output "$RUNNER_TEMP/harness-a.json" 2>&1 | tee "$RUNNER_TEMP/harness-a.log"
@@ -92,6 +94,7 @@ jobs:
             ${{ runner.temp }}/run-screen-test.log
             ${{ runner.temp }}/archive-screen-test.log
             ${{ runner.temp }}/run-recap-test.log
+            ${{ runner.temp }}/telemetry-store-test.log
             ${{ runner.temp }}/harness-a.log
             ${{ runner.temp }}/harness-b.log
             ${{ runner.temp }}/harness-malformed.log
