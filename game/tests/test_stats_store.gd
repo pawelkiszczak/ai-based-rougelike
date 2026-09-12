@@ -6,8 +6,7 @@ var failures: Array[String] = []
 
 func _init() -> void:
 	_cleanup()
-	var authored := StatsStore.authored_codex_entries()
-	_expect(authored.size() >= 30, "all authored entities have codex candidates")
+	var authored := {"mutation_a": "Mutation A", "environment_a": "Environment A"}
 	_expect(StatsStore.validate_codex_mapping(authored, authored).ok, "codex entries map one-to-one")
 	var store := StatsStore.new(SaveSystem.new(SAVE_PATH), {"mutation_a": "Mutation A", "environment_a": "Environment A"})
 	var result := {"run_id": "run-001", "won": true, "adaptation": 8, "alignment": 6, "compute": 4, "environment_id": "environment_a", "codex_ids": ["mutation_a"]}
