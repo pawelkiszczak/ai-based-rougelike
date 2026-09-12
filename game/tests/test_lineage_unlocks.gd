@@ -87,7 +87,7 @@ func _on_watchdog_timeout() -> void:
 
 func _purchase(store: ArchiveStore, unlock_id: String, message: String) -> void:
 	var result := store.purchase(unlock_id)
-	_expect(result.ok, message + " (" + str(result.error) + ")")
+	_expect(bool(result.get("ok", false)), message + " (" + str(result.get("error", "")) + ")")
 
 
 func _has_mutation(pool: Array[MutationData], mutation_id: String) -> bool:
