@@ -14,16 +14,20 @@ var reputation_changes: Array[Dictionary] = []
 var run_log: Array[Dictionary] = []
 var ended := false
 var won := false
+var modifiers: Dictionary = {}
 
 func _init(
 	initial_state: GameState = null,
 	random: RNGService = null,
 	faction_reputation: FactionReputation = null,
+	run_modifiers: Dictionary = {},
 ) -> void:
 	state = initial_state if initial_state != null else GameState.new()
 	rng_service = random if random != null else RNGService.new(state.run_seed)
 	enemy_director = AdaptiveEnemyDirector.new(state.run_seed)
 	reputation = faction_reputation if faction_reputation != null else FactionReputation.new(null, FactionReputation.normalise({}))
+	modifiers = run_modifiers.duplicate(true)
+	DailyRunConfig.apply_starting_modifiers(state, modifiers)
 
 
 func apply_faction_choice(choice_id: String) -> Dictionary:
@@ -33,17 +37,20 @@ func apply_faction_choice(choice_id: String) -> Dictionary:
 	return change
 
 func draw_choices(pool: Array[MutationData], count: int = 3) -> Array[MutationData]:
-	if pool.is_empty() or count <= 0:
+	var available := DailyRunConfig.filter_pool(pool, modifiers)
+	if available.is_empty() or count <= 0:
 		return []
-	var indices := rng_service.draw_choice_indices(pool.size(), mini(count, pool.size()))
+	var indices := rng_service.draw_choice_indices(available.size(), mini(count, available.size()))
 	var choices: Array[MutationData] = []
 	for index in indices:
-		choices.append(pool[index])
+		choices.append(available[index])
 	return choices
 
 func damage_range(current_state: GameState, mutation: MutationData, encounter: Dictionary = {}) -> Dictionary:
 	var base_pressure := 3 + current_state.cycle * 2
 	var pressure := int(encounter.get("pressure", base_pressure))
+	if bool(modifiers.get("hardened_pressure", false)):
+		pressure += 2
 	var pressure_min := maxi(0, int(encounter.get("pressure_min", pressure - 1)))
 	var pressure_max := maxi(pressure_min, int(encounter.get("pressure_max", pressure + 1)))
 	var adaptation_after := current_state.adaptation + mutation.adaptation
