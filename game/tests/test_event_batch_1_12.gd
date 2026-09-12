@@ -25,7 +25,7 @@ func _init() -> void:
 		_expect(first == second and not str(first.text).is_empty(), id + " instantiates deterministically")
 		for outcome in template.outcomes:
 			_expect(outcome.has("effects") and not Dictionary(outcome.effects).is_empty(), id + " outcome changes state")
-	_expect(templates.size() == 14, "event library contains the two foundation and twelve production templates")
+	_expect(templates.size() == 26, "event library contains twenty-six templates")
 	if failures.is_empty():
 		print("Event batch 1-12 tests passed")
 		quit(0)
