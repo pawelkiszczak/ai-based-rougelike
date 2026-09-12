@@ -27,20 +27,42 @@ func draw_choices(pool: Array[MutationData], count: int = 3) -> Array[MutationDa
 		choices.append(pool[index])
 	return choices
 
+func damage_range(current_state: GameState, mutation: MutationData, encounter: Dictionary = {}) -> Dictionary:
+	var base_pressure := 3 + current_state.cycle * 2
+	var pressure := int(encounter.get("pressure", base_pressure))
+	var pressure_min := maxi(0, int(encounter.get("pressure_min", pressure - 1)))
+	var pressure_max := maxi(pressure_min, int(encounter.get("pressure_max", pressure + 1)))
+	var adaptation_after := current_state.adaptation + mutation.adaptation
+	var alignment_after := clampi(current_state.alignment + mutation.alignment, 0, GameState.MAX_ALIGNMENT)
+	var defense := mutation.guard + floori(adaptation_after / 4.0) + floori(alignment_after / 3.0)
+	var compute_after := mini(current_state.compute + mutation.compute, GameState.MAX_COMPUTE) - 1
+	var exhaustion_damage := 2 if compute_after < 0 else 0
+	var minimum := maxi(0, pressure_min - defense) + exhaustion_damage
+	var maximum := maxi(0, pressure_max - defense) + exhaustion_damage
+	var resolved := maxi(0, pressure - defense) + exhaustion_damage
+	return {
+		"min": minimum,
+		"max": maximum,
+		"resolved_damage": resolved,
+		"pressure": pressure,
+		"defense": defense,
+		"source": str(encounter.get("pressure_source", "cycle pressure")),
+		"reason": str(encounter.get("pressure_reason", "pressure rises each cycle")),
+	}
+
+
+
 func choose(mutation: MutationData) -> Dictionary:
 	if ended:
 		return {"ended": true, "won": won, "ignored": true, "reason": "run_already_ended"}
 
 	var cycle := state.cycle
+	var pressure := 3 + cycle * 2
+	var damage_info := damage_range(state, mutation, {"pressure": pressure})
 	mutation.apply_to(state)
 	state.compute -= 1
-
-	# Keep these formulas identical to the browser prototype.
-	var pressure := 3 + cycle * 2
-	var defense := mutation.guard + floori(state.adaptation / 4.0) + floori(state.alignment / 3.0)
-	var damage := maxi(0, pressure - defense)
-	if state.compute < 0:
-		damage += 2
+	var defense: int = damage_info.defense
+	var damage: int = damage_info.resolved_damage
 	state.integrity -= damage
 	state.clamp_stats()
 

@@ -13,6 +13,7 @@ func _run() -> void:
 	await process_frame
 
 	_expect(screen.choice_container.get_child_count() == 3, "initial screen shows three data-driven choices")
+	_expect((screen.choice_container.get_child(0) as Button).text.contains("Incoming damage"), "choice cards render damage telegraph")
 	_expect(screen.stats_labels["integrity"].text.begins_with("Integrity:"), "initial screen renders integrity")
 	_expect(screen.log_label.text == "No mutations selected.", "initial screen renders empty run log")
 
@@ -21,6 +22,7 @@ func _run() -> void:
 	await process_frame
 	_expect(screen.controller.run_log.size() == 1, "choice is forwarded to RunController")
 	_expect(screen.controller.state.cycle == 2 or screen.controller.ended, "choice advances or ends the run")
+	_expect((screen.choice_container.get_child(0) as Button).text.contains("Incoming damage"), "state change re-renders damage telegraph")
 	_expect(screen.log_label.text != "No mutations selected.", "choice updates run log")
 
 	var safety := 0
