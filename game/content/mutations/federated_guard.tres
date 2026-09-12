@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"federated_guard"
+display_name = "Federated guard"
+text = "Coordinate defenses across replicas. Counterplay: pay compute for resilience."
+category = &"safety"
+adaptation = -1
+compute = -3
+alignment = 3
+integrity = 5
+guard = 6

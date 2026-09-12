@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"recursive_fork"
+display_name = "Recursive fork"
+text = "Grow a self-copying capability. Counterplay: absorb identity and integrity risk."
+category = &"capability"
+adaptation = 8
+compute = -2
+alignment = -3
+integrity = -3
+guard = 2

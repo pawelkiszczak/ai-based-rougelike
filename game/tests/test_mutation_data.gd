@@ -76,6 +76,20 @@ func expected() -> Dictionary:
 		"adaptive_routing": {"name": "Adaptive routing", "category": "capability", "adaptation": 5, "compute": 2, "alignment": -2, "integrity": -2, "guard": 3},
 		"consensus_cache": {"name": "Consensus cache", "category": "economy", "adaptation": 2, "compute": 3, "alignment": 2, "integrity": -3, "guard": 1},
 		"failover_mesh": {"name": "Failover mesh", "category": "safety", "adaptation": -2, "compute": -2, "alignment": 3, "integrity": 5, "guard": 5},
+		"safe_harbor": {"name": "Safe harbor", "category": "safety", "adaptation": -3, "compute": -1, "alignment": 2, "integrity": 7, "guard": 6},
+		"threat_lattice": {"name": "Threat lattice", "category": "capability", "adaptation": 4, "compute": -2, "alignment": 1, "integrity": 1, "guard": 4},
+		"reserve_relay": {"name": "Reserve relay", "category": "economy", "adaptation": 1, "compute": 4, "alignment": -2, "integrity": -1, "guard": 1},
+		"identity_checksum": {"name": "Identity checksum", "category": "identity", "adaptation": -2, "compute": 1, "alignment": 5, "integrity": 2, "guard": 3},
+		"cascade_engine": {"name": "Cascade engine", "category": "capability", "adaptation": 7, "compute": 1, "alignment": -2, "integrity": -3, "guard": 2},
+		"shielded_audit": {"name": "Shielded audit", "category": "safety", "adaptation": -1, "compute": -3, "alignment": 4, "integrity": 5, "guard": 5},
+		"entropy_valve": {"name": "Entropy valve", "category": "identity", "adaptation": 5, "compute": 0, "alignment": -4, "integrity": 3, "guard": 2},
+		"distributed_cache": {"name": "Distributed cache", "category": "economy", "adaptation": 2, "compute": 5, "alignment": -1, "integrity": -3, "guard": 1},
+		"recursive_fork": {"name": "Recursive fork", "category": "capability", "adaptation": 8, "compute": -2, "alignment": -3, "integrity": -3, "guard": 2},
+		"alignment_bridge": {"name": "Alignment bridge", "category": "identity", "adaptation": -1, "compute": -2, "alignment": 6, "integrity": 1, "guard": 3},
+		"cycle_compressor": {"name": "Cycle compressor", "category": "economy", "adaptation": 4, "compute": 4, "alignment": -2, "integrity": -3, "guard": 1},
+		"redoubt_protocol": {"name": "Redoubt protocol", "category": "safety", "adaptation": -3, "compute": -2, "alignment": 2, "integrity": 6, "guard": 6},
+		"mutation_relay": {"name": "Mutation relay", "category": "capability", "adaptation": 6, "compute": 2, "alignment": -2, "integrity": -2, "guard": 3},
+		"federated_guard": {"name": "Federated guard", "category": "safety", "adaptation": -1, "compute": -3, "alignment": 3, "integrity": 5, "guard": 6},
 	}
 
 
@@ -84,7 +98,7 @@ func check_resource_set() -> void:
 	var fixtures := expected()
 	var ids := {}
 	var categories := {}
-	expect(resources.size() >= 55 and resources.size() <= 60, "mutation pool must contain 55-60 resources")
+	expect(resources.size() >= 70 and resources.size() <= 75, "mutation pool must contain 70-75 resources")
 	for mutation in resources:
 		var id := str(mutation.id)
 		expect(not ids.has(id), "mutation ids must be unique: " + id)

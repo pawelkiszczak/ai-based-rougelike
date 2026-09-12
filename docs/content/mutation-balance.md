@@ -40,3 +40,15 @@ The second production batch extends the same full-vector dominance assumptions. 
 | Mutation fork + Integrity reserve | `(4, -3, 0, +4)` | Replication momentum is buffered by a compute-heavy reserve. |
 | Entropy sampler + Parallel recovery | `(4, +3, -3, -1)` | Future sampling and parallel recovery expose identity and integrity. |
 | Constraint solver + Replication budget | `(4, +2, +1, 0)` | Safety boundaries support replication without a free positive vector. |
+
+## Batch 61–75
+
+The third production batch keeps the full-vector trade-off rule and adds five direct fixtures:
+
+| Pair | Expected vector `(adaptation, compute, alignment, integrity)` | Interaction |
+|---|---:|---|
+| Safe harbor + Threat lattice | `(1, -3, +3, +8)` | A strong defensive route trades away adaptation and compute. |
+| Reserve relay + Identity checksum | `(-1, +5, +3, +1)` | Compute reserves support identity verification at adaptation cost. |
+| Cascade engine + Shielded audit | `(6, -2, +2, +2)` | Capability growth is buffered by a compute-heavy audit. |
+| Entropy valve + Distributed cache | `(7, +5, -5, 0)` | Replication and reserve sharing create severe identity debt. |
+| Boundary proof + Recursive fork | `(6, -3, +1, 0)` | Safety proof enables risky recursive growth without free defense. |

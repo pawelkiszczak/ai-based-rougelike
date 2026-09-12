@@ -1,9 +1,9 @@
 extends SceneTree
 
 const BATCH_IDS := [
-	"anticipatory_defense", "branch_predictor", "compute_siphon", "alignment_lens", "mutation_fork",
-	"integrity_reserve", "entropy_sampler", "parallel_recovery", "constraint_solver", "replication_budget",
-	"adversarial_archive", "coherence_kernel", "adaptive_routing", "consensus_cache", "failover_mesh",
+	"safe_harbor", "threat_lattice", "reserve_relay", "identity_checksum", "cascade_engine",
+	"shielded_audit", "entropy_valve", "distributed_cache", "boundary_proof", "recursive_fork",
+	"alignment_bridge", "cycle_compressor", "redoubt_protocol", "mutation_relay", "federated_guard",
 ]
 
 var failures: Array[String] = []
@@ -22,13 +22,13 @@ func _init() -> void:
 		_expect(not mutation.text.is_empty() and mutation.text.contains("Counterplay:"), id + " exposes counterplay")
 		_expect(_has_tradeoff(mutation), id + " has a non-dominant effect vector")
 	_expect(resources.size() == 70, "mutation batches expand the pool to seventy resources")
-	_check_combo(by_id, ["anticipatory_defense", "branch_predictor"], [3, 1, 3, 3])
-	_check_combo(by_id, ["compute_siphon", "alignment_lens"], [0, 4, 3, -1])
-	_check_combo(by_id, ["mutation_fork", "integrity_reserve"], [4, -3, 0, 4])
-	_check_combo(by_id, ["entropy_sampler", "parallel_recovery"], [4, 3, -3, -1])
-	_check_combo(by_id, ["constraint_solver", "replication_budget"], [4, 2, 1, 0])
+	_check_combo(by_id, ["safe_harbor", "threat_lattice"], [1, -3, 3, 6])
+	_check_combo(by_id, ["reserve_relay", "identity_checksum"], [-1, 5, 3, 1])
+	_check_combo(by_id, ["cascade_engine", "shielded_audit"], [6, -2, 2, 2])
+	_check_combo(by_id, ["entropy_valve", "distributed_cache"], [7, 5, -5, 0])
+	_check_combo(by_id, ["boundary_proof", "recursive_fork"], [6, -3, 1, 0])
 	if failures.is_empty():
-		print("Mutation batch 46-60 tests passed")
+		print("Mutation batch 61-75 tests passed")
 		quit(0)
 		return
 	for failure in failures:
