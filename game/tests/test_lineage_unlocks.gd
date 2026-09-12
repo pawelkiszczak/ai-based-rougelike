@@ -20,6 +20,7 @@ func _run() -> void:
 	lineage["archive"] = 100
 	data["lineage"] = lineage
 	var seed_result := save.save(data)
+	print("lineage: saved json " + FileAccess.get_file_as_string(SAVE_PATH))
 	print("lineage: seed result " + str(seed_result))
 	_expect(seed_result.ok, "unlock fixture save succeeds")
 	var store := ArchiveStore.new(save)
