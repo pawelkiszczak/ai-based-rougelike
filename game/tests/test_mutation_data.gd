@@ -152,6 +152,16 @@ func check_combo_fixtures() -> void:
 		["recursive_self_improvement", "rollback_window", 5, -1, -1, 2],
 		["adaptive_cache", "deferred_commit", 9, 0, -3, -1],
 		["parallel_probe", "embodied_model", 3, 3, -1, 3],
+		["adversarial_fuzzing", "invariant_check", 4, -4, 3, 1],
+		["speculative_branch", "trust_anchor", 4, 1, 2, 1],
+		["elastic_scheduler", "mirror_descent", 4, 4, -5, -1],
+		["quorum_vote", "rollback_cache", -4, -1, 4, 7],
+		["gradient_probe", "consensus_mesh", 6, 3, 2, -3],
+		["red_team_protocol", "latent_compiler", 9, -5, -1, -3],
+		["audit_quorum", "federated_memory", 1, 2, 4, -2],
+		["adversarial_archive", "coherence_kernel", 0, -2, 6, 3],
+		["adaptive_routing", "consensus_cache", 7, 5, 0, -5],
+		["failover_mesh", "safe_harbor", -5, -3, 5, 12],
 	]
 	for combo in combos:
 		var state := GameState.new()

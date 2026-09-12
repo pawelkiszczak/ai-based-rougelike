@@ -135,6 +135,7 @@ def main() -> int:
         "game/tests/test_narrative_system.gd",
         "docs/content/narrative.md",
         "tools/validate_narrative.py",
+        "tools/validate_mutation_balance.py",
         "tools/validate_foundation.py",
         "tools/harness.gd",
         "tools/README.md",

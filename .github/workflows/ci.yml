@@ -54,6 +54,8 @@ jobs:
         run: python3 tools/validate_licenses.py 2>&1 | tee "$RUNNER_TEMP/license-validation.log"
       - name: Validate narrative content
         run: python3 tools/validate_narrative.py 2>&1 | tee "$RUNNER_TEMP/narrative-validation.log"
+      - name: Validate mutation balance
+        run: python3 tools/validate_mutation_balance.py 2>&1 | tee "$RUNNER_TEMP/mutation-balance-validation.log"
       - name: Run GameState tests
         run: godot --headless --path game -s res://tests/test_game_state.gd 2>&1 | tee "$RUNNER_TEMP/game-state-test.log"
       - name: Run RNGService tests
@@ -160,6 +162,7 @@ jobs:
             ${{ runner.temp }}/audio-validation.log
             ${{ runner.temp }}/license-validation.log
             ${{ runner.temp }}/narrative-validation.log
+            ${{ runner.temp }}/mutation-balance-validation.log
             ${{ runner.temp }}/mutation-batch-46-60-test.log
             ${{ runner.temp }}/game-state-test.log
             ${{ runner.temp }}/mutation-batch-test.log

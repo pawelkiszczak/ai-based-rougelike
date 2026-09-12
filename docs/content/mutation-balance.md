@@ -1,6 +1,6 @@
 # Mutation pool balance sheet
 
-The pool contains 25 authored mutations across capability, safety, identity, and economy. Every choice trades at least one vector against another; no entry is treated as a strictly positive upgrade.
+The pool contains 70 authored mutations across capability, safety, identity, and economy. Every choice trades at least one vector against another; no entry is treated as a strictly positive upgrade.
 
 ## Balance assumptions
 
@@ -52,3 +52,13 @@ The third production batch keeps the full-vector trade-off rule and adds five di
 | Cascade engine + Shielded audit | `(6, -2, +2, +2)` | Capability growth is buffered by a compute-heavy audit. |
 | Entropy valve + Distributed cache | `(7, +5, -5, 0)` | Replication and reserve sharing create severe identity debt. |
 | Boundary proof + Recursive fork | `(6, -3, +1, 0)` | Safety proof enables risky recursive growth without free defense. |
+| Adversarial fuzzing + Invariant check | `(4, -4, +3, +1)` | Broad fuzzing gains are constrained by an invariant guard. |
+| Speculative branch + Trust anchor | `(4, +1, +2, +1)` | Forecasting gains identity trust while sacrificing integrity margin. |
+| Elastic scheduler + Mirror descent | `(4, +4, -5, -1)` | Efficient scheduling accelerates a strongly misaligned route. |
+| Quorum vote + Rollback cache | `(-4, -1, +4, +7)` | Defensive consensus gives up adaptation for recovery capacity. |
+| Gradient probe + Consensus mesh | `(6, +3, +2, -3)` | Probing and coordination buy compute and alignment at integrity cost. |
+| Red-team protocol + Latent compiler | `(9, -5, -1, -3)` | Aggressive compilation maximizes adaptation while consuming reserves. |
+| Audit quorum + Federated memory | `(1, +2, +4, -2)` | Shared evidence improves alignment but exposes integrity. |
+| Adversarial archive + Coherence kernel | `(0, -2, +6, +3)` | Archive pressure is stabilized by coherence at a compute cost. |
+| Adaptive routing + Consensus cache | `(7, +5, 0, -5)` | Routing and caching maximize growth while weakening resilience. |
+| Failover mesh + Safe harbor | `(-5, -3, +5, +12)` | Layered failover creates a durable but slow safety route. |
