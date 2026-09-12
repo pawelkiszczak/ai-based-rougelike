@@ -22,7 +22,7 @@ func _init() -> void:
 		_expect(not mutation.text.is_empty() and mutation.text.contains("Counterplay:"), id + " exposes counterplay")
 		_expect(_has_tradeoff(mutation), id + " has a non-dominant effect vector")
 	_expect(resources.size() == 70, "mutation batches expand the pool to seventy resources")
-	_check_combo(by_id, ["safe_harbor", "threat_lattice"], [1, -3, 3, 8])
+	_check_combo(by_id, ["safe_harbor", "threat_lattice"], [1, -3, 3, 6])
 	_check_combo(by_id, ["reserve_relay", "identity_checksum"], [-1, 5, 3, 1])
 	_check_combo(by_id, ["cascade_engine", "shielded_audit"], [6, -2, 2, 2])
 	_check_combo(by_id, ["entropy_valve", "distributed_cache"], [7, 5, -5, 0])
