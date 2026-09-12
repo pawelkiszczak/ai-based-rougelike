@@ -28,9 +28,9 @@ func _init() -> void:
 	var below_trusted := faction.available_offers(low_compute, RNGService.new(3), 24)
 	var at_trusted := faction.available_offers(low_compute, RNGService.new(3), 25)
 	_expect(_ids(below_neutral) == ["safety_layer"], "neutral offer stays gated below reputation boundary")
-	_expect(_ids(at_neutral) == ["safety_layer", "interpretability_probe"], "neutral offer opens at exact reputation boundary")
-	_expect(_ids(below_trusted) == ["safety_layer", "interpretability_probe"], "trusted offer stays gated below reputation boundary")
-	_expect(_ids(at_trusted) == ["safety_layer", "interpretability_probe", "drift_insurance"], "trusted offer opens at exact reputation boundary")
+	_expect(_ids(at_neutral) == ["interpretability_probe", "safety_layer"], "neutral offer opens at exact reputation boundary")
+	_expect(_ids(below_trusted) == ["interpretability_probe", "safety_layer"], "trusted offer stays gated below reputation boundary")
+	_expect(_ids(at_trusted) == ["drift_insurance", "interpretability_probe", "safety_layer"], "trusted offer opens at exact reputation boundary")
 	for offer in faction.offers:
 		_expect(not str(offer.description).is_empty() and offer.has("constraint"), "offer has visible constraint and description")
 	_expect(low_compute.lineage_flags.accepted_audit, "faction memory trigger is recorded")
