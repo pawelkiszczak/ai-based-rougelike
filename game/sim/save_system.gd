@@ -133,6 +133,7 @@ func normalise(input: Dictionary) -> Dictionary:
 		document["stats"] = input.stats.duplicate(true)
 	if input.has("settings") and input.settings is Dictionary:
 		document["settings"] = input.settings.duplicate(true)
+	return document
 
 
 func validate(document: Dictionary) -> Dictionary:
