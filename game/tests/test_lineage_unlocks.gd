@@ -7,6 +7,8 @@ var failures: Array[String] = []
 
 func _init() -> void:
 	call_deferred("_run")
+	var watchdog := create_timer(30.0)
+	watchdog.timeout.connect(_on_watchdog_timeout)
 
 
 func _run() -> void:
@@ -63,6 +65,10 @@ func _run() -> void:
 		push_error(failure)
 	quit(1)
 
+
+func _on_watchdog_timeout() -> void:
+	push_error("Lineage unlock test watchdog expired")
+	quit(2)
 
 func _has_mutation(pool: Array[MutationData], mutation_id: String) -> bool:
 	for mutation in pool:
