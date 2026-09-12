@@ -86,6 +86,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_faction_two.gd 2>&1 | tee "$RUNNER_TEMP/faction-two-test.log"
       - name: Run Faction three tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_faction_three.gd 2>&1 | tee "$RUNNER_TEMP/faction-three-test.log"
+      - name: Run Faction four tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_faction_four.gd 2>&1 | tee "$RUNNER_TEMP/faction-four-test.log"
       - name: Run FactionReputation tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_faction_reputation.gd 2>&1 | tee "$RUNNER_TEMP/faction-reputation-test.log"
       - name: Run AdaptiveEnemyDirector tests
@@ -142,6 +144,7 @@ jobs:
             ${{ runner.temp }}/faction-reputation-test.log
             ${{ runner.temp }}/adaptive-director-test.log
             ${{ runner.temp }}/event-templates-test.log
+            ${{ runner.temp }}/faction-four-test.log
             ${{ runner.temp }}/stats-store-test.log
             ${{ runner.temp }}/faction-three-test.log
             ${{ runner.temp }}/accessibility-settings-test.log
