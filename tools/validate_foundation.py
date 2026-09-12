@@ -136,8 +136,10 @@ def main() -> int:
         "docs/content/narrative.md",
         "tools/validate_narrative.py",
         "tools/validate_mutation_balance.py",
-        "tools/validate_foundation.py",
-        "tools/harness.gd",
+        "game/sim/enemy_archetype_data.gd",
+        "game/sim/enemy_archetype_library.gd",
+        "game/tests/test_enemy_archetypes.gd",
+        "docs/content/enemy-archetypes.md",
         "tools/README.md",
         "prototype/index.html",
     )
