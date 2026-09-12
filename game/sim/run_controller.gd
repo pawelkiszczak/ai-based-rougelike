@@ -18,6 +18,15 @@ func _init(initial_state: GameState = null, random: RNGService = null) -> void:
 	rng_service = random if random != null else RNGService.new(state.run_seed)
 
 
+func draw_choices(pool: Array[MutationData], count: int = 3) -> Array[MutationData]:
+	if pool.is_empty() or count <= 0:
+		return []
+	var indices := rng_service.draw_choice_indices(pool.size(), mini(count, pool.size()))
+	var choices: Array[MutationData] = []
+	for index in indices:
+		choices.append(pool[index])
+	return choices
+
 func choose(mutation: MutationData) -> Dictionary:
 	if ended:
 		return {"ended": true, "won": won, "ignored": true, "reason": "run_already_ended"}

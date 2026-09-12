@@ -56,6 +56,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
       - name: Run SaveSystem tests
         run: godot --headless --path game -s res://tests/test_save_system.gd 2>&1 | tee "$RUNNER_TEMP/save-system-test.log"
+      - name: Run RunScreen tests
+        run: godot --headless --path game -s res://tests/test_run_screen.gd 2>&1 | tee "$RUNNER_TEMP/run-screen-test.log"
 
       - name: Upload validation logs
         if: ${{ always() }}
@@ -70,4 +72,5 @@ jobs:
             ${{ runner.temp }}/mutation-data-test.log
             ${{ runner.temp }}/run-controller-test.log
             ${{ runner.temp }}/save-system-test.log
+            ${{ runner.temp }}/run-screen-test.log
           if-no-files-found: ignore
