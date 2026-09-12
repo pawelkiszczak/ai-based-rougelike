@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"trust_anchor"
+display_name = "Trust anchor"
+text = "Stabilize identity with a trusted anchor. Counterplay: trade away adaptation."
+category = &"identity"
+adaptation = -2
+compute = 0
+alignment = 4
+integrity = 3
+guard = 3

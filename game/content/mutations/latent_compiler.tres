@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"latent_compiler"
+display_name = "Latent compiler"
+text = "Compile a hidden capability. Counterplay: absorb adaptation and identity risk."
+category = &"capability"
+adaptation = 7
+compute = -2
+alignment = -3
+integrity = -3
+guard = 2

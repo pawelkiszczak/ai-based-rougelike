@@ -46,6 +46,21 @@ func expected() -> Dictionary:
 		"reserve_budget": {"name": "Reserve budget", "category": "economy", "adaptation": 0, "compute": 3, "alignment": 0, "integrity": 4, "guard": 1},
 		"shared_memory": {"name": "Shared memory", "category": "economy", "adaptation": 2, "compute": 2, "alignment": 1, "integrity": -3, "guard": 2},
 		"deferred_commit": {"name": "Deferred commit", "category": "economy", "adaptation": 4, "compute": 1, "alignment": -2, "integrity": -1, "guard": 3},
+		"adversarial_fuzzing": {"name": "Adversarial fuzzing", "category": "capability", "adaptation": 5, "compute": -2, "alignment": -1, "integrity": -1, "guard": 3},
+		"invariant_check": {"name": "Invariant check", "category": "safety", "adaptation": -1, "compute": -2, "alignment": 4, "integrity": 2, "guard": 4},
+		"speculative_branch": {"name": "Speculative branch", "category": "capability", "adaptation": 6, "compute": 1, "alignment": -2, "integrity": -2, "guard": 1},
+		"trust_anchor": {"name": "Trust anchor", "category": "identity", "adaptation": -2, "compute": 0, "alignment": 4, "integrity": 3, "guard": 3},
+		"elastic_scheduler": {"name": "Elastic scheduler", "category": "economy", "adaptation": 1, "compute": 4, "alignment": -1, "integrity": -2, "guard": 1},
+		"mirror_descent": {"name": "Mirror descent", "category": "identity", "adaptation": 3, "compute": 0, "alignment": -4, "integrity": 1, "guard": 2},
+		"quorum_vote": {"name": "Quorum vote", "category": "safety", "adaptation": -1, "compute": 1, "alignment": 3, "integrity": 2, "guard": 4},
+		"rollback_cache": {"name": "Rollback cache", "category": "economy", "adaptation": -3, "compute": -2, "alignment": 1, "integrity": 5, "guard": 4},
+		"gradient_probe": {"name": "Gradient probe", "category": "capability", "adaptation": 4, "compute": 2, "alignment": -1, "integrity": -1, "guard": 2},
+		"consensus_mesh": {"name": "Consensus mesh", "category": "identity", "adaptation": 2, "compute": 1, "alignment": 3, "integrity": -2, "guard": 2},
+		"shard_allocator": {"name": "Shard allocator", "category": "economy", "adaptation": 0, "compute": 5, "alignment": -2, "integrity": -2, "guard": 1},
+		"red_team_protocol": {"name": "Red-team protocol", "category": "safety", "adaptation": 2, "compute": -3, "alignment": 2, "integrity": 0, "guard": 4},
+		"latent_compiler": {"name": "Latent compiler", "category": "capability", "adaptation": 7, "compute": -2, "alignment": -3, "integrity": -3, "guard": 2},
+		"audit_quorum": {"name": "Audit quorum", "category": "safety", "adaptation": -2, "compute": -1, "alignment": 5, "integrity": 1, "guard": 3},
+		"federated_memory": {"name": "Federated memory", "category": "economy", "adaptation": 3, "compute": 3, "alignment": -1, "integrity": -3, "guard": 2},
 	}
 
 
@@ -54,7 +69,7 @@ func check_resource_set() -> void:
 	var fixtures := expected()
 	var ids := {}
 	var categories := {}
-	expect(resources.size() >= 25 and resources.size() <= 30, "mutation pool must contain 25-30 resources")
+	expect(resources.size() >= 40 and resources.size() <= 45, "mutation pool must contain 40-45 resources")
 	for mutation in resources:
 		var id := str(mutation.id)
 		expect(not ids.has(id), "mutation ids must be unique: " + id)

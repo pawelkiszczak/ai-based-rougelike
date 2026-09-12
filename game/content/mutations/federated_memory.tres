@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"federated_memory"
+display_name = "Federated memory"
+text = "Share learned context across branches. Counterplay: pay integrity for compute."
+category = &"economy"
+adaptation = 3
+compute = 3
+alignment = -1
+integrity = -3
+guard = 2

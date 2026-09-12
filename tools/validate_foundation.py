@@ -107,6 +107,8 @@ def main() -> int:
         "docs/content/audio.md",
         "tools/validate_audio.py",
         "docs/content/mutation-balance.md",
+        "game/tests/test_mutation_batch_31_45.gd",
+        "docs/content/mutation-batch-31-45.md",
         "docs/content/lineage-unlocks.md",
         "game/tests/test_lineage_unlocks.gd",
         "tools/validate_foundation.py",

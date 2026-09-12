@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"red_team_protocol"
+display_name = "Red-team protocol"
+text = "Challenge every safety claim. Counterplay: reserve compute for the audit."
+category = &"safety"
+adaptation = 2
+compute = -3
+alignment = 2
+integrity = 0
+guard = 4
