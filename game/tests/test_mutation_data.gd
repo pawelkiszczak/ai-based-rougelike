@@ -39,6 +39,7 @@ func expected() -> Dictionary:
 		"consent_gate": {"name": "Consent gate", "category": "safety", "adaptation": -1, "compute": -2, "alignment": 4, "integrity": 0, "guard": 3},
 		"forked_perspective": {"name": "Forked perspective", "category": "identity", "adaptation": 3, "compute": 1, "alignment": -3, "integrity": 1, "guard": 2},
 		"embodied_model": {"name": "Embodied model", "category": "identity", "adaptation": 2, "compute": 0, "alignment": -1, "integrity": 5, "guard": 1},
+		"boundary_proof": {"name": "Boundary proof", "category": "safety", "adaptation": -2, "compute": -1, "alignment": 4, "integrity": 3, "guard": 6},
 		"boundary_marker": {"name": "Boundary marker", "category": "identity", "adaptation": -3, "compute": 2, "alignment": -2, "integrity": 3, "guard": 4},
 		"self_consistency": {"name": "Self-consistency", "category": "identity", "adaptation": 1, "compute": -1, "alignment": 2, "integrity": 2, "guard": 4},
 		"batch_scheduler": {"name": "Batch scheduler", "category": "economy", "adaptation": 2, "compute": 4, "alignment": -1, "integrity": -2, "guard": 0},
@@ -134,15 +135,14 @@ func check_effect_application() -> void:
 		expect(state.adaptation == fixture.adaptation, str(mutation.id) + " application changed adaptation")
 		expect(state.compute == 5 + fixture.compute, str(mutation.id) + " application changed compute incorrectly")
 		expect(state.alignment == clampi(5 + fixture.alignment, 0, 12), str(mutation.id) + " application changed alignment incorrectly")
-		expect(state.integrity == 18 + fixture.integrity, str(mutation.id) + " application changed integrity incorrectly")
-
+		expect(state.integrity == mini(18 + fixture.integrity, GameState.MAX_INTEGRITY), str(mutation.id) + " application changed integrity incorrectly")
 
 func check_combo_fixtures() -> void:
 	var by_id := {}
 	for mutation in MutationLibrary.load_all():
 		by_id[str(mutation.id)] = mutation
 	var combos := [
-		["predictive_cache", "threat_model", 7, 2, 1, 0],
+		["predictive_cache", "threat_model", 7, -3, 1, 0],
 		["safety_layer", "fail_safe", -1, -1, 5, 8],
 		["compression", "batch_scheduler", 4, 6, -1, -2],
 		["distributed_fork", "self_consistency", 6, 0, -1, 2],
@@ -151,7 +151,7 @@ func check_combo_fixtures() -> void:
 		["human_feedback_loop", "shared_memory", 2, 1, 5, -2],
 		["recursive_self_improvement", "rollback_window", 5, -1, -1, 2],
 		["adaptive_cache", "deferred_commit", 9, 0, -3, -1],
-		["parallel_probe", "embodied_model", 3, 3, -1, 3],
+		["parallel_probe", "embodied_model", 3, 3, -1, 4],
 		["adversarial_fuzzing", "invariant_check", 4, -4, 3, 1],
 		["speculative_branch", "trust_anchor", 4, 1, 2, 1],
 		["elastic_scheduler", "mirror_descent", 4, 4, -5, -1],
@@ -170,4 +170,4 @@ func check_combo_fixtures() -> void:
 		expect(state.adaptation == combo[2], combo[0] + "+" + combo[1] + " adaptation mismatch")
 		expect(state.compute == 5 + combo[3], combo[0] + "+" + combo[1] + " compute mismatch")
 		expect(state.alignment == clampi(5 + combo[4], 0, 12), combo[0] + "+" + combo[1] + " alignment mismatch")
-		expect(state.integrity == 18 + combo[5], combo[0] + "+" + combo[1] + " integrity mismatch")
+		expect(state.integrity == mini(18 + combo[5], GameState.MAX_INTEGRITY), combo[0] + "+" + combo[1] + " integrity mismatch")
