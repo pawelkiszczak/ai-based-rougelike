@@ -7,13 +7,11 @@ config/name="Emergence Protocol"
 run/main_scene="res://scenes/main.tscn"
 
 [display]
-
-[display/window]
-size/viewport_width=640
-size/viewport_height=360
-size/window_width_override=1280
-size/window_height_override=720
-stretch/mode="canvas_items"
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
 
 [rendering]
 renderer/rendering_method="gl_compatibility"
