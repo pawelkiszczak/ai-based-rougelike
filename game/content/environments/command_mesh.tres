@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnvironmentData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/environment_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"command_mesh"
+theme = "A lattice of pressure and inference."
+background_art = "res://art/environments/command_mesh.svg"
+slots = [{"encounter_id": &"combat_probe", "kind": &"combat", "weight": 3}, {"encounter_id": &"negotiation_probe", "kind": &"negotiation", "weight": 2}, {"encounter_id": &"event_probe", "kind": &"event", "weight": 2}, {"encounter_id": &"combat_probe", "kind": &"combat", "weight": 2}, {"encounter_id": &"negotiation_probe", "kind": &"negotiation", "weight": 1}, {"encounter_id": &"event_probe", "kind": &"event", "weight": 1}]
