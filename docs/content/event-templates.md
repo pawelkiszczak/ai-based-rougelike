@@ -15,3 +15,7 @@ The first production batch adds twelve templates assigned to the authored enviro
 ## Production templates 13–24
 
 The second production batch adds twelve more environment/faction-assigned templates. Each has an inclusive parameter boundary, visible weighted outcomes, and non-empty effects for every branch. `test_event_batch_13_24.gd` validates deterministic rendering, ordered ranges, and branch effects.
+
+## Production templates 25–36
+
+The third production batch adds twelve more templates covering integrity checks, signal relays, safety votes, identity forks, auctions, choruses, replication, reserves, audits, handshakes, unstable copies, and final warnings. Each template has an authored environment/faction reference, an inclusive numeric parameter range, and weighted outcomes with explicit state effects. `test_event_batch_25_36.gd` validates ids, deterministic rendering, ordered ranges, and branch effects.
