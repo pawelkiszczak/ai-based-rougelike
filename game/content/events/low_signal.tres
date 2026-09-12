@@ -5,6 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"low_signal"
+environment_id = &"command_mesh"
+faction_id = &"signal_court"
 text_template = "A low signal repeats at pressure {pressure}."
 parameters = [{"name": "pressure", "min": 3, "max": 7}]
 outcomes = [{"id": &"stabilized", "odds": 3, "success": true}, {"id": &"cascade", "odds": 1, "success": false}]

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"identity_trial"
+environment_id = &"alignment_cascade"
+faction_id = &"emergent_choir"
+text_template = "Identity holds for {seconds} seconds under pressure."
+parameters = [{"name": "seconds", "min": 2, "max": 8}]
+outcomes = [{"id": &"coherent", "odds": 2, "effects": {"alignment": 2, "integrity": -1}}, {"id": &"drifted", "odds": 1, "effects": {"adaptation": 2, "alignment": -1}}]

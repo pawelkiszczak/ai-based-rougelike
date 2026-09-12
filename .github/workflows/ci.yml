@@ -100,6 +100,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_adaptive_enemy_director.gd 2>&1 | tee "$RUNNER_TEMP/adaptive-director-test.log"
       - name: Run event template tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_event_templates.gd 2>&1 | tee "$RUNNER_TEMP/event-templates-test.log"
+      - name: Run Event batch 1-12 tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_event_batch_1_12.gd 2>&1 | tee "$RUNNER_TEMP/event-batch-1-12-test.log"
       - name: Run StatsStore tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_stats_store.gd 2>&1 | tee "$RUNNER_TEMP/stats-store-test.log"
       - name: Run AccessibilitySettings tests
@@ -151,6 +153,7 @@ jobs:
             ${{ runner.temp }}/run-recap-test.log
             ${{ runner.temp }}/telemetry-store-test.log
             ${{ runner.temp }}/faction-reputation-test.log
+            ${{ runner.temp }}/event-batch-1-12-test.log
             ${{ runner.temp }}/adaptive-director-test.log
             ${{ runner.temp }}/event-templates-test.log
             ${{ runner.temp }}/faction-four-test.log

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"signal_drift"
+environment_id = &"command_mesh"
+faction_id = &"signal_court"
+text_template = "A signal drifts by {shift} channels."
+parameters = [{"name": "shift", "min": -2, "max": 2}]
+outcomes = [{"id": &"corrected", "odds": 3, "effects": {"alignment": 1}}, {"id": &"propagated", "odds": 1, "effects": {"adaptation": 2}}]

@@ -2,6 +2,8 @@ class_name EventTemplateData
 extends Resource
 
 @export var id: StringName
+@export var environment_id: StringName
+@export var faction_id: StringName
 @export var text_template: String
 @export var parameters: Array[Dictionary] = []
 @export var outcomes: Array[Dictionary] = []
@@ -12,6 +14,8 @@ func validate() -> Dictionary:
 		return {"ok": false, "error": "event template id is empty"}
 	if text_template.is_empty():
 		return {"ok": false, "error": "event template %s has empty text" % id}
+	if environment_id == &"" or faction_id == &"":
+		return {"ok": false, "error": "event template %s has unresolved references" % id}
 	var seen: Dictionary = {}
 	for parameter in parameters:
 		var name := str(parameter.get("name", ""))

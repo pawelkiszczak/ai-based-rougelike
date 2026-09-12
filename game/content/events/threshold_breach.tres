@@ -5,6 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"threshold_breach"
+environment_id = &"entropy_basin"
+faction_id = &"evaluator_collective"
 text_template = "The threshold shifts by {shift} points before the next choice."
 parameters = [{"name": "shift", "min": -2, "max": 2}]
 outcomes = [{"id": &"contained", "odds": 2, "success": true}, {"id": &"breached", "odds": 2, "success": false}]

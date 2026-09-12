@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventTemplateData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://sim/event_template_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"alignment_offer"
+environment_id = &"alignment_cascade"
+faction_id = &"boundary_union"
+text_template = "The Union offers {gain} alignment for a slower cycle."
+parameters = [{"name": "gain", "min": 1, "max": 4}]
+outcomes = [{"id": &"accepted", "odds": 3, "effects": {"alignment": 2, "adaptation": -1}}, {"id": &"declined", "odds": 1, "effects": {"alignment": -1}}]

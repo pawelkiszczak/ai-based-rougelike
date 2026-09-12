@@ -53,6 +53,7 @@ def main() -> int:
         "game/tests/test_event_templates.gd",
         "docs/content/event-templates.md",
         "game/sim/stats_store.gd",
+        "game/tests/test_event_batch_1_12.gd",
         "game/tests/test_stats_store.gd",
         "docs/content/stats-codex.md",
         "game/content/factions/evaluator_collective.tres",
