@@ -85,7 +85,7 @@ jobs:
       - name: Run event template tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_event_templates.gd 2>&1 | tee "$RUNNER_TEMP/event-templates-test.log"
       - name: Run StatsStore tests
-        run: set -o pipefail; godot --headless --path game -s res://tests/test_stats_store.gd 2>&1 | tee "$RUNNER_TEMP/stats-store-test.log"
+        run: set -o pipefail; timeout 30s godot --headless --path game -s res://tests/test_stats_store.gd 2>&1 | tee "$RUNNER_TEMP/stats-store-test.log"
       - name: Run BossGate tests
         run: godot --headless --path game -s res://tests/test_boss_gate.gd 2>&1 | tee "$RUNNER_TEMP/boss-gate-test.log"
       - name: Run AudioDirector tests

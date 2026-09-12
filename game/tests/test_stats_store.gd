@@ -6,23 +6,30 @@ var failures: Array[String] = []
 
 func _init() -> void:
 	_cleanup()
+	print("stats-marker-authored")
 	var authored := {"mutation_a": "Mutation A", "environment_a": "Environment A"}
 	_expect(StatsStore.validate_codex_mapping(authored, authored).ok, "codex entries map one-to-one")
+	print("stats-marker-store")
 	var store := StatsStore.new(SaveSystem.new(SAVE_PATH), {"mutation_a": "Mutation A", "environment_a": "Environment A"})
 	var result := {"run_id": "run-001", "won": true, "adaptation": 8, "alignment": 6, "compute": 4, "environment_id": "environment_a", "codex_ids": ["mutation_a"]}
 	_expect(store.process_run(result).processed, "completed run updates authoritative stats")
+	print("stats-marker-first-process")
 	_expect(store.runs() == 1 and store.wins() == 1, "stats count runs and wins without telemetry")
 	_expect(store.is_codex_unlocked("mutation_a"), "first entity encounter unlocks codex")
 	_expect(store.stats.environment_records.environment_a.wins == 1, "environment record stores completed result")
 	_expect(not store.process_run(result).processed and store.runs() == 1, "duplicate run id is idempotent")
+	print("stats-marker-duplicate")
 	var second := {"run_id": "run-002", "won": false, "adaptation": 12, "alignment": 2, "compute": 3, "environment_id": "environment_a", "codex_ids": ["environment_a"]}
 	_expect(store.process_run(second).processed, "second unique run updates stats")
 	_expect(store.runs() == 2 and store.wins() == 1 and store.stats.best_build.adaptation == 12, "best build uses authoritative result data")
+	print("stats-marker-second")
 	var reloaded := StatsStore.new(SaveSystem.new(SAVE_PATH), {"mutation_a": "Mutation A", "environment_a": "Environment A"})
 	_expect(reloaded.runs() == 2 and reloaded.is_codex_unlocked("mutation_a"), "stats and codex survive save/load")
 	_expect(reloaded.is_codex_unlocked("environment_a"), "codex unlocks persist independently")
+	print("stats-marker-reload")
 	_expect(not StatsStore.new(SaveSystem.new(SAVE_PATH), {"mutation_a": "Mutation A"}).process_run({"won": true}).ok, "run processing requires stable id")
 	_cleanup()
+	print("stats-marker-final")
 	if failures.is_empty():
 		print("StatsStore tests passed")
 		quit(0)
