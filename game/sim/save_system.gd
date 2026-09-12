@@ -20,6 +20,7 @@ func defaults() -> Dictionary:
 		"last_run_id": "",
 		"lineage": {"archive": 0, "runs": 0, "wins": 0},
 		"unlocks": [],
+		"reputation": {},
 		"stats": {},
 		"settings": {},
 	}
@@ -119,6 +120,8 @@ func migrate(document: Dictionary, from_version: int) -> Dictionary:
 		if not migrated.has("last_run_id"):
 			migrated["last_run_id"] = ""
 		migrated["version"] = CURRENT_VERSION
+	if not migrated.has("reputation"):
+		migrated["reputation"] = {}
 	return migrated
 
 
@@ -138,15 +141,16 @@ func normalise(input: Dictionary) -> Dictionary:
 		document["lineage"] = lineage
 	if input.has("unlocks") and input.unlocks is Array:
 		document["unlocks"] = input.unlocks.duplicate()
+	if input.has("reputation") and input.reputation is Dictionary:
+		document["reputation"] = input.reputation.duplicate(true)
 	if input.has("stats") and input.stats is Dictionary:
 		document["stats"] = input.stats.duplicate(true)
 	if input.has("settings") and input.settings is Dictionary:
 		document["settings"] = input.settings.duplicate(true)
 	return document
 
-
 func validate(document: Dictionary) -> Dictionary:
-	for key in ["version", "revision", "last_run_id", "lineage", "unlocks", "stats", "settings"]:
+	for key in ["version", "revision", "last_run_id", "lineage", "unlocks", "reputation", "stats", "settings"]:
 		if not document.has(key):
 			return {"ok": false, "error": "missing field: " + key}
 	if not document.version is int or document.version != CURRENT_VERSION:
@@ -165,6 +169,11 @@ func validate(document: Dictionary) -> Dictionary:
 	for unlock in document.unlocks:
 		if not unlock is String:
 			return {"ok": false, "error": "invalid unlock id"}
+	if not document.reputation is Dictionary:
+		return {"ok": false, "error": "invalid reputation"}
+	for faction_id in document.reputation:
+		if not faction_id is String or not (document.reputation[faction_id] is int or document.reputation[faction_id] is float):
+			return {"ok": false, "error": "invalid reputation entry"}
 	if not document.stats is Dictionary or not document.settings is Dictionary:
 		return {"ok": false, "error": "invalid structured fields"}
 	return {"ok": true, "error": ""}
