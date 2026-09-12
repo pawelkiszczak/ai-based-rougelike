@@ -226,6 +226,7 @@ jobs:
             --output "$templates_archive"
           unzip -q "$templates_archive" -d "$RUNNER_TEMP/godot-templates"
           cp -R "$RUNNER_TEMP/godot-templates/templates/." "$templates_dir/"
+          export PATH="$install_dir:$PATH"
           godot --version
 
       - name: Generate build metadata
