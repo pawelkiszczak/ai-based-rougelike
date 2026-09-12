@@ -22,6 +22,8 @@ def main() -> int:
         "game/scenes/main.tscn",
         "game/scenes/run.tscn",
         "game/ui/run_screen.gd",
+        "game/sim/encounter_fsm.gd",
+        "game/tests/test_encounter_fsm.gd",
         "tools/validate_foundation.py",
         "tools/harness.gd",
         "tools/README.md",

@@ -54,6 +54,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_mutation_data.gd 2>&1 | tee "$RUNNER_TEMP/mutation-data-test.log"
       - name: Run RunController tests
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
+      - name: Run EncounterFSM tests
+        run: godot --headless --path game -s res://tests/test_encounter_fsm.gd 2>&1 | tee "$RUNNER_TEMP/encounter-fsm-test.log"
       - name: Run SaveSystem tests
         run: godot --headless --path game -s res://tests/test_save_system.gd 2>&1 | tee "$RUNNER_TEMP/save-system-test.log"
       - name: Run RunScreen tests
@@ -81,6 +83,7 @@ jobs:
             ${{ runner.temp }}/rng-service-test.log
             ${{ runner.temp }}/mutation-data-test.log
             ${{ runner.temp }}/run-controller-test.log
+            ${{ runner.temp }}/encounter-fsm-test.log
             ${{ runner.temp }}/save-system-test.log
             ${{ runner.temp }}/run-screen-test.log
             ${{ runner.temp }}/harness-a.log

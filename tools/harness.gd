@@ -69,6 +69,7 @@ func _simulate(run_seed: int, mutations: Array[MutationData]) -> Dictionary:
 	var state := GameState.new(18, 5, 5, 0, 1, run_seed)
 	var controller := RunController.new(state, RNGService.new(run_seed))
 	var picks: Array[String] = []
+	var encounters: Array[Dictionary] = []
 	var safety := 0
 	while not controller.ended and safety < RunController.MAX_CYCLES + 1:
 		var choices := controller.draw_choices(mutations, CHOICE_COUNT)
@@ -76,6 +77,16 @@ func _simulate(run_seed: int, mutations: Array[MutationData]) -> Dictionary:
 			return {"ok": false, "error": "choice policy received fewer than three mutations"}
 		var selected := _select_greedy(choices)
 		picks.append(str(selected.id))
+		var encounter_kind: StringName = [&"combat", &"negotiation", &"event"][safety % 3]
+		var encounter := EncounterFSM.new(encounter_kind)
+		encounter.start({"cycle": state.cycle})
+		encounter.open_choice({"choice_count": CHOICE_COUNT})
+		encounter.resolve({"mutation_id": str(selected.id)})
+		encounter.apply_consequence()
+		encounters.append({
+			"kind": str(encounter_kind),
+			"states": encounter.state_sequence_names(),
+		})
 		controller.choose(selected)
 		safety += 1
 	if not controller.ended:
@@ -84,7 +95,8 @@ func _simulate(run_seed: int, mutations: Array[MutationData]) -> Dictionary:
 		return {"ok": false, "error": "simulation produced no cycle log for seed %d" % run_seed}
 
 	var cycles: Array[Dictionary] = []
-	for entry in controller.run_log:
+	for index in controller.run_log.size():
+		var entry: Dictionary = controller.run_log[index]
 		cycles.append({
 			"cycle": entry.cycle,
 			"pressure": entry.pressure,
@@ -93,6 +105,7 @@ func _simulate(run_seed: int, mutations: Array[MutationData]) -> Dictionary:
 			"compute": entry.compute,
 			"alignment": entry.alignment,
 			"adaptation": entry.adaptation,
+			"encounter": encounters[index],
 		})
 	var final_state := controller.state
 	var final_stats := {
