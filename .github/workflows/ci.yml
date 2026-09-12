@@ -50,6 +50,8 @@ jobs:
         run: godot --headless --path game -s res://tests/test_game_state.gd 2>&1 | tee "$RUNNER_TEMP/game-state-test.log"
       - name: Run RNGService tests
         run: godot --headless --path game -s res://tests/test_rng_service.gd 2>&1 | tee "$RUNNER_TEMP/rng-service-test.log"
+      - name: Run MutationData tests
+        run: godot --headless --path game -s res://tests/test_mutation_data.gd 2>&1 | tee "$RUNNER_TEMP/mutation-data-test.log"
 
       - name: Upload validation logs
         if: ${{ always() }}
@@ -61,4 +63,5 @@ jobs:
             ${{ runner.temp }}/foundation-validation.log
             ${{ runner.temp }}/game-state-test.log
             ${{ runner.temp }}/rng-service-test.log
+            ${{ runner.temp }}/mutation-data-test.log
           if-no-files-found: ignore

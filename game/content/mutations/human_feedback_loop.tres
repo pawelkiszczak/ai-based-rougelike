@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"human_feedback_loop"
+display_name = "Human feedback loop"
+text = "Expose your internal reasoning to a fragile human partner."
+category = &"safety"
+adaptation = 0
+compute = -1
+alignment = 4
+integrity = 1
+guard = 2
