@@ -8,6 +8,8 @@ var ended_results: Array[Dictionary] = []
 func _init() -> void:
 	check_golden_cycle()
 	check_compute_exhaustion()
+	check_damage_range()
+	check_telegraph_property()
 	check_death_precedes_gate()
 	check_final_gate_victory()
 	check_successor_creation()
@@ -56,6 +58,28 @@ func check_golden_cycle() -> void:
 	expect(controller.state.cycle == 2, "active run must advance to the next cycle")
 	expect(state_changes == 1, "active cycle must emit one state change")
 	expect(ended_results.is_empty(), "active cycle must not emit run-ended")
+
+
+func check_damage_range() -> void:
+	var controller := controller_for(GameState.new(18, 5, 5, 0, 1, 82))
+	var info := controller.damage_range(controller.state, mutation("res://content/mutations/predictive_cache.tres"))
+	expect(info.min == 0, "golden telegraph minimum must match pressure range")
+	expect(info.max == 1, "golden telegraph maximum must match pressure range")
+	expect(info.resolved_damage == 0, "golden telegraph resolved damage must match controller")
+
+
+func check_telegraph_property() -> void:
+	var pool := MutationLibrary.load_all()
+	for seed in 1000:
+		var controller := controller_for(GameState.new(18, 5, 5, 0, 1, seed))
+		var safety := 0
+		while not controller.ended and safety < RunController.MAX_CYCLES + 1:
+			var choices := controller.draw_choices(pool, 3)
+			var selected := choices[0]
+			var info := controller.damage_range(controller.state, selected)
+			var result := controller.choose(selected)
+			expect(result.damage >= info.min and result.damage <= info.max, "telegraph range must contain resolved damage")
+			safety += 1
 
 
 func check_compute_exhaustion() -> void:

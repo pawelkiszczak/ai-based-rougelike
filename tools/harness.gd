@@ -70,6 +70,7 @@ func _simulate(run_seed: int, mutations: Array[MutationData]) -> Dictionary:
 	var controller := RunController.new(state, RNGService.new(run_seed))
 	var picks: Array[String] = []
 	var encounters: Array[Dictionary] = []
+	var damage_ranges: Array[Dictionary] = []
 	var safety := 0
 	while not controller.ended and safety < RunController.MAX_CYCLES + 1:
 		var choices := controller.draw_choices(mutations, CHOICE_COUNT)
@@ -77,6 +78,7 @@ func _simulate(run_seed: int, mutations: Array[MutationData]) -> Dictionary:
 			return {"ok": false, "error": "choice policy received fewer than three mutations"}
 		var selected := _select_greedy(choices)
 		picks.append(str(selected.id))
+		damage_ranges.append(controller.damage_range(state, selected))
 		var encounter_kind: StringName = [&"combat", &"negotiation", &"event"][safety % 3]
 		var encounter := EncounterFSM.new(encounter_kind)
 		encounter.start({"cycle": state.cycle})
@@ -101,6 +103,10 @@ func _simulate(run_seed: int, mutations: Array[MutationData]) -> Dictionary:
 			"cycle": entry.cycle,
 			"pressure": entry.pressure,
 			"damage": entry.damage,
+			"damage_min": damage_ranges[index].min,
+			"damage_max": damage_ranges[index].max,
+			"damage_source": damage_ranges[index].source,
+			"damage_reason": damage_ranges[index].reason,
 			"integrity": entry.integrity,
 			"compute": entry.compute,
 			"alignment": entry.alignment,

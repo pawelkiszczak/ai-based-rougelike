@@ -155,7 +155,8 @@ func _render_choices() -> void:
 		button.custom_minimum_size = Vector2(0, 150)
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		button.text = "%s\n\n%s\n\n%s" % [mutation.display_name, mutation.text, _effect_text(mutation)]
+		var telegraph := controller.damage_range(controller.state, mutation)
+		button.text = "%s\n\n%s\n\n%s\n%s" % [mutation.display_name, mutation.text, _effect_text(mutation), _telegraph_text(telegraph)]
 		button.tooltip_text = mutation.text
 		button.pressed.connect(_on_choice.bind(mutation))
 		choice_container.add_child(button)
@@ -189,6 +190,10 @@ func _effect_text(mutation: MutationData) -> String:
 		if item[1] != 0:
 			effects.append("%s %s" % [item[0], _signed(item[1])])
 	return ", ".join(effects) if not effects.is_empty() else "No stat change"
+
+
+func _telegraph_text(telegraph: Dictionary) -> String:
+	return "Incoming damage %d–%d · %s (%s)" % [telegraph.min, telegraph.max, telegraph.source, telegraph.reason]
 
 
 func _signed(value: int) -> String:
