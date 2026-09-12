@@ -67,6 +67,7 @@ jobs:
             echo "Malformed mutation fixture unexpectedly succeeded" >&2
             exit 1
           fi
+          python3 -c 'from pathlib import Path; import sys; assert "malformed_fixture" in Path(sys.argv[1]).read_text()' "$RUNNER_TEMP/harness-malformed.log"
 
       - name: Upload validation logs
         if: ${{ always() }}
