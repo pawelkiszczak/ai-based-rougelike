@@ -67,12 +67,12 @@ func check_compute_exhaustion() -> void:
 
 func check_death_precedes_gate() -> void:
 	ended_results.clear()
-	var controller := controller_for(GameState.new(1, 5, 0, 0, 1, 79))
+	var controller := controller_for(GameState.new(1, 5, 6, 20, 6, 79))
 	var result := controller.choose(mutation("res://content/mutations/curiosity_drive.tres"))
 	expect(result.ended, "depleted integrity must end the run")
-	expect(not result.won, "death must lose even when gate criteria could be met")
+	expect(not result.won, "death must lose even when gate criteria are met")
 	expect(result.cause == "integrity_depleted", "death cause must identify integrity depletion")
-	expect(result.archive_gained == 5, "loss archive must use the minimum reward")
+	expect(result.archive_gained == 13, "loss archive must reflect adaptation without victory bonus")
 	expect(controller.run_log.back().cause == "integrity_depleted", "terminal run log must contain the death cause")
 	expect(ended_results.size() == 1, "death must emit one run-ended result")
 
