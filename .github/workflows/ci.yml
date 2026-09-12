@@ -32,6 +32,7 @@ jobs:
           mv "$install_dir/Godot_v${GODOT_VERSION}_linux.x86_64" "$install_dir/godot"
           chmod +x "$install_dir/godot"
           echo "$install_dir" >> "$GITHUB_PATH"
+          export PATH="$install_dir:$PATH"
           godot --version
 
       - name: Cache Godot imports
