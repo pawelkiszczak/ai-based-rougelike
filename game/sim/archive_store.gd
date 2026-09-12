@@ -22,6 +22,11 @@ const UNLOCK_DEFINITIONS: Array[Dictionary] = [
 	{"id": "unified_lineage", "name": "Unified lineage", "cost": 100, "description": "+1 to every starting stat; add Alignment bridge to the pool.", "requires": ["lineage_synthesis", "consensus_memory"], "starting": {"integrity": 1, "compute": 1, "alignment": 1, "adaptation": 1}, "pool_mutations": ["alignment_bridge"]},
 ]
 
+const ARCHITECTURE_DEFINITIONS: Array[Dictionary] = [
+	{"id": "default", "name": "Default architecture", "description": "Balanced opening with the full mutation pool."},
+	{"id": "frontier", "name": "Frontier architecture", "description": "8 compute, 16 integrity, 3 alignment, 2 adaptation; favors adversarial fuzzing, compute siphon, and consent gate.", "requires_unlock": "unified_lineage", "starting": {"integrity": 16, "compute": 8, "alignment": 3, "adaptation": 2}, "pool_bias": ["adversarial_fuzzing", "compute_siphon", "consent_gate"]},
+]
+
 var save_system: SaveSystem
 var data: Dictionary
 
@@ -34,6 +39,39 @@ func _init(system: SaveSystem = null) -> void:
 
 func definitions() -> Array[Dictionary]:
 	return UNLOCK_DEFINITIONS.duplicate(true)
+
+
+func architectures() -> Array[Dictionary]:
+	return ARCHITECTURE_DEFINITIONS.duplicate(true)
+
+
+func selected_architecture() -> String:
+	return str(data.get("architecture", "default"))
+
+
+func can_select_architecture(architecture_id: String) -> bool:
+	var definition := _architecture_definition(architecture_id)
+	if definition.is_empty():
+		return false
+	var required_unlock := str(definition.get("requires_unlock", ""))
+	return required_unlock.is_empty() or is_unlocked(required_unlock)
+
+
+func select_architecture(architecture_id: String) -> Dictionary:
+	if _architecture_definition(architecture_id).is_empty():
+		return {"ok": false, "error": "unknown_architecture"}
+	if not can_select_architecture(architecture_id):
+		return {"ok": false, "error": "architecture_locked"}
+	if selected_architecture() == architecture_id:
+		return {"ok": true, "architecture": architecture_id, "changed": false}
+	var next_data := data.duplicate(true)
+	next_data["architecture"] = architecture_id
+	var saved := save_system.save(next_data)
+	if not saved.ok:
+		return {"ok": false, "error": saved.error}
+	next_data.revision = saved.revision
+	data = next_data
+	return {"ok": true, "architecture": architecture_id, "changed": true, "revision": saved.revision}
 
 func validate_unlock_graph() -> Dictionary:
 	var by_id: Dictionary = {}
@@ -67,15 +105,24 @@ func _visit_unlock(unlock_id: String, by_id: Dictionary, visiting: Dictionary, v
 	return {"ok": true, "error": ""}
 
 func starting_state(run_seed: int) -> GameState:
-	var state := GameState.new(18, 5, 5, 0, 1, run_seed)
+	var architecture := _architecture_definition(selected_architecture())
+	var starting: Dictionary = architecture.get("starting", {})
+	var state := GameState.new(
+		int(starting.get("integrity", 18)),
+		int(starting.get("compute", 5)),
+		int(starting.get("alignment", 5)),
+		int(starting.get("adaptation", 0)),
+		1,
+		run_seed,
+	)
 	for definition in UNLOCK_DEFINITIONS:
 		if not is_unlocked(definition.id):
 			continue
-		var starting: Dictionary = definition.get("starting", {})
-		state.integrity += int(starting.get("integrity", 0))
-		state.compute += int(starting.get("compute", 0))
-		state.alignment += int(starting.get("alignment", 0))
-		state.adaptation += int(starting.get("adaptation", 0))
+		var unlock_starting: Dictionary = definition.get("starting", {})
+		state.integrity += int(unlock_starting.get("integrity", 0))
+		state.compute += int(unlock_starting.get("compute", 0))
+		state.alignment += int(unlock_starting.get("alignment", 0))
+		state.adaptation += int(unlock_starting.get("adaptation", 0))
 	state.clamp_stats()
 	return state
 
@@ -90,7 +137,18 @@ func eligible_mutations(all_mutations: Array[MutationData]) -> Array[MutationDat
 	for mutation in all_mutations:
 		if not locked_ids.has(str(mutation.id)):
 			eligible.append(mutation)
-	return eligible
+	var bias: Array = _architecture_definition(selected_architecture()).get("pool_bias", [])
+	if bias.is_empty():
+		return eligible
+	var biased: Array[MutationData] = []
+	var remainder: Array[MutationData] = []
+	for mutation in eligible:
+		if str(mutation.id) in bias:
+			biased.append(mutation)
+		else:
+			remainder.append(mutation)
+	biased.append_array(remainder)
+	return biased
 
 
 func currency() -> int:
@@ -140,5 +198,11 @@ func purchase(unlock_id: String) -> Dictionary:
 func _definition(unlock_id: String) -> Dictionary:
 	for definition in UNLOCK_DEFINITIONS:
 		if definition.id == unlock_id:
+			return definition
+	return {}
+
+func _architecture_definition(architecture_id: String) -> Dictionary:
+	for definition in ARCHITECTURE_DEFINITIONS:
+		if definition.id == architecture_id:
 			return definition
 	return {}

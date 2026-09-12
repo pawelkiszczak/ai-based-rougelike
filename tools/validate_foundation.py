@@ -119,6 +119,7 @@ def main() -> int:
         "docs/content/mutation-batch-61-75.md",
         "docs/content/lineage-unlocks.md",
         "game/tests/test_lineage_unlocks.gd",
+        "game/tests/test_architecture_selection.gd",
         "tools/validate_foundation.py",
         "tools/harness.gd",
         "tools/README.md",
