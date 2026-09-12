@@ -50,6 +50,8 @@ jobs:
         run: python3 tools/validate_art.py 2>&1 | tee "$RUNNER_TEMP/art-validation.log"
       - name: Validate audio assets
         run: python3 tools/validate_audio.py 2>&1 | tee "$RUNNER_TEMP/audio-validation.log"
+      - name: Validate license provenance
+        run: python3 tools/validate_licenses.py 2>&1 | tee "$RUNNER_TEMP/license-validation.log"
       - name: Run GameState tests
         run: godot --headless --path game -s res://tests/test_game_state.gd 2>&1 | tee "$RUNNER_TEMP/game-state-test.log"
       - name: Run RNGService tests
@@ -66,6 +68,8 @@ jobs:
         run: set -o pipefail; godot --headless --path game -s res://tests/test_lineage_unlocks.gd 2>&1 | tee "$RUNNER_TEMP/lineage-unlocks-test.log"
       - name: Run architecture selection tests
         run: set -o pipefail; godot --headless --path game -s res://tests/test_architecture_selection.gd 2>&1 | tee "$RUNNER_TEMP/architecture-selection-test.log"
+      - name: Run license manifest tests
+        run: set -o pipefail; godot --headless --path game -s res://tests/test_license_manifest.gd 2>&1 | tee "$RUNNER_TEMP/license-manifest-test.log"
       - name: Run RunController tests
         run: godot --headless --path game -s res://tests/test_run_controller.gd 2>&1 | tee "$RUNNER_TEMP/run-controller-test.log"
       - name: Run EncounterFSM tests
@@ -146,12 +150,14 @@ jobs:
             ${{ runner.temp }}/art-validation.log
             ${{ runner.temp }}/mutation-batch-61-75-test.log
             ${{ runner.temp }}/audio-validation.log
+            ${{ runner.temp }}/license-validation.log
             ${{ runner.temp }}/mutation-batch-46-60-test.log
             ${{ runner.temp }}/game-state-test.log
             ${{ runner.temp }}/mutation-batch-test.log
             ${{ runner.temp }}/rng-service-test.log
             ${{ runner.temp }}/mutation-data-test.log
             ${{ runner.temp }}/lineage-unlocks-test.log
+            ${{ runner.temp }}/license-manifest-test.log
             ${{ runner.temp }}/architecture-selection-test.log
             ${{ runner.temp }}/run-controller-test.log
             ${{ runner.temp }}/encounter-fsm-test.log
