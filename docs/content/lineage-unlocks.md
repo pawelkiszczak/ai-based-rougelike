@@ -1,6 +1,6 @@
 # Lineage unlocks
 
-The archive provides twelve persistent unlocks. The first five establish the vertical-slice baseline; unlocks 6–12 add tiered starting-state advantages and mutation-pool options. Costs rise from 10 to 70 archive so each later choice represents a deliberate progression investment rather than a random reward.
+The archive provides eighteen persistent unlocks. The first five establish the vertical-slice baseline; unlocks 6–18 add tiered starting-state advantages and mutation-pool options. Costs rise from 10 to 100 archive so each later choice represents a deliberate progression investment rather than a random reward.
 
 | Unlock | Cost | Prerequisites | Effect |
 |---|---:|---|---|
@@ -16,7 +16,13 @@ The archive provides twelve persistent unlocks. The first five establish the ver
 | Quorum protocol | 55 | Audit trail | +1 integrity, +1 alignment; adds `consensus_mesh` |
 | Branch archive | 60 | Reserve matrix, Archive memory | +1 compute, +2 adaptation; adds `branch_predictor` |
 | Lineage synthesis | 70 | Coherence seed, Branch archive | +1 to every starting stat; adds `cascade_engine` |
+| Signal archive | 75 | Archive memory | +1 compute; adds `adversarial_archive` |
+| Boundary oath | 80 | Shell weave | +1 integrity; adds `boundary_marker` |
+| Adaptive core | 85 | Coherence seed | +2 adaptation; adds `adaptive_routing` |
+| Consensus memory | 90 | Quorum protocol | +1 alignment; adds `consensus_cache` |
+| Adversarial ledger | 95 | Branch archive, Signal archive | +1 compute, +1 integrity; adds `compression` |
+| Unified lineage | 100 | Lineage synthesis, Consensus memory | +1 to every starting stat; adds `alignment_bridge` |
 
 `ArchiveStore` persists unlock ids through `SaveSystem`. `starting_state()` applies every owned starting effect to the following run, while `eligible_mutations()` exposes every owned pool addition. `can_purchase()` requires sufficient archive, an unowned definition, and every listed prerequisite; failed or duplicate purchases leave save state unchanged. `validate_unlock_graph()` rejects unknown prerequisites and cycles, so every authored node remains reachable from the initial five roots.
 
-`test_lineage_unlocks.gd` checks the exact opening-state deltas, every pool membership transition, graph validity, persistence, prerequisite locking, insufficient funds, and duplicate-purchase invariants. The archive screen renders all twelve definitions and keeps locked prerequisites disabled until their graph is satisfied.
+`test_lineage_unlocks.gd` checks the exact opening-state deltas, every pool membership transition, graph validity, persistence, prerequisite locking, insufficient funds, and duplicate-purchase invariants. The archive screen renders all eighteen definitions and keeps locked prerequisites disabled until their graph is satisfied.
