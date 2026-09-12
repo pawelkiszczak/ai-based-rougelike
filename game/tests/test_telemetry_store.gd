@@ -7,18 +7,23 @@ var failures: Array[String] = []
 
 
 func _init() -> void:
+	var watchdog := create_timer(15.0)
+	watchdog.timeout.connect(_on_watchdog_timeout)
 	call_deferred("_run")
 
 
 func _run() -> void:
+	print("telemetry: start")
 	_cleanup()
 	var telemetry := TelemetryStore.new(TELEMETRY_PATH, true)
 	for seed in 3:
 		_expect(telemetry.record_run(_recap(seed, seed == 0), seed * 100).recorded, "opt-in run is appended")
+	print("telemetry: records written")
 	var lines := FileAccess.get_file_as_string(TELEMETRY_PATH).strip_edges().split("\n")
 	_expect(lines.size() == 3, "three completed runs produce three JSONL records")
 	for line in lines:
 		_expect(telemetry.validate_line(line).ok, "every telemetry line satisfies the schema")
+	print("telemetry: records validated")
 
 	var disabled_path := "user://telemetry-disabled.jsonl"
 	var disabled := TelemetryStore.new(disabled_path)
@@ -37,6 +42,7 @@ func _run() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TELEMETRY_PATH))
 	var loaded := SaveSystem.new(SAVE_PATH).load()
 	_expect(loaded.data.lineage.archive == 12 and loaded.data.unlocks == ["deep_reserves"], "deleting telemetry leaves progression unchanged")
+	print("telemetry: before quit")
 
 	_cleanup()
 	if failures.is_empty():
@@ -46,6 +52,11 @@ func _run() -> void:
 		for failure in failures:
 			push_error(failure)
 		quit(1)
+
+
+func _on_watchdog_timeout() -> void:
+	push_error("TelemetryStore test watchdog expired")
+	quit(2)
 
 
 func _recap(seed: int, won: bool) -> Dictionary:
