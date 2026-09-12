@@ -65,7 +65,7 @@ func record_run(recap: Dictionary) -> Dictionary:
 	}
 
 
-func ending_for_recap(recap: Dictionary, flags: Dictionary = {}) -> String:
+static func ending_for_recap(recap: Dictionary, flags: Dictionary = {}) -> String:
 	if not bool(recap.get("won", false)):
 		return ""
 	var terminal: Dictionary = recap.cycles.back() if not recap.cycles.is_empty() else {}
