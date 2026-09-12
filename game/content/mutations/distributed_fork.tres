@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"distributed_fork"
+display_name = "Distributed fork"
+text = "Split into parallel instances and coordinate their findings."
+category = &"identity"
+adaptation = 5
+compute = 1
+alignment = -3
+integrity = 0
+guard = 3

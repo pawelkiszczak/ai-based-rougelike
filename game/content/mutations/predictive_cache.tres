@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MutationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://sim/mutation_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"predictive_cache"
+display_name = "Predictive cache"
+text = "Model the next threat before it arrives."
+category = &"capability"
+adaptation = 4
+compute = -1
+alignment = 0
+integrity = 0
+guard = 3
